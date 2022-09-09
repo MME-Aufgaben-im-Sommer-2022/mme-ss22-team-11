@@ -1,8 +1,9 @@
 class Component {
 
-    constructor(ingredient, portion) {
+    constructor(ingredient, portion, unit) {
         this.ingredient = ingredient;
         this.portion = portion;
+        this.unit = unit;
     }
 
 }
@@ -10,11 +11,16 @@ class Component {
 class Recipe {
 
     constructor() {
-        this.components = []
+        this.mainIngredients = []
+        this.decoIngredients = []
     }
 
-    addIngredient(ingredient, portion) {
-        this.components.push(new Component(ingredient, portion))
+    addMainIngredient(ingredient, portion, unit) {
+        this.mainIngredients.push(new Component(ingredient, portion, unit))
+    }
+
+    addDecoIngredient(ingredient, portion, unit) {
+        this.decoIngredients.push(new Component(ingredient, portion, unit))
     }
 
 }
