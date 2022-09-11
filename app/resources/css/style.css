@@ -1,44 +1,98 @@
-/* Beispiel für die Einbindung zusätzlicher Schriftarten via Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&display=swap');
-
-
-/* Beispiel für die einfache Einbindung eines Farbschema, generiert auf coolors.co */
 :root {
-    --turquoise-green: #b9e3c6ff;
-    --ocean-green: #59c9a5ff;
-    --ruby: #d81e5bff;
-    --prussian-blue: #23395bff;
-    --canary: #fffd98ff;
-    --snow: #f7f2f4ff;
-    --jet: #343434ff;
+    --primary: #F7F2F4;
+    --primary-darker: #E8E3E5;
+    --secondary: #D1C5F4;
+    --accent: #9672FF;
+    --black: #151515;
+
 }
 
-.attachment-full {
-    position: fixed;
-    top: 0;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    background-color: var(--primary);
+}
+
+li, a {
+    font-family: 'Josefin';
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--black);
+    text-decoration: none;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 50px 10%;
+    background: var(--secondary);
+    height: 15vh;
+    box-shadow: 0px 0px 50px 13px rgba(132,120,169,0.25);
+}
+
+.logo {
+    background: none;
+    width: 200px;
+    height: auto;
+}
+
+nav {
+    background: none;
+    width: 75vw;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    background: none;
+}
+
+.nav-links li {
+    padding: 0 20px;
+    background: none;
+    flex-grow: 1;
+    text-align: end;
+}
+
+.nav-links li a {
+    background: none;
+    text-decoration: none;
+    padding-bottom: 0.25rem;
+    display: inline-block;
+    position: relative;
+    transition: all 150ms ease-in-out;
+}
+
+.nav-links li a::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 0;
+    height: 3px;
+    background-color: var(--black);
+    transition: all 150ms ease-in-out;
+}
+
+.nav-links li a:hover::before {
+    width: 100%;
     left: 0;
 }
 
-.hidden {
-    display: none !important;
+.nav-links li a:is(:link, :active, :visited).active {
+    color: var(--accent);
 }
 
-body {
-    background-color: var(--snow);
-    font-family: 'Space Grotesk', sans-serif;
-    margin: 0;
-    padding: 0;
+.nav-links li a:is(:link, :active, :visited).active::before {
+    background-color: var(--accent);
+    width: 100%;
+    left: 0;
 }
 
-.ui {
-    display: flex;
-    flex-direction: column;
-    width: 90vw;
-    margin: 0 auto;
-    padding: 0;
+#profile-link {
+    flex-grow: 2;
 }
 
-.ui h1 {
-    text-align: center;
-    color: var(--jet);
-}
