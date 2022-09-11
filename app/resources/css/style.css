@@ -3,6 +3,7 @@
     --primary-darker: #E8E3E5;
     --secondary: #D1C5F4;
     --accent: #9672FF;
+    --accent-lighter: #B49CFA;
     --black: #151515;
 
 }
@@ -13,6 +14,10 @@
     padding: 0;
     background-color: var(--primary);
 }
+
+/*
+    Top NavBar
+*/
 
 li, a {
     font-family: 'Josefin';
@@ -29,6 +34,8 @@ header {
     padding: 50px 10%;
     background: var(--secondary);
     height: 15vh;
+    position: relative;
+    z-index: 1;
     box-shadow: 0px 0px 50px 13px rgba(132,120,169,0.25);
 }
 
@@ -96,3 +103,117 @@ nav {
     flex-grow: 2;
 }
 
+/*
+    Filter Section
+*/
+
+#filter {
+    position: relative;
+    background-color: var(--primary-darker);
+    width: 25vw;
+    height: 85vh;
+    z-index: 0;
+    box-shadow: 0px 0px 50px 13px rgba(132,120,169,0.25);
+
+    overflow-x: hidden;
+
+    font-family: 'Josefin';
+    font-size: 1.5rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 50px;
+    padding: 50px 25px;
+
+
+    transition: all 500ms ease-in;
+}
+
+.filter-header {
+    height: 50px;
+    width: 100%;
+    background: none;
+    /*display: flex;
+    justify-content: center;
+    align-items: baseline;*/
+}
+
+.filter-header h1 {
+    text-align: center;
+    margin: auto;
+    background: none;
+}
+
+.filter-header img {
+    background: none;
+    height: 30px;
+    width: auto;
+    position: absolute;
+    top: 50px;
+    right: 25px;
+    transition: all 250ms ease-in-out;
+    cursor: pointer;
+}
+
+.filter-header .hidden {
+    opacity: 0;
+}
+
+.filter-header .hidden:hover{
+    opacity: 1;
+}
+
+.divider {
+    width: 75%;
+    height: 4px;
+    align-self: center;
+    background: var(--black);
+}
+
+.ingredients-section {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    background: none;
+}
+
+.ingredients-section h1 {
+    margin: auto;
+    background: none;
+}
+
+.ingredients-container {
+    background: none;
+    height: fit-content;
+    width: 80%;
+    align-self: center;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+    gap: 10px;
+}
+
+.ingredient {
+    background: var(--secondary);
+    color: var(--black);
+    width: fit-content;
+    padding: 7.5px 15px;
+    border-radius: 10px;
+
+    transition: all 150ms ease-in-out;
+    cursor: pointer;
+}
+
+.ingredient.active {
+    background: var(--accent);
+    color: var(--primary);
+}
+
+.ingredient:hover {
+    background: var(--accent-lighter);
+}

@@ -9,9 +9,9 @@
     <link rel="stylesheet" href="./resources/css/fonts.css">
 </head>
 
-<body alink="#123123">
+<body>
     <header>
-        <img class="logo" src="./resources/css/logo/VectorVerwertBarLogo.svg" alt="logo">
+        <img class="logo" src="./resources/css/img/VectorVerwertBarLogo.svg" alt="logo">
         <nav>
             <ul class="nav-links">
                 <li><a class="nav-link active" href="#">Rezepte</a></li>
@@ -20,6 +20,48 @@
             </ul>
         </nav>
     </header>
+
+    <section id="filter">
+        <div class="filter-header">
+            <h1>Filter</h1>
+            <img src="./resources/css/img/VectorCancel.svg">
+            <img class="hidden" id="cancel-filter" src="./resources/css/img/VectorCancelHover.svg">
+        </div>
+        <div class="divider"></div>
+        <div class="ingredients-section">
+            <h1>Zutaten</h1>
+            <div class="ingredients-container">
+                <!--Ingredients for testing display-->
+                <div class="ingredient">
+                    Gin
+                </div>
+                <div class="ingredient">
+                    Whiskey
+                </div>
+                <div class="ingredient">
+                    Vodka
+                </div>
+                <div class="ingredient">
+                    Zucker
+                </div>
+                <div class="ingredient">
+                    Zitrone
+                </div>
+                <div class="ingredient">
+                    Limette
+                </div>
+                <div class="ingredient">
+                    Minze
+                </div>
+                <div class="ingredient">
+                    Likör
+                </div>
+                <div class="ingredient">
+                    Sekt
+                </div>
+            </div>
+        </div>
+    </section>
 
    <script type="module" src="./src/index.js"></script>
 </body>
