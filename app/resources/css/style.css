@@ -33,7 +33,7 @@ header {
     align-items: baseline;
     padding: 50px 10%;
     background: var(--secondary);
-    height: 15vh;
+    height: 150px;
     position: relative;
     z-index: 1;
     box-shadow: 0px 0px 50px 13px rgba(132,120,169,0.25);
@@ -58,7 +58,6 @@ nav {
 }
 
 .nav-links li {
-    padding: 0 20px;
     background: none;
     flex-grow: 1;
     text-align: end;
@@ -68,7 +67,6 @@ nav {
     background: none;
     text-decoration: none;
     padding-bottom: 0.25rem;
-    display: inline-block;
     position: relative;
     transition: all 150ms ease-in-out;
 }
@@ -100,7 +98,8 @@ nav {
 }
 
 #profile-link {
-    flex-grow: 2;
+    flex-grow: 3;
+    float: right;
 }
 
 /*
@@ -110,8 +109,8 @@ nav {
 #filter {
     position: relative;
     background-color: var(--primary-darker);
-    width: 25vw;
-    height: 85vh;
+    width: 22.5vw;
+    height: calc(100vh - 150px);
     z-index: 0;
     box-shadow: 0px 0px 50px 13px rgba(132,120,169,0.25);
 
@@ -123,7 +122,7 @@ nav {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    gap: 50px;
+    gap: 3vh;
     padding: 50px 25px;
 
 
@@ -134,9 +133,6 @@ nav {
     height: 50px;
     width: 100%;
     background: none;
-    /*display: flex;
-    justify-content: center;
-    align-items: baseline;*/
 }
 
 .filter-header h1 {
@@ -174,13 +170,61 @@ nav {
 .ingredients-section {
     display: flex;
     flex-direction: column;
-    gap: 50px;
+    gap: inherit;
     background: none;
 }
 
 .ingredients-section h1 {
     margin: auto;
     background: none;
+}
+
+.ingredient-input-container {
+    background: none;
+    align-self: center;
+    width: 80%;
+    height: 40px;
+    border: 5px solid var(--accent);
+    
+    padding: 7.5px 15px;
+    border-radius: 10px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ingredients-section .ingredient-input {
+    cursor: pointer;
+    font-family: 'Josefin';
+    color: var(--black);
+    font-size: 1.3rem;
+    margin-left: -10px;
+    width: 90%;
+    height: 150%;
+    background: none;
+    border: none;
+    caret-color: var(--black);
+}
+
+.ingredients-section .ingredient-input:hover {
+    cursor: text;
+}
+
+.ingredients-section .ingredient-input:focus {
+    outline: none;
+}
+
+.ingredients-section .ingredient-input::placeholder {
+    color: var(--accent-lighter);
+}
+
+.ingredients-section .ingredient-search {
+    background: none;
+    height: 28px;
+    width: auto;
+    margin-right: -10px;
 }
 
 .ingredients-container {
@@ -199,8 +243,10 @@ nav {
 }
 
 .ingredient {
-    background: var(--secondary);
-    color: var(--black);
+    /*background: var(--secondary);
+    color: var(--black);*/
+    background: var(--accent);
+    color: var(--primary);
     width: fit-content;
     padding: 7.5px 15px;
     border-radius: 10px;
