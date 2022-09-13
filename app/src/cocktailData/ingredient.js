@@ -1,7 +1,6 @@
 class Ingredient {
 
-    constructor(id, name, displayName, alcoholic) {
-        this.id = id;
+    constructor(name, displayName, alcoholic) {
         this.name = name;
         this.displayName = displayName;
         this.alcoholic = alcoholic;
@@ -23,10 +22,11 @@ class IngredientList {
         this.displayNames = [];
     }
 
-    getIngredients() {
-
+    addIngredient(ingredient) {
+        this.list.push(ingredient);
     }
 
+    //TODO: aktualisieren auf die csv
     // Um Alle Ingredients mit selben displayName zu kriegen (wird vielleicht gebraucht)
     getAllIngredientsForDisplayName(query) {
 
@@ -37,8 +37,35 @@ class IngredientList {
                 returnList.push(ingredient);
             }
         })
+
+        return returnList;
+    }
+
+    isIngredientAlcoholic(query) {
+
+        let alcoholic = false;
+
+        this.list.forEach(ingredient => {
+            if (ingredient.name === query) {
+                alcoholic = ingredient.alcoholic;
+            }
+        });
+        return alcoholic;
+    }
+
+    getDisplayNameFromName(query) {
+
+        let returnString = query;
+
+        this.list.forEach(ingredient => {
+
+            if (ingredient.name === query) {
+                returnString = ingredient.displayName;
+            }
+        });
+        return returnString;
     }
 
 }
 
-export { Ingredient };
+export { Ingredient, IngredientList };

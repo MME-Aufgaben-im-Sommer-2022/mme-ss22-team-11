@@ -16,41 +16,45 @@ class Cocktail {
     }
 
     getIsAlcoholic() {
+
+        let alcoholic = false;
+
         this.recipe.mainIngredients.forEach(component => {
             if (component.ingredient.alcoholic) {
-                return true;
+                alcoholic = true;
             }
         });
 
         this.recipe.decoIngredients.forEach(component => {
             if (component.ingredient.alcoholic) {
-                return true;
+                alcoholic = true;
             }
         });
 
-        return false;
+        return alcoholic;
     }
 
     // nur displaynames werden berücksichtigt
     checkIfCocktailHasIngredients(ingredients, withDeco) {
 
         //TODO: Eiswürfel ignorieren? (vielleicht mit checkbox)
+        let bool = true;
 
         this.recipe.mainIngredients.forEach(component => {
             if (ingredients.indexOf(component.ingredient.displayName) == -1) {
-                return false;
+                bool = false;
             }
         })
 
         if (withDeco) {
             this.recipe.decoIngredients.forEach(component => {
                 if (ingredients.indexOf(component.ingredient.displayName) == -1) {
-                    return false;
+                    bool = false;
                 }
             })
         }
 
-        return true;
+        return bool;
 
     }
 

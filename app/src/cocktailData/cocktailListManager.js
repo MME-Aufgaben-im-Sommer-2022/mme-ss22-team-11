@@ -1,24 +1,46 @@
 import { Cocktail } from "./cocktail.js";
 import { Component, Recipe } from "./recipe.js"
+import { Ingredient, IngredientList } from "./ingredient.js"
 
 class CocktailListManager {
 
     constructor() {
         //TODO: aus Datenbank/API laden
         this.allCocktails = [];
-        this.getCocktailsFromJson(this);
+        this.ingredientList = new IngredientList();
 
-        // Die Liste soll immer angezeigt werden
+        this.getIngredientData();
+
+        setTimeout(() => this.getCocktailsFromJson(), 100);
+
+        // Diese Liste soll immer angezeigt werden
         this.displayList = this.allCocktails;
 
-        setTimeout(() => console.log(this.searchCocktailByName("Moscow")), 100)
-        setTimeout(() => console.log(this.filterCocktailsByBannedIngredient(["Cola", "Limette"])), 100)
 
+        setTimeout(() => console.log(this.allCocktails[1]), 1000)
+
+    }
+
+    getIngredientData() {
+        fetch('./src/cocktailData/JSON/ingredients.json')
+            .then((response) => response.json())
+            .then((json) => {
+
+                for (let i in json) {
+
+                    let data = json[i];
+                    let alcoholic = data.alcoholic == 1;
+                    this.ingredientList.addIngredient(new Ingredient(i, data.display_name, alcoholic));
+
+                }
+
+                console.log(this.ingredientList.list);
+            });
     }
 
     addCocktail(name, recipe, image, category, tags, description, steps, author) {
 
-        // id aus db auslesen
+        // letzte id aus db auslesen (daraus neue errechnen)
         // neuen Cocktail machen
         // in cocktails pushen
         // db aktualisieren
@@ -118,16 +140,24 @@ class CocktailListManager {
         let recipe = new Recipe();
 
         Object.entries(data.main_ingredients).forEach((entry) => {
-            let [key, value] = entry
-            recipe.addMainIngredient(key, value[0], value[1])
+            let [key, value] = entry;
+            let ingredient = this.getIngredientFromKey(key);
+            recipe.addMainIngredient(ingredient, value[0], value[1]);
         })
 
         Object.entries(data.deko_ingredients).forEach((entry) => {
-            let [key, value] = entry
-            recipe.addDecoIngredient(key, value[0], value[1])
+            let [key, value] = entry;
+            let ingredient = this.getIngredientFromKey(key);
+            recipe.addMainIngredient(ingredient, value[0], value[1]);
         })
 
         return recipe;
+    }
+
+    getIngredientFromKey(key) {
+        let alcoholic = this.ingredientList.isIngredientAlcoholic(key);
+        let displayName = this.ingredientList.getDisplayNameFromName(key);
+        return new Ingredient(key, displayName, alcoholic);
     }
 
 }
