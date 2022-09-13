@@ -5,8 +5,11 @@ class CocktailListManager {
 
     constructor() {
         //TODO: aus Datenbank/API laden
-        this.cocktails = [];
+        this.allCocktails = [];
         this.getCocktailsFromJson(this);
+
+        // Die Liste soll immer angezeigt werden
+        this.displayList = this.allCocktails;
 
         setTimeout(() => console.log(this.searchCocktailByName("Moscow")), 100)
         setTimeout(() => console.log(this.filterCocktailsByBannedIngredient(["Cola", "Limette"])), 100)
@@ -27,7 +30,7 @@ class CocktailListManager {
         //TODO: letzte id aus Datenbank auslesen, dann: let id = letzte id + 1 (wenn id nicht angegeben)
 
         let newCocktail = new Cocktail(id, name, recipe, image, undefined, [], category, tags, description, steps, author);
-        this.cocktails.push(newCocktail);
+        this.allCocktails.push(newCocktail);
         //TODO: Datenbank updaten
 
     }
@@ -35,13 +38,13 @@ class CocktailListManager {
     searchCocktailByName(query) {
 
         let returnList = [];
-        this.cocktails.forEach(cocktail => {
+        this.allCocktails.forEach(cocktail => {
 
             if (cocktail.name.startsWith(query)) {
                 returnList.push(cocktail);
             }
         });
-        return returnList;
+        this.displayList = returnList;;
 
     }
 
@@ -49,13 +52,24 @@ class CocktailListManager {
 
         let bannedIds = this.checkIngredientBanList(bannedIngredients);
         let returnList = [];
-        this.cocktails.forEach(cocktail => {
+        this.allCocktails.forEach(cocktail => {
             if (bannedIds.indexOf(cocktail.id) == -1) {
                 returnList.push(cocktail);
             }
         })
+        this.displayList = returnList;;
 
-        return returnList;
+    }
+
+    getCocktailsFromIngredients(ingredients, withDeco) {
+
+        returnList = [];
+        this.allCocktails.forEach(cocktail => {
+            if (cocktail.checkIfCocktailHasIngredients(ingredients, withDeco)) {
+                returnList.push(cocktail)
+            }
+        })
+        this.displayList = returnList;;
 
     }
 
@@ -63,7 +77,7 @@ class CocktailListManager {
 
         let bannedIds = []
 
-        this.cocktails.forEach(cocktail => {
+        this.allCocktails.forEach(cocktail => {
 
             let ingredients = [];
 
