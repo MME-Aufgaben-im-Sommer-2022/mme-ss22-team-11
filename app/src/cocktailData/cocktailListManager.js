@@ -16,8 +16,7 @@ class CocktailListManager {
         // Diese Liste soll immer angezeigt werden
         this.displayList = this.allCocktails;
 
-
-        setTimeout(() => console.log(this.allCocktails[1]), 1000)
+        //TODO: listener hinzufügen um zu sehen wann daten bereit sind
 
     }
 
