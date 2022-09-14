@@ -192,9 +192,6 @@ nav {
     padding: 7.5px 15px;
     border-radius: 10px;
 
-    overflow-x: hidden;
-    overflow-y: scroll;
-
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
