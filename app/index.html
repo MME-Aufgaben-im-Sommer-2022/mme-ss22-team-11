@@ -4,16 +4,137 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MME: Projekte im SS 2022</title>
+    <title>VerwertBar</title>
     <link rel="stylesheet" href="./resources/css/style.css">
+    <link rel="stylesheet" href="./resources/css/fonts.css">
 </head>
 
 <body>
-    <div class="ui">
-        <h1>MME: Projekte im SS 2022</h1>
-    </div>
+    <header>
+        <img class="logo" src="./resources/css/img/VectorVerwertBarLogo.svg" draggable="false" alt="logo">
+        <nav>
+            <ul class="nav-links">
+                <li><a class="nav-link active" href="#">Rezepte</a></li>
+                <li><a class="nav-link" href="#">Bars</a></li>
+                <li id="profile-link"><a class="nav-link" href="#">Profil</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="filter">
+        <!--TODO: Rename for better understanding of workings (and sustainability aspect)-->
+        <div class="filter-header">
+            <h1>Filter</h1>
+        </div>
+        <div class="divider"></div>
+        <div class="ingredients-section">
+            <h1>Zutaten</h1>
+            <div class="ingredient-input-container">
+                <div class="ingredient-input-header">
+                    <input class="ingredient-input" type="text" placeholder="Search...">
+                    <img class="ingredient-search" src="./resources/css/img/VectorSearch.svg" draggable="false">
+                </div>
+                <div class="ingredient-search-results">
+                    <!--TODO: Make templates-->
+                    <div class="ingredient">
+                        Gin
+                    </div>
+                    <div class="ingredient">
+                        Whiskey
+                    </div>
+                    <div class="ingredient">
+                        Whiskey
+                    </div>
+                    <div class="ingredient">
+                        Gin
+                    </div>
+                </div>
+            </div>
+            <div class="ingredients-container">
+                <!--TODO: Make templates-->
+                
+                <!--Ingredients for testing display-->
+                <div class="ingredient">
+                    Gin
+                </div>
+                <div class="ingredient">
+                    Whiskey
+                </div>
+                <div class="ingredient">
+                    Vodka
+                </div>
+                <div class="ingredient">
+                    Zucker
+                </div>
+                <div class="ingredient">
+                    Zitrone
+                </div>
+                <div class="ingredient">
+                    Limette
+                </div>
+            </div>
+        </div>
+        <div class="divider"></div>
+    </section>
+    <section class="cocktails">
+        <div class="search-bar-container">
+            <div class="search-bar">
+                <input class="search-bar-input" type="text" placeholder="Search...">
+                <img src="./resources/css/img/VectorSearchBig.svg" draggable="false">
+            </div>
+            <div class="search-random">
+                <img src="./resources/css/img/VectorRandom.svg" draggable="false">
+            </div>
+        </div>
+        <div class="cocktail-container">
+
+            <!--Append cocktails here-->
+
+            <!--TODO: Remove cocktails here-->
+            <!--Cocktails here are for testing purposes-->
+            <div class="cocktail">
+                <div class="cocktail-image"></div>
+                <div class="cocktail-text">
+                    <p class="cocktail-name">[Name]</p>
+                    <p class="cocktail-info"><span class="cocktail-tags">[Tags]</span><br><span class="cocktail-ingredients">0 Zutaten</span></p>
+                </div>
+            </div>
+            <div class="cocktail">
+                <div class="cocktail-image"></div>
+                <div class="cocktail-text">
+                    <p class="cocktail-name">[Name]</p>
+                    <p class="cocktail-info"><span class="cocktail-tags">[Tags]</span><br><span class="cocktail-ingredients">0 Zutaten</span></p>
+                </div>
+            </div>
+            <div class="cocktail">
+                <div class="cocktail-image"></div>
+                <div class="cocktail-text">
+                    <p class="cocktail-name">[Name]</p>
+                    <p class="cocktail-info"><span class="cocktail-tags">[Tags]</span><br><span class="cocktail-ingredients">0 Zutaten</span></p>
+                </div>
+            </div>
+            <div class="cocktail">
+                <div class="cocktail-image"></div>
+                <div class="cocktail-text">
+                    <p class="cocktail-name">[Name]</p>
+                    <p class="cocktail-info"><span class="cocktail-tags">[Tags]</span><br><span class="cocktail-ingredients">0 Zutaten</span></p>
+                </div>
+            </div>
+        </div>
+    </section>
 
    <script type="module" src="./src/index.js"></script>
 </body>
+
+<template id="cocktail-list-element-template">
+    <div class="cocktail">
+        <div class="cocktail-image"></div>
+        <div class="cocktail-text">
+            <p class="cocktail-name">[Name]</p>
+            <!--Display avg rating?-->
+            <p class="cocktail-info"><span class="cocktail-tags">[Tags]</span><br><span class="cocktail-ingredients">0 Zutaten</span></p>
+        </div>
+    </div>
+</template>
 
 </html>
