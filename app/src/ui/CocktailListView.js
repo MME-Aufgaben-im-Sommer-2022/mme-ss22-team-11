@@ -27,8 +27,6 @@ class CocktailListView extends Observable {
 
     fillHtml() {
 
-        console.log(this.el);
-
         this.el.querySelector(".cocktail-image").style.background = `url(${this.cocktail.image}) center`;
         this.el.querySelector(".cocktail-image").style.backgroundSize = "cover";
 

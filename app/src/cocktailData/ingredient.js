@@ -14,12 +14,12 @@ class Ingredient {
 
 }
 
-class customIngredientMaker {
+class CustomIngredientMaker {
 
     constructor() { }
 
     makeCustomIngredient(name, alcoholic) {
-        let ingredient = Ingredient(name, name, alcoholic);
+        let ingredient = new Ingredient(name, name, alcoholic);
         ingredient.isCustomIngredient = true;
         return ingredient;
     }
@@ -81,4 +81,4 @@ class IngredientList {
 
 }
 
-export { Ingredient, IngredientList };
+export { Ingredient, IngredientList, CustomIngredientMaker };

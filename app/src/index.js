@@ -7,7 +7,9 @@ let cocktailListManager = new CocktailListManager();
 let listView = new ListView();
 
 let showCocktails = () => {
-    console.log(cocktailListManager.displayList);
+    // let ingredientList = [];
+    // ingredientList.push("Rum (weiß)");
+    // cocktailListManager.getCocktailsWithIngredients(ingredientList);
     listView.refreshCocktails(cocktailListManager.displayList);
 }
 

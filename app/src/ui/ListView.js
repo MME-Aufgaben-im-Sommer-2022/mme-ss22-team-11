@@ -15,8 +15,6 @@ class ListView extends Observable {
         cocktailListView.fillHtml();
         cocktailListView.appendTo(document.querySelector(".cocktail-container"));
 
-        console.log(cocktailListView);
-
         cocktailListViews.push(cocktailListView);
     }
 

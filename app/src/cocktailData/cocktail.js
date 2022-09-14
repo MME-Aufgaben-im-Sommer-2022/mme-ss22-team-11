@@ -35,24 +35,51 @@ class Cocktail {
     }
 
     // nur displaynames werden berücksichtigt
-    checkIfCocktailHasIngredients(ingredients, withDeco) {
+    checkIfCocktailHasOnlyTheseIngredients(ingredients, withDeco) {
 
         //TODO: Eiswürfel ignorieren? (vielleicht mit checkbox)
         let bool = true;
 
         this.recipe.mainIngredients.forEach(component => {
-            if (component.ingredient.displayName.indexOf(ingredients) == -1 && component.ingredient.displayName != "Eiswürfel") {
+
+            if (ingredients.indexOf(component.ingredient.displayName) == -1 && component.ingredient.displayName != "Eiswürfel" && component.ingredient.displayName != "Crushed Ice") {
                 bool = false;
             }
         })
 
         if (withDeco) {
             this.recipe.decoIngredients.forEach(component => {
-                if (component.ingredient.displayName.indexOf(ingredients) == -1) {
+                if (ingredients.indexOf(component.ingredient.displayName) == -1) {
                     bool = false;
                 }
             })
         }
+
+        return bool;
+
+    }
+
+    // Hat der Cocktail mindestens die angegebenen Zutaten?
+    checkIfCocktailHasIngredients(ingredients, withDeco) {
+
+        let bool = true;
+        let lst = [];
+
+        this.recipe.mainIngredients.forEach(component => {
+            lst.push(component.ingredient.displayName);
+        });
+
+        if (withDeco) {
+            this.recipe.decoIngredients.forEach(component => {
+                lst.push(component.ingredient.displayName);
+            });
+        }
+
+        ingredients.forEach(ingredient => {
+            if (lst.indexOf(ingredient) == -1) {
+                bool = false;
+            }
+        })
 
         return bool;
 

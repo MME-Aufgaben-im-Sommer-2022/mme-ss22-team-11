@@ -1,6 +1,6 @@
 import { Cocktail } from "./cocktail.js";
 import { Component, Recipe } from "./recipe.js"
-import { Ingredient, IngredientList } from "./ingredient.js"
+import { Ingredient, IngredientList, CustomIngredientMaker } from "./ingredient.js"
 import { Observable, Event } from "../utils/Observable.js"
 
 class CocktailListManager extends Observable {
@@ -83,7 +83,7 @@ class CocktailListManager extends Observable {
 
         let bannedIds = this.checkIngredientBanList(bannedIngredients);
         let returnList = [];
-        this.allCocktails.forEach(cocktail => {
+        this.displayList.forEach(cocktail => {
             if (bannedIds.indexOf(cocktail.id) == -1) {
                 returnList.push(cocktail);
             }
@@ -92,12 +92,27 @@ class CocktailListManager extends Observable {
 
     }
 
+    // Zum Reste verwerten: nur cocktails mit ausschließlich den gewünschten Zutaten werden angezeigt
     getCocktailsFromIngredients(ingredients, withDeco) {
 
-        returnList = [];
+        let returnList = [];
+        this.allCocktails.forEach(cocktail => {
+            if (cocktail.checkIfCocktailHasOnlyTheseIngredients(ingredients, withDeco)) {
+                returnList.push(cocktail)
+            }
+        })
+        this.updateDisplayList(returnList);
+
+    }
+
+    // Alle Cocktails die mindestens alle angegebenen Zutaten benötigen
+    getCocktailsWithIngredients(ingredients, withDeco) {
+
+        let returnList = [];
         this.allCocktails.forEach(cocktail => {
             if (cocktail.checkIfCocktailHasIngredients(ingredients, withDeco)) {
-                returnList.push(cocktail)
+                console.log("Hä")
+                returnList.push(cocktail);
             }
         })
         this.updateDisplayList(returnList);
