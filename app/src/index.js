@@ -1,3 +1,8 @@
+
+/*
+    TODO: Put elsewhere (functions for the html css workings (e.g. animate ingredient-search))
+*/
+
 const NAV_LINKS = document.getElementsByClassName("nav-link");
 const INGREDIENT_CONTAINER = document.getElementsByClassName("ingredients-container")[0];
 const FILTER_CANCEL = document.getElementById("cancel-filter");
@@ -5,7 +10,7 @@ const FILTER_SECTION = document.getElementById("filter");
 const FILTER_ING_INPUT_CONTAINER = document.getElementsByClassName("ingredient-input-container")[0];
 const FILTER_ING_INPUT = document.getElementsByClassName("ingredient-input")[0];
 const FILTER_ING_RESULTS = document.getElementsByClassName("ingredient-search-results")[0]
-const RECIPES = document.getElementsByClassName("recipe");
+const RECIPES = document.getElementsByClassName("cocktail");
 
 for (let item of NAV_LINKS) {
     item.addEventListener("click", (event) => {
@@ -43,6 +48,9 @@ for (let item of FILTER_ING_RESULTS.children) {
     })
 }
 
+/*
+    TODO: Delete (this is only for testing purposes)
+*/
 
 class Recipe {
 
@@ -54,11 +62,11 @@ class Recipe {
     }
 
     createRecipeEntry(recipeEl) {
-        recipeEl.getElementsByClassName("recipe-image")[0].style.background = `url(${this.image}) center`;
-        recipeEl.getElementsByClassName("recipe-image")[0].style.backgroundSize = "cover";
-        recipeEl.getElementsByClassName("recipe-name")[0].textContent = this.name;
-        recipeEl.getElementsByClassName("recipe-tags")[0].textContent = `${this.tags.join(", ")}`;
-        recipeEl.getElementsByClassName("recipe-ingredients")[0].textContent = `${this.ingredients.splice(0, 2).join(", ")}, ..`;
+        recipeEl.getElementsByClassName("cocktail-image")[0].style.background = `url(${this.image}) center`;
+        recipeEl.getElementsByClassName("cocktail-image")[0].style.backgroundSize = "cover";
+        recipeEl.getElementsByClassName("cocktail-name")[0].textContent = this.name;
+        recipeEl.getElementsByClassName("cocktail-tags")[0].textContent = `${this.tags.join(", ")}`;
+        recipeEl.getElementsByClassName("cocktail-ingredients")[0].textContent = `${this.ingredients.splice(0, 2).join(", ")}, ..`;
     }
 }
 

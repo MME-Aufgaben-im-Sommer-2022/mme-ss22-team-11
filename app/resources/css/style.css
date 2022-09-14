@@ -310,10 +310,10 @@ nav {
 }
 
 /*
-    Recipes Section
+    cocktails Section
 */
 
-.recipes {
+.cocktails {
     position: absolute;
     z-index: 0;
     right: 0;
@@ -397,7 +397,7 @@ nav {
     background: none;
 }
 
-.recipe-container {
+.cocktail-container {
     width: 100%;
     height: calc(100% - 110px);
     position: relative;
@@ -416,7 +416,7 @@ nav {
     gap: 50px;
 }
 
-.recipe {
+.cocktail {
     width: 45%;
     min-width: 450px;
     height: 150px;
@@ -436,20 +436,20 @@ nav {
     transition: all 250ms ease-in-out;
 }
 
-.recipe:hover {
+.cocktail:hover {
     box-shadow: 0px 0px 50px 15px rgba(132,120,169,0.25);
     background: var(--accent-lighter);
 
 }
 
-.recipe-image {
+.cocktail-image {
     height: 100px;
     width: 100px;
     background: rgba(132,120,169,0.25);
     border-radius: 100%;
 }
 
-.recipe-text {
+.cocktail-text {
     background: none;
     height: 90%;
     width: 60%;
@@ -462,17 +462,17 @@ nav {
     align-items: flex-start;
 }
 
-.recipe-name {
+.cocktail-name {
     background: none;
     font-size: 2rem;
     font-weight: 700;
 }
 
-.recipe-info {
+.cocktail-info {
     background: none;
     font-size: 1.1rem;
 }
 
-.recipe-info span {
+.cocktail-info span {
     background: none;
 }
