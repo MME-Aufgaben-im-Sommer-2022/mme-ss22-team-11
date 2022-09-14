@@ -1,5 +1,3 @@
-function init() {
-    console.log("### Starting MME Project ###"); // eslint-disable-line no-console
-}
+import HtmlManipulator from "./ui/HtmlManipulator.js";
 
-init();
+let htmlManipulator = new HtmlManipulator;
