@@ -1,17 +1,21 @@
 import { Cocktail } from "./cocktail.js";
 import { Component, Recipe } from "./recipe.js"
 import { Ingredient, IngredientList } from "./ingredient.js"
+import { Observable, Event } from "../utils/Observable.js"
 
-class CocktailListManager {
+class CocktailListManager extends Observable {
 
     constructor() {
+
+        super();
+
         //TODO: aus Datenbank/API laden
         this.allCocktails = [];
         this.ingredientList = new IngredientList();
 
-        this.getIngredientData();
+        this.getIngredientAndCocktailData();
 
-        setTimeout(() => this.getCocktailsFromJson(), 100);
+        // setTimeout(() => this.getCocktailsFromJson(), 100);
 
         // Diese Liste soll immer angezeigt werden
         this.displayList = this.allCocktails;
@@ -20,7 +24,7 @@ class CocktailListManager {
 
     }
 
-    getIngredientData() {
+    getIngredientAndCocktailData() {
         fetch('./src/cocktailData/JSON/ingredients.json')
             .then((response) => response.json())
             .then((json) => {
@@ -32,6 +36,9 @@ class CocktailListManager {
                     this.ingredientList.addIngredient(new Ingredient(i, data.display_name, alcoholic));
 
                 }
+
+                this.getCocktailsFromJson();
+
             });
     }
 
@@ -44,11 +51,11 @@ class CocktailListManager {
 
     }
 
-    addCocktailFromJSON(id, name, recipe, image, category, tags, description, steps, author) {
+    addCocktailFromJSON(id, name, recipe, image, category, description, steps, author) {
 
         //TODO: letzte id aus Datenbank auslesen, dann: let id = UUID
 
-        let newCocktail = new Cocktail(id, name, recipe, image, undefined, 0, [], category, tags, description, steps, author);
+        let newCocktail = new Cocktail(id, name, recipe, image, undefined, 0, [], category, [], description, steps, author);
         this.allCocktails.push(newCocktail);
         //TODO: Datenbank updaten
 
@@ -56,7 +63,7 @@ class CocktailListManager {
 
     updateDisplayList(returnList) {
         this.displayList = returnList;
-        //TODO: listener notifies ListView
+        this.notifyAll("DATA_UPDATED");
     }
 
     searchCocktailByName(query) {
@@ -68,7 +75,7 @@ class CocktailListManager {
                 returnList.push(cocktail);
             }
         });
-        this.updateDisplayList(returnList);;
+        this.updateDisplayList(returnList);
 
     }
 
@@ -135,6 +142,12 @@ class CocktailListManager {
 
                     this.addCocktailFromJSON(i, data.name, recipe, data.img, data.category, data.tags, data.description, data.steps, data.author);
                 }
+
+                //TODO: get Data from db (notify after that)
+
+                //TODO: notify data ready
+                this.notifyAll(new Event("DATA_READY"))
+
             });
     }
 

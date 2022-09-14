@@ -62,6 +62,20 @@ class Cocktail {
         this.comments.push(comment);
     }
 
+    getAllDisplayNames() {
+        let displayNames = [];
+
+        this.recipe.mainIngredients.forEach(component => {
+            // wenn gleicher displayname öfter im rezept ist
+            if (displayNames.indexOf(component.ingredient.displayName) == -1) {
+                displayNames.push(component.ingredient.displayName);
+            }
+        })
+
+        return displayNames;
+
+    }
+
 }
 
 export { Cocktail };

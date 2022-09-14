@@ -1,18 +1,21 @@
-import CocktailListView from "./CocktailListView";
+import CocktailListView from "./CocktailListView.js";
 import { Observable, Event } from "../utils/Observable.js";
 
 const cocktailListViews = [];
 
 class ListView extends Observable {
 
-    constructor () {
+    constructor() {
         super();
     }
 
     add(cocktail) {
+
         let cocktailListView = new CocktailListView(cocktail);
         cocktailListView.fillHtml();
-        cocktailListView.appendTo(document.querySelector(".cocktail-container"))
+        cocktailListView.appendTo(document.querySelector(".cocktail-container"));
+
+        console.log(cocktailListView);
 
         cocktailListViews.push(cocktailListView);
     }
@@ -22,7 +25,14 @@ class ListView extends Observable {
         cocktailListViews.splice(0, cocktailListViews.length)
     }
 
-    //addAll and refresh?
+    addAllCocktails(cocktails) {
+        cocktails.forEach(cocktail => this.add(cocktail));
+    }
+
+    refreshCocktails(cocktails) {
+        this.removeAllCocktails();
+        this.addAllCocktails(cocktails);
+    }
 }
 
-export default ListView;
+export { ListView };

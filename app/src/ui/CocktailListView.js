@@ -26,12 +26,19 @@ class CocktailListView extends Observable {
     }
 
     fillHtml() {
-        this.el.querySelector("recipe-image").style.background = `url(${this.cocktail.image}) center`;
-        this.el.querySelector("recipe-image").style.backgroundSize = "cover";
 
-        this.el.querySelector("recipe-name").textContent = this.cocktail.name;
-        this.el.querySelector("recipe-tags").textContent = `${this.cocktail.tags.join(", ")}`;
-        this.el.querySelector("recipe-ingredients").textContent = getIngredientsForList(this.cocktail.ingredients);
+        console.log(this.el);
+
+        this.el.querySelector(".cocktail-image").style.background = `url(${this.cocktail.image}) center`;
+        this.el.querySelector(".cocktail-image").style.backgroundSize = "cover";
+
+        this.el.querySelector(".cocktail-name").textContent = this.cocktail.name;
+        this.el.querySelector(".cocktail-tags").textContent = `${this.cocktail.tags.join(", ")}`;
+
+        let displayNames = this.cocktail.getAllDisplayNames();
+
+
+        this.el.querySelector(".cocktail-ingredients").textContent = getIngredientsForList(displayNames);
     }
 
     appendTo(parent) {
