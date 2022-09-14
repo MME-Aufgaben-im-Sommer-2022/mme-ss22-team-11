@@ -5,10 +5,23 @@ class Ingredient {
         this.displayName = displayName;
         this.alcoholic = alcoholic;
         this.replacements = [];
+        this.isCustomIngredient = false;
     }
 
     setReplacements(replacements) {
         this.replacements = replacements;
+    }
+
+}
+
+class customIngredientMaker {
+
+    constructor() { }
+
+    makeCustomIngredient(name, alcoholic) {
+        let ingredient = Ingredient(name, name, alcoholic);
+        ingredient.isCustomIngredient = true;
+        return ingredient;
     }
 
 }

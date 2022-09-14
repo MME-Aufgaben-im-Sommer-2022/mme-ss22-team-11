@@ -1,6 +1,6 @@
 class Cocktail {
 
-    constructor(id, name, recipe, image, rating, comments, category, tags, description, steps, author) {
+    constructor(id, name, recipe, image, rating, numRatings, comments, category, tags, description, steps, author) {
         this.id = id;
         this.name = name;
         this.recipe = recipe;
@@ -41,14 +41,14 @@ class Cocktail {
         let bool = true;
 
         this.recipe.mainIngredients.forEach(component => {
-            if (ingredients.indexOf(component.ingredient.displayName) == -1) {
+            if (component.ingredient.displayName.indexOf(ingredients) == -1 && component.ingredient.displayName != "Eiswürfel") {
                 bool = false;
             }
         })
 
         if (withDeco) {
             this.recipe.decoIngredients.forEach(component => {
-                if (ingredients.indexOf(component.ingredient.displayName) == -1) {
+                if (component.ingredient.displayName.indexOf(ingredients) == -1) {
                     bool = false;
                 }
             })
@@ -56,6 +56,10 @@ class Cocktail {
 
         return bool;
 
+    }
+
+    addComment(comment) {
+        this.comments.push(comment);
     }
 
 }

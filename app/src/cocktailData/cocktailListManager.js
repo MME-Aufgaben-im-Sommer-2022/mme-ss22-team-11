@@ -33,8 +33,6 @@ class CocktailListManager {
                     this.ingredientList.addIngredient(new Ingredient(i, data.display_name, alcoholic));
 
                 }
-
-                console.log(this.ingredientList.list);
             });
     }
 
@@ -49,12 +47,17 @@ class CocktailListManager {
 
     addCocktailFromJSON(id, name, recipe, image, category, tags, description, steps, author) {
 
-        //TODO: letzte id aus Datenbank auslesen, dann: let id = letzte id + 1 (wenn id nicht angegeben)
+        //TODO: letzte id aus Datenbank auslesen, dann: let id = UUID
 
-        let newCocktail = new Cocktail(id, name, recipe, image, undefined, [], category, tags, description, steps, author);
+        let newCocktail = new Cocktail(id, name, recipe, image, undefined, 0, [], category, tags, description, steps, author);
         this.allCocktails.push(newCocktail);
         //TODO: Datenbank updaten
 
+    }
+
+    updateDisplayList(returnList) {
+        this.displayList = returnList;
+        //TODO: listener notifies ListView
     }
 
     searchCocktailByName(query) {
@@ -66,7 +69,7 @@ class CocktailListManager {
                 returnList.push(cocktail);
             }
         });
-        this.displayList = returnList;;
+        this.updateDisplayList(returnList);;
 
     }
 
@@ -79,7 +82,7 @@ class CocktailListManager {
                 returnList.push(cocktail);
             }
         })
-        this.displayList = returnList;;
+        this.updateDisplayList(returnList);
 
     }
 
@@ -91,7 +94,7 @@ class CocktailListManager {
                 returnList.push(cocktail)
             }
         })
-        this.displayList = returnList;;
+        this.updateDisplayList(returnList);
 
     }
 
