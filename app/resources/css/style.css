@@ -34,7 +34,7 @@ header {
     padding: 50px 10%;
     background: var(--secondary);
     height: 150px;
-    position: relative;
+    position: fixed;
     z-index: 2;
     box-shadow: 0px 0px 50px 13px rgba(132,120,169,0.25);
 }
@@ -115,12 +115,13 @@ nav {
 }
 
 #filter {
-    position: relative;
+    position: fixed;
     background-color: var(--primary-darker);
     width: 22.5vw;
     height: calc(100vh - 150px);
     z-index: 1;
     box-shadow: 0px 0px 50px 13px rgba(132,120,169,0.25);
+    top: 150px;
 
     overflow-x: hidden;
     overflow-y: scroll;
