@@ -269,7 +269,8 @@ nav {
     justify-content: flex-start;
     align-items: center;
     gap: 10px;
-    overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 
 .ingredient-search-results .ingredient {
@@ -400,7 +401,8 @@ nav {
 
 .cocktail-container {
     width: 100%;
-    height: calc(100% - 110px);
+    /*height: calc(100% - 110px);*/
+    height: fit-content;
     position: relative;
     top: 50px;
     left: 0;
