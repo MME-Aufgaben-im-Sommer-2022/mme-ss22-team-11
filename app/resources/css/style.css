@@ -330,7 +330,7 @@ nav {
     position: relative;
 
     top: 30px;
-    left: 50px;
+    left: calc(2.5% + 25px);
     
     background: none;
 
