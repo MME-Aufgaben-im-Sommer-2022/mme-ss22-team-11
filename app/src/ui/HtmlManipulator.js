@@ -1,11 +1,9 @@
 const NAV_LINKS = document.getElementsByClassName("nav-link");
 const INGREDIENT_CONTAINER = document.getElementsByClassName("ingredients-container")[0];
-const FILTER_CANCEL = document.getElementById("cancel-filter");
 const FILTER_SECTION = document.getElementById("filter");
 const FILTER_ING_INPUT_CONTAINER = document.getElementsByClassName("ingredient-input-container")[0];
 const FILTER_ING_INPUT = document.getElementsByClassName("ingredient-input")[0];
 const FILTER_ING_RESULTS = document.getElementsByClassName("ingredient-search-results")[0]
-const RECIPES = document.getElementsByClassName("cocktail");
 
 class HtmlManipulator {
 
@@ -23,13 +21,19 @@ class HtmlManipulator {
         
         FILTER_ING_INPUT_CONTAINER.addEventListener("click", (event) => {
             if(FILTER_ING_RESULTS.childElementCount != 0) {
-                FILTER_ING_INPUT_CONTAINER.classList.add("focused");
+                FILTER_ING_INPUT_CONTAINER.classList.add("extend");
+            } else {
+                FILTER_ING_INPUT_CONTAINER.classList.add("focus");
             }
         })
         
         document.addEventListener("click", (event) => {
             if (!FILTER_ING_INPUT_CONTAINER.contains(event.target) && event.target.className != "ingredient") {
-                FILTER_ING_INPUT_CONTAINER.classList.remove("focused");
+                if(FILTER_ING_INPUT_CONTAINER.classList.contains("focus")) {
+                    FILTER_ING_INPUT_CONTAINER.classList.remove("focus");
+                } else if (FILTER_ING_INPUT_CONTAINER.classList.contains("extend")) {
+                    FILTER_ING_INPUT_CONTAINER.classList.remove("extend");
+                }
             }
         })
         
@@ -48,4 +52,4 @@ class HtmlManipulator {
     }
 }
 
-export default HtmlManipulator;
+export { HtmlManipulator };

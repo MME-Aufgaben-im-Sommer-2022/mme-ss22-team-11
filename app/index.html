@@ -35,43 +35,15 @@
                     <img class="ingredient-search" src="./resources/css/img/VectorSearch.svg" draggable="false">
                 </div>
                 <div class="ingredient-search-results">
-                    <!--TODO: Make templates-->
-                    <div class="ingredient">
-                        Gin
-                    </div>
-                    <div class="ingredient">
-                        Whiskey
-                    </div>
-                    <div class="ingredient">
-                        Whiskey
-                    </div>
-                    <div class="ingredient">
-                        Gin
-                    </div>
+
+                    <!--Append search ingredients here-->
+
                 </div>
             </div>
             <div class="ingredients-container">
-                <!--TODO: Make templates-->
-                
-                <!--Ingredients for testing display-->
-                <div class="ingredient">
-                    Gin
-                </div>
-                <div class="ingredient">
-                    Whiskey
-                </div>
-                <div class="ingredient">
-                    Vodka
-                </div>
-                <div class="ingredient">
-                    Zucker
-                </div>
-                <div class="ingredient">
-                    Zitrone
-                </div>
-                <div class="ingredient">
-                    Limette
-                </div>
+
+                <!--Append selected ingredients here-->
+
             </div>
         </div>
         <div class="divider"></div>
@@ -97,14 +69,48 @@
 </body>
 
 <template id="cocktail-list-element-template">
-    <div class="cocktail">
-        <div class="cocktail-image"></div>
-        <div class="cocktail-text">
-            <p class="cocktail-name">[Name]</p>
-            <!--Display avg rating?-->
-            <p class="cocktail-info"><span class="cocktail-tags">[Tags]</span><br><span class="cocktail-ingredients">0 Zutaten</span></p>
-        </div>
+    <a class="cocktail">
+            <div class="cocktail-image"></div>
+            <div class="cocktail-text">
+                <p class="cocktail-name">[Name]</p>
+                <!--Display avg rating?-->
+                <p class="cocktail-info"><span class="cocktail-tags">[Tags]</span><br><span class="cocktail-ingredients">0 Zutaten</span></p>
+            </div>
+    </a>
+</template>
+
+<template id="ingredient-element-template">
+    <div class="ingredient">
+        Zutat
     </div>
+</template>
+
+<template id="cocktail-section-element-template">
+    <section class="cocktail-section">
+
+        <div class="cocktail-header">
+            <div class="cocktail-image"></div>
+            <div class="cocktail-info"><span class="tags">TAGS, TAGS, TAGS, TAGS</span><span class="name">NAME</span></div>
+            <img class="cocktail-back" src="./resources/css/img/VectorBack.svg" draggable="false">
+        </div>
+
+        <div class="ing-ins-container">
+            <div class="ingredients-container">
+                <h1>Zutaten</h1>
+                <ul class="ingredients">
+                    <!--Append ingredients here-->
+                </ul>
+            </div>
+            <div class="divider"></div>
+            <div class="instructions-container">
+                <h1>Zubereitung</h1>
+                <ol class="instructions">
+                    <!--Append instruction steps here-->
+                </ol>
+            </div>
+        </div>
+
+    </section>
 </template>
 
 </html>

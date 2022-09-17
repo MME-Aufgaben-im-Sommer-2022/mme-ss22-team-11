@@ -23,10 +23,11 @@ class CocktailListView extends Observable {
         
         this.cocktail = cocktail;
         this.el = createCocktailElementForView();
+
+        this.el.addEventListener("click", (event) => this.notifyAll(new Event("COCKTAIL CLICKED", this.cocktail)))
     }
 
     fillHtml() {
-
         this.el.querySelector(".cocktail-image").style.background = `url(${this.cocktail.image}) center`;
         this.el.querySelector(".cocktail-image").style.backgroundSize = "cover";
 

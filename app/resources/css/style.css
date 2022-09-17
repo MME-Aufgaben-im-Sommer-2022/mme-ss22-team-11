@@ -100,6 +100,7 @@ nav {
 #profile-link {
     flex-grow: 3;
     float: right;
+    margin-right: 50px;
 }
 
 /*
@@ -250,8 +251,12 @@ nav {
     cursor: pointer;
 }
 
-.ingredients-section .ingredient-input-container.focused {
+.ingredients-section .ingredient-input-container.extend {
     height: 25vh;
+    border-color: var(--accent);
+}
+
+.ingredients-section .ingredient-input-container.focus {
     border-color: var(--accent);
 }
 
@@ -478,4 +483,123 @@ nav {
 
 .cocktail-info span {
     background: none;
+}
+
+
+/*
+    Cocktail section
+*/
+
+.cocktail-section {
+    width: 65vw;
+    position: relative;
+    top: 150px;
+    margin: 0 auto;
+    padding-top: 50px;
+    
+    background: none;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 30px;
+}
+
+.cocktail-section .cocktail-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    height: fit-content;
+    gap: 25px;
+
+    background: none;
+}
+
+.cocktail-section .cocktail-image {
+    background: #151515;
+    width: 200px;
+    height: 200px;
+    border-radius: 50px;
+}
+
+.cocktail-section .cocktail-info {
+    width: calc(100% - 250px - 50px - 50px);
+    height: 100%;
+    background: none;
+    font-family: 'Josefin';
+    color: var(--black);
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.cocktail-section .cocktail-info .tags {
+    font-size: 1.25rem;
+    background: none;
+}
+
+.cocktail-section .cocktail-info .name {
+    font-size: 3.5rem;
+    font-weight: 700;
+    background: none;
+}
+
+.cocktail-section .cocktail-back {
+    background: none;
+    height: 50px;
+    cursor: pointer;
+}
+
+
+.cocktail-section .ing-ins-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-start;
+    padding: 25px 0;
+    width: 100%;
+    height: fit-content;
+    font-family: 'Josefin';
+
+    background: none;
+}
+
+.cocktail-section .ingredients-container {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.cocktail-section h1 {
+    font-size: 2.5rem;
+}
+
+.cocktail-section .ingredients {
+    margin-left: 50px;
+}
+
+.cocktail-section .ing-ins-container .divider {
+    width: 5px;
+    height: 175px;
+    background: var(--black);
+    align-self: center;
+}
+
+.cocktail-section .instructions-container {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.cocktail-section .instructions {
+    margin-left: 50px;
+    list-style: decimal;
 }

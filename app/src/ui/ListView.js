@@ -10,12 +10,13 @@ class ListView extends Observable {
     }
 
     add(cocktail) {
-
         let cocktailListView = new CocktailListView(cocktail);
         cocktailListView.fillHtml();
         cocktailListView.appendTo(document.querySelector(".cocktail-container"));
 
         cocktailListViews.push(cocktailListView);
+
+        cocktailListView.addEventListener("COCKTAIL CLICKED", (event) => this.notifyAll(new Event("COCKTAIL CLICKED", event.data)));
     }
 
     removeAllCocktails() {
