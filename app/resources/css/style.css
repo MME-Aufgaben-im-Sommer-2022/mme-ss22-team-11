@@ -135,6 +135,9 @@ nav {
     justify-content: flex-start;
     gap: 3vh;
     padding: 50px 25px;
+
+
+
 }
 
 .filter-header {
@@ -328,6 +331,9 @@ nav {
     width: 77.5vw;
     height: calc(100% - 150px);
     background: var(--primary);
+
+
+
 }
 
 .search-bar-container {
@@ -602,4 +608,128 @@ nav {
 .cocktail-section .instructions {
     margin-left: 50px;
     list-style: decimal;
+}
+
+/*
+    Login Section
+*/
+
+.login-section {
+    width: 100%;
+    height: calc(100vh - 150px);
+    position: fixed;
+    top: 150px;
+    z-index: 2;
+
+    background: none;
+    backdrop-filter: blur(3px) saturate(100%) brightness(95%);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container {
+    width: 50%;
+    min-width: 800px;
+    height: 90%;
+    background: var(--primary);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 25px;
+    border-radius: 25px;
+
+    box-shadow: 0px 0px 40px 13px rgba(132,120,169,0.25);
+}
+
+.login-icon {
+    width: 100px;
+    height: auto;
+}
+
+.login-field {
+    width: 75%;
+    height: 15%;
+    background: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+
+    font-family: 'Josefin';
+    color: var(--black);
+}
+
+.login-field p {
+    margin-left: 9%;
+    background: none;
+    font-size: 1.5rem;
+}
+
+.login-field input {
+    width: 90%;
+    height: 70%;
+    min-height: 50px;
+    align-self: center;
+    padding-left: 15px;
+    background: none;
+    border: 4px var(--black) solid;
+    border-radius: 100px;
+    font-family: 'Inter';
+    font-size: 1.5rem;
+    font-weight: 200;
+    color: var(--accent);
+
+    transition: all 150ms ease-in-out;
+}
+
+.login-field input:focus {
+    outline: none;
+    border: 4px var(--accent) solid;
+}
+
+.login-field input::placeholder {
+    color: var(--secondary);
+}
+
+.signup-button {
+    width: 125px;
+    height: 50px;
+    font-family: 'Josefin';
+    font-size: 1.25rem;
+    color: var(--primary);
+    border-radius: 25px;
+    background: var(--accent);
+    border: none;
+    cursor: pointer;
+
+    transition: all 150ms ease-in-out;
+}
+
+.signup-button:hover {
+    color: var(--accent);
+    background: none;
+    border: 5px solid var(--accent);
+}
+
+.login-question {
+    color: var(--black);
+    font-family: 'Josefin';
+    font-size: 1.25rem;
+    background: none;
+}
+
+.login-span {
+    background: none;
+    color: var(--black);
+    text-decoration: underline;
+    cursor: pointer;
+
+    transition: all 150ms ease-in-out;
+}
+
+.login-span:hover {
+    color: var(--accent);
 }
