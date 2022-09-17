@@ -63,15 +63,16 @@ class CocktailListManager extends Observable {
 
     updateDisplayList(returnList) {
         this.displayList = returnList;
-        this.notifyAll("DATA_UPDATED");
+        this.notifyAll(new Event("DATA_UPDATED"));
     }
 
     searchCocktailByName(query) {
-
         let returnList = [];
         this.allCocktails.forEach(cocktail => {
-
-            if (cocktail.name.startsWith(query)) {
+            // make cocktail name & query lowercase for comparing
+            let name = cocktail.name.toLowerCase()
+            query = query.toLowerCase();
+            if (name.startsWith(query)) {
                 returnList.push(cocktail);
             }
         });
