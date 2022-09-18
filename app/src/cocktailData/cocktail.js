@@ -76,7 +76,7 @@ class Cocktail {
         }
 
         ingredients.forEach(ingredient => {
-            if (lst.indexOf(ingredient) == -1) {
+            if (lst.indexOf(ingredient.ingredient) == -1) {
                 bool = false;
             }
         })

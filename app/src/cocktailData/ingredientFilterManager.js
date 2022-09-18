@@ -7,10 +7,11 @@ class IngredientFilterManager extends Observable {
         super();
 
         this.ingredientList = new IngredientList();
+        
 
         this.getIngredientData();
 
-        this.displayList = []
+        this.displayList = this.ingredientList.displayNames;
     }
 
     // fetch ingredients from JSON
@@ -24,11 +25,10 @@ class IngredientFilterManager extends Observable {
                     let data = json[i];
                     let alcoholic = data.alcoholic == 1;
                     this.ingredientList.addIngredient(new Ingredient(i, data.display_name, alcoholic));
-                    this.ingredientList.addIngredientDisplay(data.display_name)
-
+                    if (!this.ingredientList.displayNames.includes(data.display_name)) {
+                        this.ingredientList.addIngredientDisplay(data.display_name)
+                    }
                 }
-
-                this.displayList = this.getIngredientDisplayNames();
 
                 this.notifyAll(new Event("INGREDIENT_DATA_READY"))
             });
@@ -37,7 +37,7 @@ class IngredientFilterManager extends Observable {
     getIngredientDisplayNames() {
         let returnList = [];
         this.ingredientList.displayNames.forEach(ingredient => {
-            returnList.push(ingredient)
+            returnList.push(ingredient);
         });
 
         return returnList;

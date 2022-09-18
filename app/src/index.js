@@ -12,9 +12,6 @@ let listView = new ListView();
 let ingredientListView = new IngredientListView();
 
 let showCocktails = () => {
-    // let ingredientList = [];
-    // ingredientList.push("Rum (weiß)");
-    // cocktailListManager.getCocktailsWithIngredients(ingredientList);
     listView.refreshCocktails(cocktailListManager.displayList);
 }
 
@@ -27,16 +24,14 @@ cocktailListManager.addEventListener("DATA_UPDATED", (event) => showCocktails())
 // Ingredient Filter
 ingredientFilterManager.addEventListener("INGREDIENT_DATA_READY", (event) => showIngredients());
 ingredientFilterManager.addEventListener("INGREDIENT_DATA_UPDATED", (event) => showIngredients());
-/* TODO: 
-ingredientFilterManager.addEventListener("INGREDIENT_SELECTED", (event) => showCocktailsFiltered())
 
-let showCocktailsFiltered = () => {
+ingredientListView.addEventListener("INGREDIENT_SELECTED", (event) => filterCocktails())
+ingredientListView.addEventListener("INGREDIENT_UNSELECTED", (event) => filterCocktails())
+
+let filterCocktails = () => {
     let selected = ingredientListView.getAllSelected();
-    console.log(selected)
     cocktailListManager.getCocktailsWithIngredients(selected, false);
-    listView.refreshCocktails(cocktailListManager.displayList);
 }
-*/
 
 let showIngredients = () => {
     ingredientListView.refreshSearchResults(ingredientFilterManager.displayList);
@@ -70,7 +65,6 @@ searchInputIngredient.addEventListener('keyup', function() {
     clearTimeout(timeout);
     timeout = setTimeout(() => {
         ingredientFilterManager.searchIngredientByName(searchInputIngredient.value)
-        console.log(searchInputIngredient.value)
     }, responseDelay);
     
 })

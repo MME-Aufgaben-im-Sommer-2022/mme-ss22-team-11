@@ -112,7 +112,6 @@ class CocktailListManager extends Observable {
         let returnList = [];
         this.allCocktails.forEach(cocktail => {
             if (cocktail.checkIfCocktailHasIngredients(ingredients, withDeco)) {
-                console.log("Hä")
                 returnList.push(cocktail);
             }
         })
