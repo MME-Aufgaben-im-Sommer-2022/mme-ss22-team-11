@@ -1,0 +1,164 @@
+:root {
+    --primary: #F7F2F4;
+    --primary-darker: #E8E3E5;
+    --secondary: #D1C5F4;
+    --accent: #9672FF;
+    --accent-lighter: #B49CFA;
+    --black: #151515;
+
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    background-color: var(--primary);
+}
+
+/*
+    Top NavBar
+*/
+
+li, a {
+    font-family: 'Josefin';
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--black);
+    text-decoration: none;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 50px 10%;
+    background: var(--secondary);
+    height: 150px;
+    position: fixed;
+    z-index: 2;
+    box-shadow: 0px 0px 50px 13px rgba(132,120,169,0.25);
+}
+
+.logo {
+    background: none;
+    width: 200px;
+    height: auto;
+}
+
+nav {
+    background: none;
+    width: 75vw;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    background: none;
+}
+
+.nav-links li {
+    background: none;
+    flex-grow: 1;
+    text-align: end;
+}
+
+.nav-links li a {
+    background: none;
+    text-decoration: none;
+    padding-bottom: 0.25rem;
+    position: relative;
+    transition: all 150ms ease-in-out;
+}
+
+.nav-links li a::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 0;
+    height: 3px;
+    background-color: var(--black);
+    transition: all 150ms ease-in-out;
+}
+
+.nav-links li a:hover::before {
+    width: 100%;
+    left: 0;
+}
+
+.nav-links li a:is(:link, :active, :visited).active {
+    color: var(--accent);
+}
+
+.nav-links li a:is(:link, :active, :visited).active::before {
+    background-color: var(--accent);
+    width: 100%;
+    left: 0;
+}
+
+#profile-link {
+    flex-grow: 3;
+    float: right;
+    margin-right: 50px;
+}
+
+/*
+    Settings Nav Section
+*/
+
+#settings-nav {
+    position: fixed;
+    background-color: var(--primary-darker);
+    width: 22.5vw;
+    min-width: 310px;
+    height: calc(100vh - 150px);
+    z-index: 1;
+    box-shadow: 0px 0px 50px 13px rgba(132,120,169,0.25);
+    top: 150px;
+
+    overflow-x: hidden;
+    overflow-y: scroll;
+
+    font-family: 'Josefin';
+    font-size: 1.5rem;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 5vh;
+    padding: 50px;
+}
+
+#settings-nav h1 {
+    color: var(--black);
+    background: none;
+    padding-bottom: 2.5vh;
+}
+
+#settings-nav a {
+    color: var(--black);
+    background: none;
+    cursor: pointer;
+    width: fit-content;
+
+    transition: all 125ms ease-in-out;
+}
+
+#settings-nav a:hover {
+    color: var(--accent);
+}
+
+/*
+    Settings Frame Section
+*/
+
+.settings-frame {
+    position: absolute;
+    z-index: 0;
+    right: 0;
+    top: 150px;
+    width: 77.5vw;
+    height: calc(100% - 150px);
+    background: var(--primary);
+}
