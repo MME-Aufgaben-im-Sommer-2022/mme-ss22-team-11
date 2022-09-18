@@ -22,6 +22,9 @@ class IngredientListView extends Observable {
         ingredientView.addEventListener("INGREDIENT CLICKED", (event) => {
             event.data[0].remove();
             this.addToSelected(event.data[1]);
+            /* TODO:
+            this.notifyAll(new Event("INGREDIENT_SELECTED"))
+            */
         })
     }
 
@@ -51,6 +54,7 @@ class IngredientListView extends Observable {
         })
     }
 
+    /*
     removeAllSelected() {
         selectedList.forEach((view) => view.remove());
         selectedList.splice(0, selectedList.length)
@@ -63,6 +67,11 @@ class IngredientListView extends Observable {
     refreshSelected(ingredients) {
         this.removeAllSelected();
         this.addAllSelected(ingredients);
+    }
+    */
+
+    getAllSelected() {
+        return selectedList;
     }
 
 }

@@ -39,6 +39,10 @@ class IngredientList {
         this.list.push(ingredient);
     }
 
+    addIngredientDisplay(ingredient) {
+        this.displayNames.push(ingredient);
+    }
+
     //TODO: aktualisieren auf die csv
     // Um Alle Ingredients mit selben displayName zu kriegen (wird vielleicht gebraucht)
     getAllIngredientsForDisplayName(query) {

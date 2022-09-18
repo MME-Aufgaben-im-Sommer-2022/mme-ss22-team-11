@@ -17,7 +17,7 @@ class IngredientView extends Observable {
         this.ingredient = ingredient;
         this.el = createIngredientElementForView();
         //this.el.textContent = ingredient.displayName;
-        this.el.textContent = `Ing ${Math.floor(Math.random()*25)}`
+        this.el.textContent = ingredient
 
         this.el.addEventListener("click", (event) => this.notifyAll(new Event("INGREDIENT CLICKED", [this.el, this.ingredient])));
     }
