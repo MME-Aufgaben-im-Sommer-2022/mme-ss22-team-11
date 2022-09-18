@@ -67,14 +67,30 @@ function createDocumentForDB(databaseId, collectionId, documentId, data) { // da
 
 function getDocumentFromDB(documentId) {
     const promise = database.getDocument(documentId);
+    promise.then(response => {
+        console.log(response); 
+    }, error => {
+        console.log(error);
+    });
+    return promise;
 }
 
 function updateDocumentFromDB(databaseId, collectionId, documentId, data) {
     const promise = database.updateDocument(databaseId, collectionId, documentId, data);
+    promise.then(response => {
+        console.log(response); 
+    }, error => {
+        console.log(error);
+    });
 }
 
 function deleteDocumentFromDB(databaseId, collectionId, documentId) {
     const promise = database.deleteDocument(databaseId, collectionId, documentId);
+    promise.then(response => {
+        console.log(response); 
+    }, error => {
+        console.log(error);
+    });
 }
 
 export function createAccount();
