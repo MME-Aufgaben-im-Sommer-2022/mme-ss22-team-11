@@ -20,7 +20,6 @@ class IngredientListView extends Observable {
         searchResultList.push(ingredientView);
 
         ingredientView.addEventListener("INGREDIENT CLICKED", (event) => {
-            event.data[0].remove();
             this.addToSelected(event.data[1]);
             this.notifyAll(new Event("INGREDIENT_SELECTED"))
         })
