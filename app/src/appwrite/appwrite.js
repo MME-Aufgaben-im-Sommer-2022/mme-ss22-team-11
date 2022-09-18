@@ -5,6 +5,8 @@ const client = new Client,
     account = new Account(client),
     USER_DB_ID = "6322d6999d9ad2fabc63",
     USER_COLLECTION_ID = "6326133862b6c6746fc1",
+    USER_FAVORITES_ID = "632749b758251bc08b30",
+    USER_BANNED_ITEMS_ID = "632749c57031dcb0980d",
     RECIPE_DB_ID = "6322d6ffdea08bc3930f",
     RECIPE_API_COLLECTION_ID = "6323493524902ec055c8",
     RECIPE_COM_COLLECTION_ID = "6323493e3da89e47d6df",
@@ -20,7 +22,7 @@ function initWebSDK() {
         .setProject("6322d676c4aa83f07836");
 }
 
-
+// account: register & login
 function setEmail(email) {
     this.email = email;
 }
