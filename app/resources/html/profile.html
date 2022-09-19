@@ -22,19 +22,66 @@
     </header>
 
     <section id="settings-nav">
-        <h1>Einstellungen</h1>
-        <a>Profil-Einstellungen</a>
-        <a>Favoriten</a>
-        <a>Gesperrte Zutaten</a>
-        <a>Erstellte Cocktails</a>
-        <a>Bewertungen</a>
+        <h1>Profil</h1>
+        <a class="nav-link" id="favorites">Favoriten</a>
+        <a class="nav-link" id="banned-ingredients">Gesperrte Zutaten</a>
+        <a class="nav-link" id="created-cocktails">Erstellte Cocktails</a>
+        <a class="nav-link" id="reviews">Bewertungen</a>
     </section>
     <section class="settings-frame">
+        
         <!--Append settings-module here-->
         
     </section>
 
-   <script type="module" src="./src/index.js"></script>
+   <script type="module" src="../../src/profile.js"></script>
 </body>
+
+<template id="banned-ingredients-section-template">
+    <div class="banned-ingredients-section">
+        <h1>Gesperrte Zutaten</h1>
+        <div class="contents-container">
+            <div class="banned-ingredients-container">
+                <!--Append banned ingredients here-->
+                <div class="ingredient">
+                    Zutat
+                </div>
+                <div class="ingredient">
+                    Zutat
+                </div>
+                <div class="ingredient">
+                    Zutat
+                </div>
+            </div>
+            <div class="search-ingredients-container">
+                <div class="search-ingredients-header">
+                    <input type="text" placeholder="Search...">
+                    <img src="../css/img/VectorSearchBig.svg" draggable="false">
+                </div>
+                <div class="search-results-container">
+                    <!--Append search results here-->
+                    <div class="ingredient">
+                        Zutat
+                    </div>
+                    <div class="ingredient">
+                        Zutat
+                    </div>
+                    <div class="ingredient">
+                        Zutat
+                    </div>
+                    <div class="ingredient">
+                        Zutat
+                    </div>
+                    <div class="ingredient">
+                        Zutat
+                    </div>
+                    <div class="ingredient">
+                        Zutat
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
 
 </html>

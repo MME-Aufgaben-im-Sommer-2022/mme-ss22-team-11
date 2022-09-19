@@ -5,7 +5,8 @@
     --accent: #9672FF;
     --accent-lighter: #B49CFA;
     --black: #151515;
-
+    --deactivated: #757575;
+    --ban: #FB838A;
 }
 
 * {
@@ -161,4 +162,155 @@ nav {
     width: 77.5vw;
     height: calc(100% - 150px);
     background: var(--primary);
+}
+
+/*
+    Banned Ingredients Section
+*/
+
+.banned-ingredients-section {
+    width: 100%;
+    height: 100%;
+    padding: 50px 40px;
+
+    background: none;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.banned-ingredients-section h1 {
+    font-family: 'Josefin';
+    font-size: 3rem;
+    background: none;
+    color: var(--black);
+}
+
+.banned-ingredients-section .contents-container {
+    width: 100%;
+    height: 88%;
+    background: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: flex-start;
+}
+
+.banned-ingredients-container {
+    width: calc(50% - 10px);
+    height: 100%;
+    background: none;
+    
+    overflow: scroll;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+    gap: 10px;
+}
+
+
+.banned-ingredients-container .ingredient {
+    font-family: 'Josefin';
+    font-size: 1.5rem;
+    
+    background: var(--deactivated);
+    color: var(--primary);
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    width: fit-content;
+    padding: 7.5px 15px;
+    border-radius: 10px;
+    text-align: center;
+
+    transition: all 150ms ease-in-out;
+    cursor: pointer;
+}
+
+.banned-ingredients-container .ingredient:hover {
+    background: var(--accent-lighter);
+}
+
+.search-ingredients-container {
+    width: calc(50% - 10px);
+    border: 5px solid var(--black);
+    border-radius: 25px;
+    background: none;
+}
+
+.search-ingredients-header {
+    background: none;
+    height: 75px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.search-ingredients-header input {
+    width: 90%;
+    height: 75%;
+    background: none;
+    border: none;
+
+    font-family: 'Josefin';
+    font-size: 2rem;
+    color: var(--accent);
+}
+
+.search-ingredients-header input:focus {
+    outline: none;
+}
+
+.search-ingredients-header input::placeholder {
+    color: var(--accent-lighter);
+}
+
+.search-ingredients-header img {
+    width: 8%;
+    background: none;
+}
+
+.search-results-container {
+    width: 100%;
+    height: calc(100% - 75px);
+    padding: 10px;
+    background: none;
+
+    overflow: scroll;
+    
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+    gap: 10px;
+}
+
+.search-results-container .ingredient {
+    font-family: 'Josefin';
+    font-size: 1.5rem;
+    
+    background: var(--secondary);
+    color: var(--black);
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    width: fit-content;
+    padding: 7.5px 15px;
+    border-radius: 10px;
+    text-align: center;
+
+    transition: all 150ms ease-in-out;
+    cursor: pointer;
+}
+
+.search-results-container .ingredient:hover {
+    background: var(--ban);
 }

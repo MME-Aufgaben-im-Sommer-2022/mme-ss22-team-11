@@ -306,6 +306,8 @@ nav {
 .ingredient {
     background: var(--accent);
     color: var(--primary);
+    overflow-wrap: break-word;
+    word-wrap: break-word;
     width: fit-content;
     padding: 7.5px 15px;
     border-radius: 10px;
@@ -383,7 +385,7 @@ nav {
 }
 
 .search-bar-input::placeholder {
-    color: var(--secondary);
+    color: var(--accent-lighter);
 }
 
 .search-bar img {
@@ -691,7 +693,7 @@ nav {
 }
 
 .login-field input::placeholder {
-    color: var(--secondary);
+    color: var(--accent-lighter);
 }
 
 .signup-button {
