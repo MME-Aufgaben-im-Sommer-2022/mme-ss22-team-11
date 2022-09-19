@@ -183,6 +183,7 @@ nav {
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
+    gap: 25px;
 }
 
 .banned-ingredients-section h1 {
