@@ -146,6 +146,10 @@ nav {
     transition: all 125ms ease-in-out;
 }
 
+#settings-nav a.active{
+    color: var(--accent);
+}
+
 #settings-nav a:hover {
     color: var(--accent);
 }
