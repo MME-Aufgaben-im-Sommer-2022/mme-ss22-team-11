@@ -191,7 +191,7 @@ nav {
     align-self: center;
     width: 80%;
     height: 45px;
-    border: 5px solid var(--black);
+    border: 4px solid var(--black);
     
     padding: 7.5px 15px;
     border-radius: 10px;
@@ -356,7 +356,7 @@ nav {
 .search-bar {
     width: calc(100% - 60px - 25px);
     background: none;
-    border: 5px solid var(--black);
+    border: 4px solid var(--black);
     border-radius: 50px;
 
     padding: 5px 10px;
@@ -398,7 +398,7 @@ nav {
 .search-random {
     width: 60px;
     height: 60px;
-    border: 5px solid var(--black);
+    border: 4px solid var(--black);
     border-radius: 50px;
     display: flex;
     justify-content: center;
@@ -520,7 +520,7 @@ nav {
     justify-content: flex-start;
     align-items: flex-start;
     width: 100%;
-    height: fit-content;
+    height: 200px;
     gap: 25px;
 
     background: none;
@@ -553,6 +553,11 @@ nav {
 .cocktail-section .cocktail-info .name {
     font-size: 3.5rem;
     font-weight: 700;
+    background: none;
+}
+
+.cocktail-section .cocktail-info img {
+    width: 30px;
     background: none;
 }
 
@@ -611,6 +616,167 @@ nav {
     margin-left: 50px;
     list-style: decimal;
 }
+
+.review-section {
+    width: 100%;
+    max-width: 1000px;
+    height: 1000px;
+    background: var(--secondary);
+    padding: 50px 75px;
+
+    border-radius: 25px 25px 0 0;
+    box-shadow: 0px 0px 50px 13px rgba(132,120,169,0.15);
+
+    z-index: 1;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 50px;
+}
+
+.review-section h1 {
+    background: none;
+    align-self: flex-start;
+    font-family: 'Josefin';
+}
+
+.review-input-container {
+    width: 100%;
+    height: 150px;
+    padding: 15px;
+
+    background: var(--primary);
+    border: 4px var(--black) solid;
+    border-radius: 25px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 7.5px;
+}
+
+.rating-input {
+    user-select: none;
+}
+
+.rating-input [type=radio] {
+    display: none;
+    opacity: 0;
+}
+
+.rating-input [type=radio] + img {
+    cursor: pointer;
+    width: 30px;
+
+}
+
+
+.review-input {
+    width: calc(100% - 35px - 15px);
+    height: 80px;
+
+    color: var(--accent);
+    border: none;
+    background: none;
+
+    caret-color: var(--black);
+
+    font-family: 'Josefin';
+    font-size: 1.5rem;
+    resize: none;
+}
+
+.review-input:focus {
+    outline: none;
+}
+
+.review-input::placeholder {
+    color: var(--accent-lighter);
+}
+
+.send-icon {
+    width: 35px;
+    background: none;
+    align-self: flex-end;
+    position: relative;
+    top: -50px;
+
+    cursor: pointer;
+}
+
+.review-container {
+    background: none;
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 25px;
+}
+
+.review {
+    width: 100%;
+    height: 150px;
+    /*
+    height: fit-content;
+    */
+
+    background: none;
+    font-family: 'Josefin';
+    color: var(--black);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 25px;
+}
+
+.review-header {
+    width: 100%;
+    height: 2.5rem;
+    
+    background: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+    gap: 25px;
+}
+
+.review-header h1 {
+    font-weight: 400;
+    font-size: 2.5rem;
+    background: none;
+}
+
+.review-rating {
+    width: fit-content;
+    height: fit-content;
+    background: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 2.5px;
+}
+
+.review-rating img {
+    width: 25px;
+    background: none;
+}
+
+.review-text {
+    font-size: 1.25rem;
+    background: none;
+}
+
 
 /*
     Login Section
@@ -713,7 +879,7 @@ nav {
 .signup-button:hover {
     color: var(--accent);
     background: none;
-    border: 5px solid var(--accent);
+    border: 4px solid var(--accent);
 }
 
 .login-question {

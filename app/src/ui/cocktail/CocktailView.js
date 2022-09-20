@@ -43,6 +43,7 @@ class CocktailView extends Observable {
         this.cocktail = cocktail;
 
         this.el = createCocktailPageElement();
+        window.scrollTo(0,0);
     }
 
     fillHtml() {
