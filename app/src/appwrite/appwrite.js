@@ -17,8 +17,8 @@ const client = new Client,
 var email, password, name;
 
 function initWebSDK() {
-    client
-        .setEndpoint("https://verwertbar.software-engineering.education/") 
+    client 
+        .setEndpoint("http://localhost/v1") //https://verwertbar.software-engineering.education/
         .setProject("6322d676c4aa83f07836");
 }
 
@@ -35,17 +35,26 @@ function setName(name) {
     this.name = name;
 }
 
+// TODO: nicht sicher ob in der account.create methode bereits ein "bereits existieren check" eingebaut ist
+// sonst -> methode mit return
 function createAccount(email, password, name) {
+    indexOfAt = email.indexOf('@');
+    emailSpliced = email.substring(0, indexOfAt); 
+    userId = emailSpliced + name.replace(/ /g, '_'); // Bsp.: max.mustermannMax_Mustermann
+
     account.create("unique()", email, password, name).then(response => {
         console.log(response); 
-        indexOfAt = email.indexOf('@');
-        emailSpliced = email.substring(0, indexOfAt);
-        userId = emailSpliced + name.replace(/ /g, '_');
-        createDocumentForDB(USER_DB_ID, USER_COLLECTION_ID, userId, response) // oder ein document und des updaten
+        createDocumentForDB(USER_DB_ID, USER_COLLECTION_ID, userId, response) 
+        // creates a new document for each user with a custom_id combining email-name and user-name
     }, error => {
         console.log(error);
     });
 }
+
+function accountExistenceCheck(userId) {
+
+}
+
 
 function login(email, password) {
     const promise = account.createEmailSession(email, password);
