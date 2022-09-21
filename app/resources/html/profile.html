@@ -38,26 +38,38 @@
 </body>
 
 <template id="cocktail-list-section-template">
-    <div class="cocktail-container">
+    <div class="cocktail-list-section">
+        <h1>Favoriten</h1>
+        <div class="cocktail-container">
 
-        <!--Append cocktails here-->
-        
-        <a class="cocktail">
-            <div class="cocktail-image"></div>
-            <div class="cocktail-text">
-                <p class="cocktail-name">[Name]</p>
-                <!--Display avg rating?-->
-                <p class="cocktail-info"><span class="cocktail-tags">[Tags]</span><br><span class="cocktail-ingredients">0 Zutaten</span></p>
-            </div>
-        </a>
-        <a class="cocktail">
-            <div class="cocktail-image"></div>
-            <div class="cocktail-text">
-                <p class="cocktail-name">[Name]</p>
-                <!--Display avg rating?-->
-                <p class="cocktail-info"><span class="cocktail-tags">[Tags]</span><br><span class="cocktail-ingredients">0 Zutaten</span></p>
-            </div>
-        </a>
+            <!--Append cocktails here-->
+
+            <a class="cocktail">
+                <div class="cocktail-image"></div>
+                <div class="cocktail-text">
+                    <p class="cocktail-name">[Name]</p>
+                    <!--Display avg rating?-->
+                    <p class="cocktail-info"><span class="cocktail-tags">[Tags]</span><br><span class="cocktail-ingredients">0 Zutaten</span></p>
+                </div>
+            </a>
+            <a class="cocktail">
+                <div class="cocktail-image"></div>
+                <div class="cocktail-text">
+                    <p class="cocktail-name">[Name]</p>
+                    <!--Display avg rating?-->
+                    <p class="cocktail-info"><span class="cocktail-tags">[Tags]</span><br><span class="cocktail-ingredients">0 Zutaten</span></p>
+                </div>
+            </a>
+            <a class="cocktail">
+                <div class="cocktail-image"></div>
+                <div class="cocktail-text">
+                    <p class="cocktail-name">[Name]</p>
+                    <!--Display avg rating?-->
+                    <p class="cocktail-info"><span class="cocktail-tags">[Tags]</span><br><span class="cocktail-ingredients">0 Zutaten</span></p>
+                </div>
+            </a>
+            
+        </div>
     </div>
 </template>
 
@@ -126,6 +138,70 @@
 <template id="ingredient-element-template">
     <div class="ingredient">
         Zutat
+    </div>
+</template>
+
+<template id="reviews-section-template">
+    <div class="reviews-section">
+        <h1>Bewertungen</h1>
+        <div class="reviews-container">
+            
+            <!--Append reviews here-->
+
+            <div class="review">
+                <div class="review-content">
+                    <div class="review-header">
+                        <a>Cocktail-Name</a>
+                        <div class="rating">
+                            <img src="../css/img/VectorStarFilledBlack.svg" draggable="false">
+                            <img src="../css/img/VectorStarFilledBlack.svg" draggable="false">
+                            <img src="../css/img/VectorStarFilledBlack.svg" draggable="false">
+                            <img src="../css/img/VectorStarFilledBlack.svg" draggable="false">
+                            <img src="../css/img/VectorStarHollowBlack.svg" draggable="false">
+                        </div>
+                    </div>
+                        <p class="review-text">Lorem Ipsum</p>
+                </div>
+                <img class="review-delete" src="../css/img/VectorTrashCan.svg">
+            </div>
+            
+            <div class="review">
+                <div class="review-content">
+                    <div class="review-header">
+                        <a>Cocktail-Name</a>
+                        <div class="rating">
+                            <img src="../css/img/VectorStarFilledBlack.svg" draggable="false">
+                            <img src="../css/img/VectorStarFilledBlack.svg" draggable="false">
+                            <img src="../css/img/VectorStarFilledBlack.svg" draggable="false">
+                            <img src="../css/img/VectorStarFilledBlack.svg" draggable="false">
+                            <img src="../css/img/VectorStarHollowBlack.svg" draggable="false">
+                        </div>
+                    </div>
+                        <p class="review-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam nihil hic neque aliquid placeat quos sequi facere beatae maxime, in et voluptas dolorum iusto! Consequatur ipsa explicabo consequuntur odit amet!</p>
+                </div>
+                <img class="review-delete" src="../css/img/VectorTrashCan.svg">
+            </div>
+
+        </div>
+    </div>
+</template>
+
+<template id="review-template">
+    <div class="review">
+        <div class="review-content">
+            <div class="review-header">
+                <a>Cocktail-Name</a>
+                <div class="rating">
+                    <img src="../css/img/VectorStarFilledBlack.svg" draggable="false">
+                    <img src="../css/img/VectorStarFilledBlack.svg" draggable="false">
+                    <img src="../css/img/VectorStarFilledBlack.svg" draggable="false">
+                    <img src="../css/img/VectorStarFilledBlack.svg" draggable="false">
+                    <img src="../css/img/VectorStarHollowBlack.svg" draggable="false">
+                </div>
+            </div>
+                <p class="review-text">Bewertung</p>
+        </div>
+        <img class="review-delete" src="../css/img/VectorTrashCan.svg">
     </div>
 </template>
 
