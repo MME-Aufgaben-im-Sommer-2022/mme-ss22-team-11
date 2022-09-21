@@ -1,4 +1,4 @@
-import { HtmlManipulator } from "./ui/HtmlManipulator.js";
+import { HtmlManipulator } from "./ui/RecipeHtmlManipulator.js";
 import { CocktailListManager } from "./cocktailData/cocktailListManager.js";
 import { IngredientFilterManager } from "./cocktailData/ingredientFilterManager.js";
 import { ListView } from "./ui/ListView.js";

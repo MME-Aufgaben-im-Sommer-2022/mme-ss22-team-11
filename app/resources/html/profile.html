@@ -37,12 +37,48 @@
    <script type="module" src="../../src/profile.js"></script>
 </body>
 
+<template id="cocktail-list-section-template">
+    <div class="cocktail-container">
+
+        <!--Append cocktails here-->
+        
+        <a class="cocktail">
+            <div class="cocktail-image"></div>
+            <div class="cocktail-text">
+                <p class="cocktail-name">[Name]</p>
+                <!--Display avg rating?-->
+                <p class="cocktail-info"><span class="cocktail-tags">[Tags]</span><br><span class="cocktail-ingredients">0 Zutaten</span></p>
+            </div>
+        </a>
+        <a class="cocktail">
+            <div class="cocktail-image"></div>
+            <div class="cocktail-text">
+                <p class="cocktail-name">[Name]</p>
+                <!--Display avg rating?-->
+                <p class="cocktail-info"><span class="cocktail-tags">[Tags]</span><br><span class="cocktail-ingredients">0 Zutaten</span></p>
+            </div>
+        </a>
+    </div>
+</template>
+
+<template id="cocktail-list-element-template">
+    <a class="cocktail">
+            <div class="cocktail-image"></div>
+            <div class="cocktail-text">
+                <p class="cocktail-name">[Name]</p>
+                <!--Display avg rating?-->
+                <p class="cocktail-info"><span class="cocktail-tags">[Tags]</span><br><span class="cocktail-ingredients">0 Zutaten</span></p>
+            </div>
+    </a>
+</template>
+
 <template id="banned-ingredients-section-template">
     <div class="banned-ingredients-section">
         <h1>Gesperrte Zutaten</h1>
         <div class="contents-container">
             <div class="banned-ingredients-container">
                 <!--Append banned ingredients here-->
+                
                 <div class="ingredient">
                     Zutat
                 </div>
@@ -52,6 +88,7 @@
                 <div class="ingredient">
                     Zutat
                 </div>
+
             </div>
             <div class="search-ingredients-container">
                 <div class="search-ingredients-header">
@@ -60,6 +97,7 @@
                 </div>
                 <div class="search-results-container">
                     <!--Append search results here-->
+
                     <div class="ingredient">
                         Zutat
                     </div>
@@ -78,9 +116,16 @@
                     <div class="ingredient">
                         Zutat
                     </div>
+
                 </div>
             </div>
         </div>
+    </div>
+</template>
+
+<template id="ingredient-element-template">
+    <div class="ingredient">
+        Zutat
     </div>
 </template>
 

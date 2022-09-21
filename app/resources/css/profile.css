@@ -169,6 +169,96 @@ nav {
 }
 
 /*
+    Favorites Section
+*/
+
+.cocktail-container {
+    width: 100%;
+    /*height: calc(100% - 110px);*/
+    height: fit-content;
+    position: relative;
+    top: 50px;
+    left: 0;
+
+    padding: 2.5%;
+
+    background: none;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    align-content: flex-start;
+    gap: 50px;
+}
+
+.cocktail {
+    width: 45%;
+    min-width: 450px;
+    height: 150px;
+    padding: 25px;
+    background: var(--secondary);
+    border-radius: 25px;
+
+    box-shadow: 0px 0px 50px 0px rgba(132,120,169,0.25);
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 25px;
+
+    cursor: pointer;
+    transition: all 250ms ease-in-out;
+}
+
+.cocktail:hover {
+    box-shadow: 0px 0px 50px 15px rgba(132,120,169,0.25);
+    background: var(--accent-lighter);
+
+}
+
+.cocktail-image {
+    height: 100px;
+    width: 100px;
+    background: rgba(132,120,169,0.25);
+    border-radius: 100%;
+}
+
+.cocktail-text {
+    background: none;
+    height: 90%;
+    width: 60%;
+    color: var(--black);
+    font-family: 'Josefin';
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: flex-start;
+}
+
+.cocktail-name {
+    background: none;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.cocktail-info {
+    background: none;
+    font-size: 1.1rem;
+}
+
+.cocktail-info span {
+    background: none;
+}
+
+
+
+
+
+
+/*
     Banned Ingredients Section
 */
 
