@@ -3,7 +3,7 @@ const INGREDIENT_CONTAINER = document.getElementsByClassName("ingredients-contai
 const FILTER_SECTION = document.getElementById("filter");
 const FILTER_ING_INPUT_CONTAINER = document.getElementsByClassName("ingredient-input-container")[0];
 const FILTER_ING_INPUT = document.getElementsByClassName("ingredient-input")[0];
-const FILTER_ING_RESULTS = document.getElementsByClassName("ingredient-search-results")[0]
+const FILTER_ING_RESULTS = document.getElementsByClassName("ingredient-search-results")[0];
 
 class HtmlManipulator {
 

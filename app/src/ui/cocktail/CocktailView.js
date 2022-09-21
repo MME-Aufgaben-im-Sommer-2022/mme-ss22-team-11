@@ -36,6 +36,30 @@ function initializeBackEventListeners(backButton, cocktailView) {
     })
 }
 
+function initializeFavEventListeners(favButton, cocktailView) {
+    favButton.addEventListener("mouseover", (event) => {
+        favButton.src = "./resources/css/img/VectorFavHover.svg";
+    });
+    favButton.addEventListener("mouseout", (event) => {
+        if(favButton.classList.contains("active")) {
+            favButton.src = "./resources/css/img/VectorFavFilled.svg";
+        } else {
+            favButton.src = "./resources/css/img/VectorFavHollow.svg";
+        }
+    });
+    favButton.addEventListener("click", (event) => {
+        if(favButton.classList.contains("active")) {
+            favButton.classList.remove("active");
+            console.log("Cocktail unmarked as fav");
+            favButton.src = "./resources/css/img/VectorFavHollow.svg";
+        } else {
+            favButton.classList.add("active");
+            console.log("Cocktail marked as fav");
+            favButton.src = "./resources/css/img/VectorFavFilled.svg";
+        }
+    })
+}
+
 class CocktailView extends Observable {
 
     constructor(cocktail) {
@@ -57,9 +81,10 @@ class CocktailView extends Observable {
         this.el.querySelector(".name").textContent = this.cocktail.name;
 
         let backButton = this.el.querySelector(".cocktail-back");
-        initializeBackEventListeners(backButton, this);
+        let favButton = this.el.querySelector(".cocktail-fav");
 
-        console.log(this.cocktail.recipe);
+        initializeBackEventListeners(backButton, this);
+        initializeFavEventListeners(favButton, this);
 
         createIngredients(this.el, this.cocktail.recipe.mainIngredients);
         createInstructions(this.el, this.cocktail.steps);
