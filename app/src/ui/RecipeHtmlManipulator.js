@@ -4,6 +4,7 @@ const FILTER_SECTION = document.getElementById("filter");
 const FILTER_ING_INPUT_CONTAINER = document.getElementsByClassName("ingredient-input-container")[0];
 const FILTER_ING_INPUT = document.getElementsByClassName("ingredient-input")[0];
 const FILTER_ING_RESULTS = document.getElementsByClassName("ingredient-search-results")[0];
+const NEW_RECIPE_FAB = document.getElementsByClassName("new-recipe-fab")[0];
 
 class HtmlManipulator {
 
@@ -49,6 +50,18 @@ class HtmlManipulator {
                 INGREDIENT_CONTAINER.append(item);
             })
         }
+        
+        NEW_RECIPE_FAB.addEventListener("mouseover", (event) => {
+            NEW_RECIPE_FAB.children[0].src = "./resources/css/img/VectorPlusPrimary.svg";
+        })
+        
+        NEW_RECIPE_FAB.addEventListener("mouseout", (event) => {
+            NEW_RECIPE_FAB.children[0].src = "./resources/css/img/VectorPlusAccent.svg";
+        })
+        
+        NEW_RECIPE_FAB.addEventListener("click", (event) => {
+            console.log("open recipe-creator");
+        })
     }
 }
 
