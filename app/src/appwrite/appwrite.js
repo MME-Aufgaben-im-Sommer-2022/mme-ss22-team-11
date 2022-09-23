@@ -3,16 +3,14 @@ import { Client, Account, Databases } from "appwrite";
 const client = new Client,
     database = new Databases(client),
     account = new Account(client),
-    USER_DB_ID = "6322d6999d9ad2fabc63",
-    USER_COLLECTION_ID = "6326133862b6c6746fc1",
-    USER_FAVORITES_ID = "632749b758251bc08b30",
-    USER_BANNED_ITEMS_ID = "632749c57031dcb0980d",
-    RECIPE_DB_ID = "6322d6ffdea08bc3930f",
-    RECIPE_API_COLLECTION_ID = "6323493524902ec055c8",
-    RECIPE_COM_COLLECTION_ID = "6323493e3da89e47d6df",
-    INGREDIENTS_DB_ID = "6322d70dc0f5c92d07d7",
-    INGREDIENTS_ALC_COLLECTION_ID = "632614a6f0647279b0c4",
-    INGREDIENTS_NON_COLLECTION_ID = "632614fec586672f06e2";
+    USER_DB_ID = "632dbc2bc51bf9eaeb25",
+    USER_COLLECTION_ID = "632dbc3088eeb52ba0d0",
+    USER_FAVORITES_ID = "632dbd25ac63865b5a40",
+    USER_BANNED_ITEMS_ID = "632dbd3adbbef22d24d8",
+    RECIPE_DB_ID = "632dbc5238a0eeba297b",
+    RECIPE_API_COLLECTION_ID = "632dbc5649f159c63894",
+    RECIPE_COM_COLLECTION_ID = "632dbc5f18e03c05d7fe",
+    INGREDIENTS_COLLECTION_ID = "632dbca9e003743dad75",
 
 var email, password, name;
 
