@@ -10,7 +10,7 @@ const client = new Client,
     RECIPE_DB_ID = "632dbc5238a0eeba297b",
     RECIPE_API_COLLECTION_ID = "632dbc5649f159c63894",
     RECIPE_COM_COLLECTION_ID = "632dbc5f18e03c05d7fe",
-    INGREDIENTS_COLLECTION_ID = "632dbca9e003743dad75",
+    INGREDIENTS_COLLECTION_ID = "632dbca9e003743dad75";
 
 var email, password, name;
 
