@@ -16,8 +16,8 @@ var email, password, name;
 
 function initWebSDK() {
     client 
-        .setEndpoint("http://localhost/v1") //https://verwertbar.software-engineering.education/
-        .setProject("6322d676c4aa83f07836");
+        .setEndpoint("https://appwrite.software-engineering.education/v1") //https://verwertbar.software-engineering.education/
+        .setProject("62ecf9068d60a3eb72ab");
 }
 
 // account: register & login
