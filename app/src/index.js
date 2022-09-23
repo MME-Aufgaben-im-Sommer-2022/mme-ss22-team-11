@@ -1,4 +1,4 @@
-import AppwriteConnector from "./appwrite/appwrite.js";
+import AppwriteConnector from "./appwrite/AppwriteConnector.js";
 
 function init() {
     console.log("### Starting MME Project ###"); // eslint-disable-line no-console

@@ -1,9 +1,20 @@
 /* 
     global Appwrite
 */
-
+const 
+    USER_DB_ID = "632dbc2bc51bf9eaeb25",
+    USER_COLLECTION_ID = "632dbc3088eeb52ba0d0",
+    USER_FAVORITES_ID = "632dbd25ac63865b5a40",
+    USER_BANNED_ITEMS_ID = "632dbd3adbbef22d24d8",
+    RECIPE_DB_ID = "632dbc5238a0eeba297b",
+    RECIPE_API_COLLECTION_ID = "632dbc5649f159c63894",
+    RECIPE_COM_COLLECTION_ID = "632dbc5f18e03c05d7fe",
+    INGREDIENTS_COLLECTION_ID = "632dbca9e003743dad75";
+    
 class AppwriteConnector {
     
+  
+
     constructor() {
         this.client = new Appwrite.Client();
         this.client
@@ -14,30 +25,24 @@ class AppwriteConnector {
 
 
     async createAccount(name, email, password) {
-        let account = new Appwrite.Account(this.client);
+        let account = new Appwrite.Account(this.client),
+            result;
         /*
         indexOfAt = email.indexOf('@');
         emailSpliced = email.substring(0, indexOfAt);
         userId = emailSpliced + name.replace(/ /g,
         '_'); // Bsp.: max.mustermannMax_Mustermann
         */
-        let result = await account.create("unique()", email, password, name);
-        //TODO: asynchron!!!
-        console.log(result);
-        return account; 
-        //try und catch!
+        try {
+            result = await account.create("unique()", email, password, name);
+            console.log(result);
+            return result; 
+        } catch (error) {
+            console.error(error);
+        }
     }
 }
 /*
-const 
-  USER_DB_ID = "632dbc2bc51bf9eaeb25",
-  USER_COLLECTION_ID = "632dbc3088eeb52ba0d0",
-  USER_FAVORITES_ID = "632dbd25ac63865b5a40",
-  USER_BANNED_ITEMS_ID = "632dbd3adbbef22d24d8",
-  RECIPE_DB_ID = "632dbc5238a0eeba297b",
-  RECIPE_API_COLLECTION_ID = "632dbc5649f159c63894",
-  RECIPE_COM_COLLECTION_ID = "632dbc5f18e03c05d7fe",
-  INGREDIENTS_COLLECTION_ID = "632dbca9e003743dad75";
 
 var email, password, name;
 
