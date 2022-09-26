@@ -1,6 +1,7 @@
 import { HtmlManipulator } from "./ui/RecipeHtmlManipulator.js";
 import { CocktailListManager } from "./cocktailData/cocktailListManager.js";
 import { IngredientFilterManager } from "./cocktailData/ingredientFilterManager.js";
+import { ReviewManager } from "./cocktailData/reviewManager.js"
 import { ListView } from "./ui/ListView.js";
 import { IngredientListView } from "./ui/ingredients/IngredientListView.js";
 import { CocktailView } from "./ui/cocktail/CocktailView.js";
@@ -8,6 +9,7 @@ import { CocktailView } from "./ui/cocktail/CocktailView.js";
 let htmlManipulator = new HtmlManipulator;
 let cocktailListManager = new CocktailListManager();
 let ingredientFilterManager = new IngredientFilterManager();
+let reviewManager = new ReviewManager();
 let listView = new ListView();
 let ingredientListView = new IngredientListView();
 
@@ -37,11 +39,17 @@ let showIngredients = () => {
     ingredientListView.refreshSearchResults(ingredientFilterManager.displayList);
 }
 
+let processReview = (event) => {
+    if (reviewManager.isRatingValid(event.data['rating'])) {
+        // save review+rating to db etc.
+    }
+}
 
 listView.addEventListener("COCKTAIL CLICKED", (event) => {
     let cocktailView = new CocktailView(event.data);
     cocktailView.fillHtml();
     cocktailView.showCocktailPage();
+    cocktailView.addEventListener("REVIEW SUBMITTED", (event) => processReview(event));
 })
 
 // input listeners
