@@ -1,12 +1,13 @@
+import { Rating } from "./rating.js";
+
 class Cocktail {
 
-    constructor(id, name, recipe, image, ratings, comments, category, tags, description, steps, author) {
+    constructor(id, name, recipe, image, ratings, category, tags, description, steps, author) {
         this.id = id;
         this.name = name;
         this.recipe = recipe;
         this.image = image;
         this.ratings = ratings;
-        this.comments = comments;
         this.category = category;
         this.tags = tags;
         this.description = description;
@@ -18,16 +19,7 @@ class Cocktail {
     }
 
     addRating(rating) {
-
-        let r = rating;
-        if (r < 0) {
-            r = 0;
-        }
-        if (r > 5) {
-            r = 5;
-        }
-
-        this.ratings.push(rating);
+        this.ratings.push(r);
     }
 
     getRating() {
@@ -36,7 +28,7 @@ class Cocktail {
         }
 
         let sum = 0;
-        this.ratings.forEach(rating => sum += rating);
+        this.ratings.forEach(rating => sum += rating.stars);
         return sum / this.ratings.length;
 
     }
