@@ -30,7 +30,9 @@ class User extends Observable {
         data.cocktailID = cocktailID;
         data.rating = new Rating(stars, text, this.username);
 
-        //TODO: listener für cocktailListManager, der data weitergibt
+        //TODO: listener in cocktailManager oder ähnlichem nutzen
+        this.notifyAll(new Event("RATING_READY", data))
+
         this.givenRatings.push(data);
     }
 

@@ -24,6 +24,15 @@ class CocktailListManager extends Observable {
 
     }
 
+    //TODO: ausführen, wenn eine neue Bewertung abgegeben wird
+    rateCocktailPositionForID(data) {
+        this.allCocktails.forEach(cocktail => {
+            if (cocktail.id == data.id) {
+                cocktail.addRating(data.rating);
+            }
+        })
+    }
+
     getIngredientAndCocktailData() {
         fetch('./src/cocktailData/JSON/ingredients.json')
             .then((response) => response.json())
