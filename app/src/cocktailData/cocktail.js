@@ -1,5 +1,3 @@
-import { Rating } from "./rating.js";
-
 class Cocktail {
 
     constructor(id, name, recipe, image, ratings, category, tags, description, steps, author) {
