@@ -1,11 +1,11 @@
 class Cocktail {
 
-    constructor(id, name, recipe, image, rating, numRatings, comments, category, tags, description, steps, author) {
+    constructor(id, name, recipe, image, ratings, comments, category, tags, description, steps, author) {
         this.id = id;
         this.name = name;
         this.recipe = recipe;
         this.image = image;
-        this.rating = rating;
+        this.ratings = ratings;
         this.comments = comments;
         this.category = category;
         this.tags = tags;
@@ -13,6 +13,23 @@ class Cocktail {
         this.steps = steps;
         this.author = author;
         this.isAlcoholic = this.getIsAlcoholic();
+
+
+    }
+
+    addRating(rating) {
+        this.ratings.push(rating);
+    }
+
+    getRating() {
+        if (this.ratings.length = 0) {
+            return undefined;
+        }
+
+        let sum = 0;
+        this.ratings.forEach(rating => sum += rating);
+        return sum / this.ratings.length;
+
     }
 
     getIsAlcoholic() {

@@ -55,8 +55,7 @@ class CocktailListManager extends Observable {
 
         //TODO: letzte id aus Datenbank auslesen, dann: let id = UUID
 
-        let newCocktail = new Cocktail(id, name, recipe, image, undefined, 0, [], category, [], description, steps, author);
-        console.log(newCocktail);
+        let newCocktail = new Cocktail(id, name, recipe, image, [], [], category, [], description, steps, author);
         this.allCocktails.push(newCocktail);
         //TODO: Datenbank updaten
 
