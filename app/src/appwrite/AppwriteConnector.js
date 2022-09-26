@@ -9,12 +9,13 @@ const
     RECIPE_DB_ID = "632dbc5238a0eeba297b",
     RECIPE_API_COLLECTION_ID = "632dbc5649f159c63894",
     RECIPE_COM_COLLECTION_ID = "632dbc5f18e03c05d7fe",
-    INGREDIENTS_COLLECTION_ID = "632dbca9e003743dad75";
+    INGREDIENTS_COLLECTION_ID = "632dbca9e003743dad75",
+    database;
     
 class AppwriteConnector {
     
-  
-
+    // using the constructer creates the Appwrite Client
+    // only initiate 1 time!
     constructor() {
         this.client = new Appwrite.Client();
         this.client
@@ -23,24 +24,61 @@ class AppwriteConnector {
             .setProject("62ecf9068d60a3eb72ab");
     }
 
-
+    // method used when creatin a new account
     async createAccount(name, email, password) {
         let account = new Appwrite.Account(this.client),
-            result;
-        /*
-        indexOfAt = email.indexOf('@');
-        emailSpliced = email.substring(0, indexOfAt);
-        userId = emailSpliced + name.replace(/ /g,
-        '_'); // Bsp.: max.mustermannMax_Mustermann
-        */
+            result,
+            indexOfAt = email.indexOf('@'), 
+            emailSpliced = email.substring(0, indexOfAt), 
+            userId = emailSpliced + "_" + name.replace(/ /g, '_'); // Bsp.: max.mustermann_Max_Mustermann
+        
         try {
-            result = await account.create("unique()", email, password, name);
+            result = await account.create(userId, email, password, name);
             console.log(result);
             return result; 
         } catch (error) {
             console.error(error);
         }
+
+        return result;
     }
+
+    getAccount(email, password) {
+
+    }
+
+    login(email, password) {
+      //const account = getAccount(email, password);
+
+      const promise = account.createEmailSession(email, password);
+      promise.then(response => {
+        console.log(response);
+        this.createDocumentForDB(USER_DB_ID, USER_COLLECTION_ID, userId, account)
+      }, error => {
+        console.log(error);
+        // display error message in ui?
+      });
+    }
+
+    createDocumentForDB(databaseId, collectionId, documentId, data) { // data as json object
+        const promise = database.createDocument(databaseId, collectionId, documentId, data);
+        promise.then(response => {
+          console.log(response);
+        }, error => {
+          console.log(error);
+        });
+      }
+
+    getDocumentFromDB(documentId) { // not id, but email? wrap with "contains",
+      // TODO: don't know if this works out with the current userId
+        const promise = database.getDocument(documentId);
+        promise.then(response => {
+          console.log(response);
+        }, error => {
+          console.log(error);
+        });
+        return promise;
+      }
 }
 /*
 
