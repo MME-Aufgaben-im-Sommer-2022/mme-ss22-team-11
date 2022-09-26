@@ -24,6 +24,23 @@ class CocktailListManager extends Observable {
 
     }
 
+    // Soll Favoriten anzeigen
+    getFavorites(idList) {
+
+        let returnList = [];
+
+        idList.forEach(id => {
+            this.allCocktails.forEach(cocktail => {
+                if (id == cocktail.id) {
+                    returnList.push(cocktail);
+                }
+            });
+        });
+
+        return returnList;
+
+    }
+
     //TODO: ausführen, wenn eine neue Bewertung abgegeben wird
     rateCocktail(data) {
 
