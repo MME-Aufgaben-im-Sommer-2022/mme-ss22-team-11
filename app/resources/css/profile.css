@@ -456,6 +456,7 @@ nav {
 .reviews-container {
     width: 100%;
     height: fit-content;
+    padding: 40px 0;
 
     background: none;
 
