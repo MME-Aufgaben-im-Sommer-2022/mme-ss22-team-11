@@ -19,7 +19,7 @@ class Cocktail {
     }
 
     addRating(rating) {
-        this.ratings.push(r);
+        this.ratings.push(rating);
     }
 
     getRating() {
