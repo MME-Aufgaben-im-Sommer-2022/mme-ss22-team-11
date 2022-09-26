@@ -25,10 +25,26 @@ class CocktailListManager extends Observable {
     }
 
     //TODO: ausführen, wenn eine neue Bewertung abgegeben wird
-    rateCocktailPositionForID(data) {
+    rateCocktail(data) {
+
         this.allCocktails.forEach(cocktail => {
-            if (cocktail.id == data.id) {
-                cocktail.addRating(data.rating);
+            if (cocktail.id == data.cocktailID) {
+
+                let allowed = true;
+
+                // if there is already a rating for this cocktail by the same user;
+                cocktail.ratings.forEach(rating => {
+                    if (rating.username == data.rating.username) {
+                        //TODO: überschreiben oder auslagern ob Bewertung möglich ist
+                        console.log("ERNEUTE BEWERTUNG DES GLEICHEN COCKTAILS NICHT MÖGLICH");
+                        allowed = false;
+                    }
+                });
+
+                if (allowed) {
+                    cocktail.addRating(data.rating);
+                }
+
             }
         })
     }

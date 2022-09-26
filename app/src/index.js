@@ -16,12 +16,15 @@ let showCocktails = () => {
     listView.refreshCocktails(cocktailListManager.displayList);
 }
 
+//TODO: LOGIN
 let user = new User("AAAA");
-console.log(user);
-
 
 cocktailListManager.addEventListener("DATA_READY", (event) => showCocktails());
 cocktailListManager.addEventListener("DATA_UPDATED", (event) => showCocktails());
+user.addEventListener("RATING_READY", (event) => cocktailListManager.rateCocktail(event.data));
+
+
+console.log(user);
 
 // Rewrite URL
 //window.history.pushState('Rezepte', 'Rezepte', '/Rezepte');
