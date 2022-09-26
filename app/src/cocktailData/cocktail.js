@@ -1,4 +1,3 @@
-import { Rating } from "./rating.js";
 
 class Cocktail {
 
