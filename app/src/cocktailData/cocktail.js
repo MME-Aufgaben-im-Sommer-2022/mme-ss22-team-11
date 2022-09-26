@@ -18,6 +18,15 @@ class Cocktail {
     }
 
     addRating(rating) {
+
+        let r = rating;
+        if (r < 0) {
+            r = 0;
+        }
+        if (r > 5) {
+            r = 5;
+        }
+
         this.ratings.push(rating);
     }
 
