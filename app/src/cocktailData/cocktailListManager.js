@@ -56,9 +56,31 @@ class CocktailListManager extends Observable {
         //TODO: letzte id aus Datenbank auslesen, dann: let id = UUID
 
         let newCocktail = new Cocktail(id, name, recipe, image, undefined, 0, [], category, [], description, steps, author);
+        console.log(newCocktail);
         this.allCocktails.push(newCocktail);
         //TODO: Datenbank updaten
 
+    }
+
+    getCocktailsFromJson() {
+        fetch('./src/cocktailData/JSON/recipes.json')
+            .then((response) => response.json())
+            .then((json) => {
+
+                for (let i in json) {
+
+                    let data = json[i];
+                    let recipe = this.getRecipeFromData(data);
+
+                    this.addCocktailFromJSON(i, data.name, recipe, data.img, data.category, data.description, data.steps, data.author);
+                }
+
+                //TODO: get Data from db (notify after that)
+
+                //TODO: notify data ready
+                this.notifyAll(new Event("DATA_READY"))
+
+            });
     }
 
     updateDisplayList(returnList) {
@@ -143,27 +165,6 @@ class CocktailListManager extends Observable {
         });
 
         return bannedIds;
-    }
-
-    getCocktailsFromJson() {
-        fetch('./src/cocktailData/JSON/recipes.json')
-            .then((response) => response.json())
-            .then((json) => {
-
-                for (let i in json) {
-
-                    let data = json[i];
-                    let recipe = this.getRecipeFromData(data);
-
-                    this.addCocktailFromJSON(i, data.name, recipe, data.img, data.category, data.tags, data.description, data.steps, data.author);
-                }
-
-                //TODO: get Data from db (notify after that)
-
-                //TODO: notify data ready
-                this.notifyAll(new Event("DATA_READY"))
-
-            });
     }
 
     getRecipeFromData(data) {
