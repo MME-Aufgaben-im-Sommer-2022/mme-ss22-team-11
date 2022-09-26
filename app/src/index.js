@@ -4,6 +4,7 @@ import { IngredientFilterManager } from "./cocktailData/ingredientFilterManager.
 import { ListView } from "./ui/ListView.js";
 import { IngredientListView } from "./ui/ingredients/IngredientListView.js";
 import { CocktailView } from "./ui/cocktail/CocktailView.js";
+import { User } from "./profile/user.js";
 
 let htmlManipulator = new HtmlManipulator;
 let cocktailListManager = new CocktailListManager();
@@ -14,6 +15,10 @@ let ingredientListView = new IngredientListView();
 let showCocktails = () => {
     listView.refreshCocktails(cocktailListManager.displayList);
 }
+
+let user = new User("AAAA");
+console.log(user);
+
 
 cocktailListManager.addEventListener("DATA_READY", (event) => showCocktails());
 cocktailListManager.addEventListener("DATA_UPDATED", (event) => showCocktails());
@@ -50,21 +55,21 @@ let responseDelay = 500;
 // Listen for user input in Search Bar
 // Also wait for user to finish input (.5s) to reduce amount of callbacks
 let searchInput = document.querySelector('.search-bar-input');
-searchInput.addEventListener('keyup', function() {
+searchInput.addEventListener('keyup', function () {
     clearTimeout(timeout);
     timeout = setTimeout(() => {
         cocktailListManager.searchCocktailByName(searchInput.value);
     }, responseDelay);
-    
+
 })
 
 // Listen for user input in Ingredient Filter Search Bar
 // Also wait for user to finish input (.5s) to reduce amount of callbacks
 let searchInputIngredient = document.querySelector('.ingredient-input');
-searchInputIngredient.addEventListener('keyup', function() {
+searchInputIngredient.addEventListener('keyup', function () {
     clearTimeout(timeout);
     timeout = setTimeout(() => {
         ingredientFilterManager.searchIngredientByName(searchInputIngredient.value)
     }, responseDelay);
-    
+
 })
