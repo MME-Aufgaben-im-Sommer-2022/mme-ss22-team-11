@@ -26,17 +26,18 @@ class AppwriteConnector {
   async createAccount(name, email, password) {
     let result,
       userId = email.replace('@', '_'); // Bsp.: max.mustermann_email.de
-
     try {
       result = await this.account.create(userId, email, password, name);
+      
       console.log(result);
       return result;
     } catch (error) {
       console.error(error);
     }
 
-    return result;
+    //TODO: Listener -> erstell neuen user
   }
+  
 
   async login(email, password) {
     const promise = await this.account.createEmailSession(email, password);
