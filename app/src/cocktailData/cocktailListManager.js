@@ -84,7 +84,7 @@ class CocktailListManager extends Observable {
             });
     }
 
-    addCocktail(name, recipe, image, category, tags, description, steps, author) {
+    addCocktail(name, recipe, image, tags, description, steps, author) {
 
         // letzte id aus db auslesen (daraus neue errechnen)
         // neuen Cocktail machen
@@ -93,11 +93,11 @@ class CocktailListManager extends Observable {
 
     }
 
-    addCocktailFromJSON(id, name, recipe, image, category, description, steps, author) {
+    addCocktailFromJSON(id, name, recipe, image, description, steps, author) {
 
         //TODO: letzte id aus Datenbank auslesen, dann: let id = UUID
 
-        let newCocktail = new Cocktail(id, name, recipe, image, [], category, [], description, steps, author);
+        let newCocktail = new Cocktail(id, name, recipe, image, [], [], description, steps, author);
         this.allCocktails.push(newCocktail);
         //TODO: Datenbank updaten
 
@@ -113,13 +113,13 @@ class CocktailListManager extends Observable {
                     let data = json[i];
                     let recipe = this.getRecipeFromData(data);
 
-                    this.addCocktailFromJSON(i, data.name, recipe, data.img, data.category, data.description, data.steps, data.author);
+                    this.addCocktailFromJSON(i, data.name, recipe, data.img, data.description, data.steps, data.author);
                 }
 
                 //TODO: get Data from db (notify after that)
 
                 //TODO: notify data ready
-                this.notifyAll(new Event("DATA_READY"))
+                this.notifyAll(new Event("DATA_READY"));
 
             });
     }

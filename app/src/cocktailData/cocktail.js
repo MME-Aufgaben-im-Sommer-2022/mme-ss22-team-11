@@ -1,12 +1,11 @@
 class Cocktail {
 
-    constructor(id, name, recipe, image, ratings, category, tags, description, steps, author) {
+    constructor(id, name, recipe, image, ratings, tags, description, steps, author) {
         this.id = id;
         this.name = name;
         this.recipe = recipe;
         this.image = image;
         this.ratings = ratings;
-        this.category = category;
         this.tags = tags;
         this.description = description;
         this.steps = steps;
