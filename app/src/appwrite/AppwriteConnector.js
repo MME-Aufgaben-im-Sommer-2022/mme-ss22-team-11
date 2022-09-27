@@ -35,9 +35,8 @@ class AppwriteConnector {
       console.error(error);
     }
 
-    //TODO: Listener -> erstell neuen user
+    // TODO: Listener -> erstell neuen user
   }
-  
 
   async login(email, password) {
     const promise = await this.account.createEmailSession(email, password);
@@ -49,8 +48,6 @@ class AppwriteConnector {
       // display error message in ui?
     });
   }
-
-  // 
 
   async createDocumentForDB(databaseId, collectionId, documentId, data) { // data as json object
     const promise = await this.database.createDocument(databaseId, collectionId, documentId, data);
@@ -92,6 +89,18 @@ class AppwriteConnector {
     } else {
       this.updateDocumentFromDB(RECIPE_DB_ID, RECIPE_COM_COLLECTION_ID, COMMUNITY_RECIPES_DOC_ID, data);
     }
+  }
+
+  safeUserInDB(userId, data) {
+    this.createDocumentForDB(USER_DB_ID, USER_COLLECTION_ID, userId, data);
+  }
+
+  updateUserData(userId, data) {
+    this.updateDocumentFromDB(USER_DB_ID, USER_COLLECTION_ID, userId, data);
+  }
+
+  getUserFromDB(userId) {
+    return this.getDocumentFromDB(USER_DB_ID, USER_COLLECTION_ID, userId);
   }
 
 }
