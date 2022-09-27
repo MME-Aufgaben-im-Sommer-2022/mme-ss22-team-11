@@ -101,6 +101,7 @@ class CocktailListManager extends Observable {
 
                 if (allowed) {
                     cocktail.addRating(data.rating);
+                    // update cocktail in db
                 }
 
             }
