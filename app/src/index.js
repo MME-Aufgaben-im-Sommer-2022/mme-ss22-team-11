@@ -16,8 +16,8 @@ let showCocktails = () => {
     listView.refreshCocktails(cocktailListManager.displayList);
 }
 
-//TODO: LOGIN
-let user = new User("AAAA");
+//TODO: LOGIN (standarduser, der nix kann, sign/log-in)
+let user = new User("AAAA", "aewheutgfo");
 
 cocktailListManager.addEventListener("DATA_READY", (event) => showCocktails());
 cocktailListManager.addEventListener("DATA_UPDATED", (event) => showCocktails());

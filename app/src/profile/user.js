@@ -4,10 +4,12 @@ import { Observable, Event } from "../utils/Observable.js";
 
 class User extends Observable {
 
-    constructor(username) {
+    constructor(email, username, id) {
 
         super();
 
+        this.email = email;
+        this.id = id;
         this.username = username;
         this.createdCocktails = [];
         this.favorites = [];
