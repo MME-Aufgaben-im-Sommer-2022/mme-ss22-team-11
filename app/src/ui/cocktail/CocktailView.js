@@ -60,6 +60,29 @@ function initializeFavEventListeners(favButton, cocktailView) {
     })
 }
 
+function initializeRatingEventListeners(ratingInput, reviewInput, sendButton, cocktailView) {
+    let stars = ratingInput.querySelectorAll("img");
+    stars = Array.from(stars);
+    let rating = 0;
+    
+    stars.forEach(element => {
+        element.addEventListener("click", () => {
+            rating = stars.indexOf(element) + 1;
+            for (let i = 0; i < stars.indexOf(element) + 1; i++) {
+                stars[i].src = "./resources/css/img/VectorStarFilledAccent.svg";
+            }
+            for (let i = stars.indexOf(element) + 1; i < 5; i++) {
+                stars[i].src = "./resources/css/img/VectorStarHollowAccent.svg";
+            }
+        })
+    });
+    sendButton.addEventListener("click", () => {
+        let review = reviewInput.value;
+        cocktailView.notifyAll(new Event("REVIEW SUBMITTED", {rating, review}));
+    })
+    
+}
+
 class CocktailView extends Observable {
 
     constructor(cocktail) {
@@ -82,9 +105,13 @@ class CocktailView extends Observable {
 
         let backButton = this.el.querySelector(".cocktail-back");
         let favButton = this.el.querySelector(".cocktail-fav");
+        let ratingInput = this.el.querySelector(".rating-input");
+        let reviewInput = this.el.querySelector(".review-input");
+        let sendButton = this.el.querySelector(".send-icon");
 
         initializeBackEventListeners(backButton, this);
         initializeFavEventListeners(favButton, this);
+        initializeRatingEventListeners(ratingInput, reviewInput, sendButton, this);
 
         createIngredients(this.el, this.cocktail.recipe.mainIngredients);
         createInstructions(this.el, this.cocktail.steps);
