@@ -2,12 +2,15 @@ import { Cocktail } from "./cocktail.js";
 import { Component, Recipe } from "./recipe.js"
 import { Ingredient, IngredientList, CustomIngredientMaker } from "./ingredient.js"
 import { Observable, Event } from "../utils/Observable.js"
+import AppwriteConnector from "../appwrite/AppwriteConnector.js";
 
 class CocktailListManager extends Observable {
 
     constructor() {
 
         super();
+
+        this.appwrite = new AppwriteConnector();
 
         //TODO: aus Datenbank/API laden
         this.allCocktails = [];
@@ -21,6 +24,44 @@ class CocktailListManager extends Observable {
         this.displayList = this.allCocktails;
 
         //TODO: listener hinzufügen um zu sehen wann daten bereit sind
+
+    }
+
+    getAllCommunityCocktails() {
+
+        let returnList = [];
+
+        // jeder Cocktail mit negativer ID ist von der Community
+        this.allCocktails.forEach(cocktail => {
+            if (cocktail.id < 0) {
+                returnList.push(cocktail);
+            }
+        });
+
+        return returnList;
+
+    }
+
+    //TODO: fertig machen
+    communityCocktailsToJSON() {
+
+        let obj;
+        this.getAllCommunityCocktails.forEach(cocktail => {
+            let id = cocktail.id;
+        });
+
+        let json = JSON.stringify(obj);
+
+        this.appwrite.createOrUpdateCommunityRecipes(json);
+
+    }
+
+    //TODO: aus Datenbank auslesen
+    jsonToCommunityCocktails() {
+
+        let json = this.appwrite.getDocumentFromDB(this.appwrite.RECIPE_DB_ID, this.appwrite.RECIPE_COM_COLLECTION_ID, this.appwrite.COMMUNITY_RECIPES_DOC_ID);
+
+        // TODO: json zu liste und zu allcocktails hinzufügen (listener mit data ready)
 
     }
 

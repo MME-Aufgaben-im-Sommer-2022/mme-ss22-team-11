@@ -61,24 +61,26 @@
         <div class="cocktail-container">
 
             <!--Append cocktails here-->
-            
+
         </div>
         <div class="new-recipe-fab">
             <img src="./resources/css/img/VectorPlusAccent.svg" draggable="false">
         </div>
     </section>
 
-   <script type="module" src="./src/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/appwrite@9.0.1/dist/iife/sdk.min.js"></script>
+    <script type="module" src="./src/index.js"></script>
 </body>
 
 <template id="cocktail-list-element-template">
     <a class="cocktail">
-            <div class="cocktail-image"></div>
-            <div class="cocktail-text">
-                <p class="cocktail-name">[Name]</p>
-                <!--Display avg rating?-->
-                <p class="cocktail-info"><span class="cocktail-tags">[Tags]</span><br><span class="cocktail-ingredients">0 Zutaten</span></p>
-            </div>
+        <div class="cocktail-image"></div>
+        <div class="cocktail-text">
+            <p class="cocktail-name">[Name]</p>
+            <!--Display avg rating?-->
+            <p class="cocktail-info"><span class="cocktail-tags">[Tags]</span><br><span class="cocktail-ingredients">0
+                    Zutaten</span></p>
+        </div>
     </a>
 </template>
 
@@ -171,7 +173,8 @@
                             <img src="./resources/css/img/VectorStarHollowBlack.svg" draggable="false">
                         </div>
                     </div>
-                    <p class="review-text">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At</p>
+                    <p class="review-text">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+                        eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At</p>
                 </div>
                 <div class="review">
                     <div class="review-header">
@@ -184,7 +187,9 @@
                             <img src="./resources/css/img/VectorStarFilledBlack.svg" draggable="false">
                         </div>
                     </div>
-                    <p class="review-text">Lorem ipsum dolor sit amet, consscing elitr,scing elitr,scing elitr,scing elitr,scing elitr,scing elitr,etetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At</p>
+                    <p class="review-text">Lorem ipsum dolor sit amet, consscing elitr,scing elitr,scing elitr,scing
+                        elitr,scing elitr,scing elitr,etetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+                        labore et dolore magna aliquyam erat, sed diam voluptua. At</p>
                 </div>
                 <div class="review">
                     <div class="review-header">
@@ -197,7 +202,11 @@
                             <img src="./resources/css/img/VectorStarHollowBlack.svg" draggable="false">
                         </div>
                     </div>
-                    <p class="review-text">Lorem ipsum dolor scing elitr,scing elitr,scing elitr,sit amet, consetetur sadipscing elitr,scing elitr,scing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. Atsit amet, consetetur sadipscing elitr,scing elitr,scing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua</p>
+                    <p class="review-text">Lorem ipsum dolor scing elitr,scing elitr,scing elitr,sit amet, consetetur
+                        sadipscing elitr,scing elitr,scing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
+                        dolore magna aliquyam erat, sed diam voluptua. Atsit amet, consetetur sadipscing elitr,scing
+                        elitr,scing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+                        erat, sed diam voluptua</p>
                 </div>
 
             </div>
@@ -212,33 +221,33 @@
     <section class="login-section">
 
         <div class="login-container">
-          <img class="login-icon" src="./resources/css/img/VectorLoginIcon.svg">
-          <div class="login-field">
-            <p>
-            E-Mail
+            <img class="login-icon" src="./resources/css/img/VectorLoginIcon.svg">
+            <div class="login-field">
+                <p>
+                    E-Mail
+                </p>
+                <input class="login-email-input" type="text" placeholder="example@email.com">
+            </div>
+            <div class="login-field">
+                <p>
+                    Passwort
+                </p>
+                <input class="login-password-input" type="password" placeholder="Mind. 6 Zeichen">
+            </div>
+            <button class="signup-button">
+                Sign Up
+            </button>
+            <p class="login-question">
+                Already have an account? <span class="login-span">Login</span>
             </p>
-            <input class="login-email-input" type="text" placeholder="example@email.com">
-          </div>
-          <div class="login-field">
-            <p>
-            Passwort
-            </p>
-            <input class="login-password-input" type="password" placeholder="Mind. 6 Zeichen">
-          </div>
-          <button class="signup-button">
-          Sign Up
-          </button>
-          <p class="login-question">
-          Already have an account? <span class="login-span">Login</span>
-          </p>
         </div>
-      
-      </section>
+
+    </section>
 </template>
 
 <template id="recipe-creator-template">
     <section class="recipe-creator-section">
-        
+
     </section>
 </template>
 
