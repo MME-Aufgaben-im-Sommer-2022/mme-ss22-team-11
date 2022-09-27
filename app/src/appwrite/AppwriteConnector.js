@@ -4,12 +4,8 @@
 const
   USER_DB_ID = "632dbc2bc51bf9eaeb25",
   USER_COLLECTION_ID = "632dbc3088eeb52ba0d0",
-  USER_FAVORITES_ID = "632dbd25ac63865b5a40",
-  USER_BANNED_ITEMS_ID = "632dbd3adbbef22d24d8",
   RECIPE_DB_ID = "632dbc5238a0eeba297b",
-  RECIPE_API_COLLECTION_ID = "632dbc5649f159c63894",
   RECIPE_COM_COLLECTION_ID = "632dbc5f18e03c05d7fe",
-  INGREDIENTS_COLLECTION_ID = "632dbca9e003743dad75",
   COMMUNITY_RECIPES_DOC_ID = "communityRecipes";
 
 class AppwriteConnector {
@@ -26,12 +22,10 @@ class AppwriteConnector {
     this.account = new Appwrite.Account(this.client);
   }
 
-  // method used when creatin a new account
+  // method used when creating a new account
   async createAccount(name, email, password) {
     let result,
-      indexOfAt = email.indexOf('@'),
-      emailSpliced = email.substring(0, indexOfAt),
-      userId = emailSpliced + "_" + name.replace(/ /g, '_'); // Bsp.: max.mustermann_Max_Mustermann
+      userId = email.replace('@', '_'); // Bsp.: max.mustermann_email.de
 
     try {
       result = await this.account.create(userId, email, password, name);
@@ -44,13 +38,7 @@ class AppwriteConnector {
     return result;
   }
 
-  async getAccount(email, password) {
-
-  }
-
   async login(email, password) {
-    //const account = getAccount(email, password);
-
     const promise = await this.account.createEmailSession(email, password);
     promise.then(response => {
       console.log(response);
@@ -60,6 +48,8 @@ class AppwriteConnector {
       // display error message in ui?
     });
   }
+
+  // 
 
   async createDocumentForDB(databaseId, collectionId, documentId, data) { // data as json object
     const promise = await this.database.createDocument(databaseId, collectionId, documentId, data);

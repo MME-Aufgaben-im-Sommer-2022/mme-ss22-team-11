@@ -20,6 +20,8 @@ class User extends Observable {
         this.allIngredients.getAllIngredientsFromJSON();
 
         this.givenRatings = [];
+
+        // TODO: save User in database
     }
 
     fillAllIngredients(data) {
