@@ -1,6 +1,8 @@
 import AppwriteConnector from "../appwrite/AppwriteConnector.js";
 import { User } from "./user.js";
 
+// soll in index.js benutzt werden um den user festzustellen
+
 class Login {
 
     constructor() {
@@ -19,6 +21,12 @@ class Login {
 
     login(id) {
         // TODO: get user by id with appwrite -> return user;
+    }
+
+    // für anonyme Nutzer
+    // TODO: undefined id abfangen, um verschiedene Funktionen zu sperren
+    getDefaultUser() {
+        return new User(undefined, undefined, undefined);
     }
 
     // TODO: delete Account
