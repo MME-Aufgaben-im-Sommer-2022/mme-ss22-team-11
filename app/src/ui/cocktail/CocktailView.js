@@ -17,9 +17,9 @@ function createIngredients(el, ingredients) {
 }
 
 function createInstructions(el, instructions) {
-    for (var step in instructions) {
+    for (let index = 1; index <= Object.keys(instructions).length; index++) {
         let li = document.createElement("li");
-        li.textContent = step;
+        li.textContent = instructions[index];
         el.querySelector(".instructions").append(li);
     }
 }
@@ -50,11 +50,9 @@ function initializeFavEventListeners(favButton, cocktailView) {
     favButton.addEventListener("click", (event) => {
         if(favButton.classList.contains("active")) {
             favButton.classList.remove("active");
-            console.log("Cocktail unmarked as fav");
             favButton.src = "./resources/css/img/VectorFavHollow.svg";
         } else {
             favButton.classList.add("active");
-            console.log("Cocktail marked as fav");
             favButton.src = "./resources/css/img/VectorFavFilled.svg";
         }
     })
