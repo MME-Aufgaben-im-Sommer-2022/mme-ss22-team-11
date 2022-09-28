@@ -2,16 +2,6 @@ import { IngredientList } from "../cocktailData/ingredient.js";
 import { Rating } from "../cocktailData/rating.js";
 import { Observable, Event } from "../utils/Observable.js";
 
-class UserGetter {
-    
-    getUserFromJSON(id) {
-        // get JSON data from db
-        // make new User with email, username, id
-        // fill the lists
-        // return user object (with listener *fetch*)
-    }
-
-}
 
 class User extends Observable {
 

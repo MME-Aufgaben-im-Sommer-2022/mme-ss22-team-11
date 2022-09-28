@@ -126,12 +126,14 @@ class CocktailListManager extends Observable {
             });
     }
 
-    addCocktail(name, recipe, image, tags, description, steps, author) {
+    addCustomCocktail(name, recipe, image, tags, description, steps, author) {
 
-        // letzte id aus db auslesen (daraus neue errechnen)
-        // neuen Cocktail machen
-        // in cocktails pushen
-        // db aktualisieren
+        // TODO: letzte id aus db auslesen (daraus neue errechnen)
+        let id = -1;
+        let cocktail = new Cocktail(id, name, recipe, image, [], tags, description, steps, author);
+        console.log(cocktail);
+        this.allCocktails.push(cocktail);
+        // TODO: db aktualisieren
 
     }
 
