@@ -7,7 +7,7 @@ import { CocktailView } from "./ui/cocktail/CocktailView.js";
 import { User } from "./profile/user.js";
 import { Login } from "./profile/login.js";
 
-let htmlManipulator = new HtmlManipulator;
+let htmlManipulator = new HtmlManipulator();
 let cocktailListManager = new CocktailListManager();
 let ingredientFilterManager = new IngredientFilterManager();
 let listView = new ListView();
