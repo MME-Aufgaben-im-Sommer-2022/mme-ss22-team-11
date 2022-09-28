@@ -247,7 +247,45 @@
 
 <template id="recipe-creator-template">
     <section class="recipe-creator-section">
+        
+        <div class="creator-header">
+            <img class="creator-cancel" src="./resources/css/img/VectorCancel.svg" draggable="false">
+        </div>
+            
+        <div>
+            <div class="creator-image-upload">
+                <form>
+                    <input type="file" class="creator-upload-image-input" accept="image/*">
+                    <input type="submit">
+                </form>
+            </div>
+            <div>
+                <input type="text" placeholder="Name">
+            </div>
+            <div class="creator-tags">
+                <input type="text" class="creator-tag-input" placeholder="Suche nach Tags...">
+                <!-- append tags -->
+                <button class="creator-add-ingredient">+</button>
+            </div>
 
+            <div class="creator-ingredients">
+                <p>Zutaten</p>
+                <input type="text" class="creator-ingredient-input" placeholder="Suche nach Zutaten...">
+                <!-- append ingredients -->
+                <button class="creator-add-ingredient">+</button>
+            </div>
+            <div class="creator-steps">
+                <p>Zubereitung</p>
+                <input type="text" class="creator-step-input" placeholder="Füge Schritt hinzu...">
+                <!-- append steps -->
+                <button class="creator-add-step">+</button>
+            </div>
+            <div class="creator-upload">
+                <button class="creator-upload-button">
+                    Hochladen
+                </button>
+            </div>
+        </div>
     </section>
 </template>
 
