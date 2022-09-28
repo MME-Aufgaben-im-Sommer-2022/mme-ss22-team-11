@@ -35,7 +35,7 @@ class AppwriteConnector {
       console.error(error);
     }
 
-    //TODO: Listener -> erstell neuen user
+    // TODO: Listener -> erstell neuen user
   }
   
 

@@ -2,6 +2,17 @@ import { IngredientList } from "../cocktailData/ingredient.js";
 import { Rating } from "../cocktailData/rating.js";
 import { Observable, Event } from "../utils/Observable.js";
 
+class UserGetter {
+    
+    getUserFromJSON(id) {
+        // get JSON data from db
+        // make new User with email, username, id
+        // fill the lists
+        // return user object (with listener *fetch*)
+    }
+
+}
+
 class User extends Observable {
 
     constructor(email, username, id) {
@@ -21,7 +32,6 @@ class User extends Observable {
 
         this.givenRatings = [];
 
-        // TODO: save User in database
     }
 
     fillAllIngredients(data) {
@@ -38,6 +48,7 @@ class User extends Observable {
         this.notifyAll(new Event("RATING_READY", data))
 
         this.givenRatings.push(data);
+        // TODO: update user in db
     }
 
     // wird aufgerufen, wenn eine Zutat gesperrt werden soll
@@ -49,6 +60,8 @@ class User extends Observable {
         ingredients.forEach(ingredient => {
             this.blackListedIngredients.addIngredient(ingredient);
         });
+
+        // TODO: update user in db
     }
 
     addCocktailToFavorites(cocktailID) {
@@ -56,11 +69,14 @@ class User extends Observable {
             return;
         }
         this.favorites.push(cocktailID);
+
+        // TODO: update user in db
     }
 
     // wenn der Nutzer einen Cocktail erstellt soll die ID hier gespeichert werden
     onCocktailCreated(cocktailID) {
         this.createdCocktails.push(cocktailID);
+        // TODO: update user in db
     }
 
 }
