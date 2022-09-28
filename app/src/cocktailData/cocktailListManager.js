@@ -43,14 +43,30 @@ class CocktailListManager extends Observable {
     }
 
     //TODO: fertig machen
-    communityCocktailsToJSON() {
+    cocktailsToJSON() {
 
-        let obj;
-        this.getAllCommunityCocktails.forEach(cocktail => {
-            let id = cocktail.id;
+        let obj = {};
+        this.allCocktails.forEach(cocktail => {
+
+            // getCocktailData
+            let data = {};
+            data.name = cocktail.name;
+            data.author = cocktail.author;
+            data.main_ingredients = cocktail.mainIngredients;
+            data.deko_ingredients = cocktail.decoIngredients;
+            data.steps = cocktail.steps;
+            data.img = cocktail.image;
+            data.description = cocktail.description;
+            data.tags = cocktail.tags;
+            data.ratings = cocktail.ratings;
+
+            obj[cocktail.id] = data;
+
         });
 
         let json = JSON.stringify(obj);
+
+        console.log(json);
 
         this.appwrite.createOrUpdateCommunityRecipes(json);
 
@@ -147,6 +163,7 @@ class CocktailListManager extends Observable {
 
     }
 
+    // TODO: auslagern, soll nur ausgeführt werden wenn Datenbank leer ist
     getCocktailsFromJson() {
         fetch('./src/cocktailData/JSON/recipes.json')
             .then((response) => response.json())
@@ -160,9 +177,7 @@ class CocktailListManager extends Observable {
                     this.addCocktailFromJSON(i, data.name, recipe, data.img, data.description, data.steps, data.author);
                 }
 
-                //TODO: get Data from db (notify after that)
-
-                //TODO: notify data ready
+                this.cocktailsToJSON();
                 this.notifyAll(new Event("DATA_READY"));
 
             });
