@@ -5,6 +5,7 @@ import { ListView } from "./ui/ListView.js";
 import { IngredientListView } from "./ui/ingredients/IngredientListView.js";
 import { CocktailView } from "./ui/cocktail/CocktailView.js";
 import { User } from "./profile/user.js";
+import { Login } from "./profile/login.js";
 
 let htmlManipulator = new HtmlManipulator;
 let cocktailListManager = new CocktailListManager();
@@ -17,14 +18,19 @@ let showCocktails = () => {
 }
 
 //TODO: LOGIN (standarduser, der nix kann, sign/log-in)
-let user = new User("AAAA", "aewheutgfo");
+// Login soll benutzt werden, um nutzer zu erstellen, abzurufen oder einen anonymen User zu erstellen
+let login = new Login();
+let user;
+login.addEventListener("SIGN_UP", (event) => {
+    user = event.data; 
+    console.log(user);
+});
+login.singUp("Gix", "georg_dechant@web.de", "IchBinEinPasswort");
 
 cocktailListManager.addEventListener("DATA_READY", (event) => showCocktails());
 cocktailListManager.addEventListener("DATA_UPDATED", (event) => showCocktails());
-user.addEventListener("RATING_READY", (event) => cocktailListManager.rateCocktail(event.data));
+// user.addEventListener("RATING_READY", (event) => cocktailListManager.rateCocktail(event.data));
 
-
-console.log(user);
 
 // Rewrite URL
 //window.history.pushState('Rezepte', 'Rezepte', '/Rezepte');

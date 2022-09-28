@@ -26,15 +26,28 @@ class User extends Observable {
         this.favorites = [];
         this.blackListedIngredients = new IngredientList();
         this.allIngredients = new IngredientList();
+        this.givenRatings = [];
 
         this.allIngredients.addEventListener("INGREDIENTS_READY", (event) => this.fillAllIngredients(event.data))
         this.allIngredients.getAllIngredientsFromJSON();
 
-        this.givenRatings = [];
 
     }
 
+    toJSON() {
+        let data = {};
+        data.email = this.email;
+        data.id = this.id;
+        data.username = this.username;
+        data.favorites = this.favorites;
+        data.blackListedIngredients = this.blackListedIngredients;
+        data.givenRatings = this.givenRatings;
+
+        return JSON.stringify(data);
+    }
+
     fillAllIngredients(data) {
+        this.allIngredients = new IngredientList();
         data.forEach(el => this.allIngredients.addIngredient(el));
     }
 

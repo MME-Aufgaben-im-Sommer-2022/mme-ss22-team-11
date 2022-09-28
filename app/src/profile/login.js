@@ -1,11 +1,13 @@
 import AppwriteConnector from "../appwrite/AppwriteConnector.js";
+import Observable, { Event } from "../utils/Observable.js";
 import { User } from "./user.js";
 
 // soll in index.js benutzt werden um den user festzustellen
 
-class Login {
+class Login extends Observable {
 
     constructor() {
+        super();
         this.appwrite = new AppwriteConnector();
     }
 
@@ -13,9 +15,11 @@ class Login {
         this.appwrite.createAccount(username, email, password);
         let id = email.replace("@", "_");
         let user = new User(email, username, id);
-        
-        let json = JSON.stringify(user);
+
+        let json = user.toJSON();
+        console.log("JSON: ", json);
         this.appwrite.safeUserInDB(id, json);
+        this.notifyAll(new Event("SIGN_UP", user));
 
     }
 
@@ -29,7 +33,7 @@ class Login {
         user.allIngredients = json.allIngredients;
         user.givenRatings = json.givenRatings;
 
-        return user;
+        this.notifyAll(new Event("LOGIN", user));
     }
 
     // für anonyme Nutzer
@@ -41,3 +45,5 @@ class Login {
     // TODO: delete Account
 
 }
+
+export { Login };

@@ -2,11 +2,12 @@
     global Appwrite
 */
 const
-  USER_DB_ID = "632dbc2bc51bf9eaeb25",
-  USER_COLLECTION_ID = "632dbc3088eeb52ba0d0",
-  RECIPE_DB_ID = "632dbc5238a0eeba297b",
-  RECIPE_COM_COLLECTION_ID = "632dbc5f18e03c05d7fe",
+  API_KEY = "5baa5fb4c8b2ae1502f7773b11fe748dbc7e95cd8d4dbd967cb4b757d243db439183f8b8a774d2376a40d447f89f001542ced75e9e5e02871b96f4a7b4862d2e76f65c82e7b77cfb0c29fd570e12ba2afaa05419152a75cd836122f0908631496cc01a796aaf2eb102c2eb645b52ef87f77437381f822eda95ee73f087d15e3c",
+  DB_ID = "633441b010a3d7ab7519",
+  USER_COLLECTION_ID = "633441b6674e76102ea8",
+  RECIPE_COM_COLLECTION_ID = "633442068d24b2efce9b",
   COMMUNITY_RECIPES_DOC_ID = "communityRecipes";
+
 
 class AppwriteConnector {
 
@@ -18,7 +19,7 @@ class AppwriteConnector {
       .setEndpoint(
         "https://appwrite.software-engineering.education/v1") // parameter an konstruktor übergeben
       .setProject("62ecf9068d60a3eb72ab");
-    this.database = new Appwrite.Database(this.client);
+    this.database = new Appwrite.Databases(this.client);
     this.account = new Appwrite.Account(this.client);
   }
 
@@ -28,7 +29,7 @@ class AppwriteConnector {
       userId = email.replace('@', '_'); // Bsp.: max.mustermann_email.de
     try {
       result = await this.account.create(userId, email, password, name);
-      
+
       console.log(result);
       return result;
     } catch (error) {
@@ -50,6 +51,7 @@ class AppwriteConnector {
   }
 
   async createDocumentForDB(databaseId, collectionId, documentId, data) { // data as json object
+    console.log("DATA: ", data);
     const promise = await this.database.createDocument(databaseId, collectionId, documentId, data);
     promise.then(response => {
       console.log(response);
@@ -84,23 +86,23 @@ class AppwriteConnector {
   // TODO: test
   async createOrUpdateCommunityRecipes(data) {
 
-    if (this.getDocumentFromDB(RECIPE_DB_ID, RECIPE_COM_COLLECTION_ID, COMMUNITY_RECIPES_DOC_ID) == undefined) {
-      this.createDocumentForDB(RECIPE_DB_ID, RECIPE_COM_COLLECTION_ID, COMMUNITY_RECIPES_DOC_ID, data);
+    if (this.getDocumentFromDB(DB_ID, RECIPE_COM_COLLECTION_ID, COMMUNITY_RECIPES_DOC_ID) == undefined) {
+      this.createDocumentForDB(DB_ID, RECIPE_COM_COLLECTION_ID, COMMUNITY_RECIPES_DOC_ID, data);
     } else {
-      this.updateDocumentFromDB(RECIPE_DB_ID, RECIPE_COM_COLLECTION_ID, COMMUNITY_RECIPES_DOC_ID, data);
+      this.updateDocumentFromDB(DB_ID, RECIPE_COM_COLLECTION_ID, COMMUNITY_RECIPES_DOC_ID, data);
     }
   }
 
   safeUserInDB(userId, data) {
-    this.createDocumentForDB(USER_DB_ID, USER_COLLECTION_ID, userId, data);
+    this.createDocumentForDB(DB_ID, USER_COLLECTION_ID, userId, data);
   }
 
   updateUserData(userId, data) {
-    this.updateDocumentFromDB(USER_DB_ID, USER_COLLECTION_ID, userId, data);
+    this.updateDocumentFromDB(DB_ID, USER_COLLECTION_ID, userId, data);
   }
 
   getUserFromDB(userId) {
-    return this.getDocumentFromDB(USER_DB_ID, USER_COLLECTION_ID, userId);
+    return this.getDocumentFromDB(DB_ID, USER_COLLECTION_ID, userId);
   }
 
 }
