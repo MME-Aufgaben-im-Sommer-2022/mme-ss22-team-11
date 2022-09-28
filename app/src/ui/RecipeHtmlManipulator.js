@@ -8,7 +8,7 @@ const NEW_RECIPE_FAB = document.getElementsByClassName("new-recipe-fab")[0];
 
 class HtmlManipulator {
 
-    constructor () {
+    constructor() {
         for (let item of NAV_LINKS) {
             item.addEventListener("click", (event) => {
                 for (let item of NAV_LINKS) {
@@ -19,50 +19,56 @@ class HtmlManipulator {
                 item.classList.add("active")
             })
         }
-        
+
         FILTER_ING_INPUT_CONTAINER.addEventListener("click", (event) => {
-            if(FILTER_ING_RESULTS.childElementCount != 0) {
+            if (FILTER_ING_RESULTS.childElementCount != 0) {
                 FILTER_ING_INPUT_CONTAINER.classList.add("extend");
             } else {
                 FILTER_ING_INPUT_CONTAINER.classList.add("focus");
             }
         })
-        
+
         document.addEventListener("click", (event) => {
             if (!FILTER_ING_INPUT_CONTAINER.contains(event.target) && event.target.className != "ingredient") {
-                if(FILTER_ING_INPUT_CONTAINER.classList.contains("focus")) {
+                if (FILTER_ING_INPUT_CONTAINER.classList.contains("focus")) {
                     FILTER_ING_INPUT_CONTAINER.classList.remove("focus");
                 } else if (FILTER_ING_INPUT_CONTAINER.classList.contains("extend")) {
                     FILTER_ING_INPUT_CONTAINER.classList.remove("extend");
                 }
             }
         })
-        
+
         for (let item of INGREDIENT_CONTAINER.children) {
             item.addEventListener("click", (event) => {
                 item.remove();
             })
         }
-        
+
         for (let item of FILTER_ING_RESULTS.children) {
             item.addEventListener("click", (event) => {
                 item.remove();
                 INGREDIENT_CONTAINER.append(item);
             })
         }
-        
-        NEW_RECIPE_FAB.addEventListener("mouseover", (event) => {
-            NEW_RECIPE_FAB.children[0].src = "./resources/css/img/VectorPlusPrimary.svg";
-        })
-        
-        NEW_RECIPE_FAB.addEventListener("mouseout", (event) => {
-            NEW_RECIPE_FAB.children[0].src = "./resources/css/img/VectorPlusAccent.svg";
-        })
-        
-        NEW_RECIPE_FAB.addEventListener("click", (event) => {
-            console.log("open recipe-creator");
-            window.location.href = "./resources/html/creator.html"
-        })
+
+
+        if (NEW_RECIPE_FAB != undefined) {
+            NEW_RECIPE_FAB.addEventListener("mouseover", (event) => {
+                NEW_RECIPE_FAB.children[0].src = "./resources/css/img/VectorPlusPrimary.svg";
+            });
+
+
+            NEW_RECIPE_FAB.addEventListener("mouseout", (event) => {
+                NEW_RECIPE_FAB.children[0].src = "./resources/css/img/VectorPlusAccent.svg";
+            });
+
+            NEW_RECIPE_FAB.addEventListener("click", (event) => {
+                console.log("open recipe-creator");
+                window.location.href = "./resources/html/creator.html"
+            });
+        }
+
+
     }
 }
 

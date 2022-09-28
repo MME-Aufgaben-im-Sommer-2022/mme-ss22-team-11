@@ -10,7 +10,7 @@ class CocktailListManager extends Observable {
 
         super();
 
-        this.appwrite = new AppwriteConnector();
+        //this.appwrite = new AppwriteConnector();
 
         //TODO: aus Datenbank/API laden
         this.allCocktails = [];
@@ -66,9 +66,9 @@ class CocktailListManager extends Observable {
 
         let json = JSON.stringify(obj);
 
-        console.log(json);
+        //console.log(json);
 
-        this.appwrite.createOrUpdateCommunityRecipes(json);
+        //this.appwrite.createOrUpdateCommunityRecipes(json);
 
     }
 

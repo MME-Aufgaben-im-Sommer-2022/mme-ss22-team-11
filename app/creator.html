@@ -5,13 +5,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VerwertBar</title>
-    <link rel="stylesheet" href="../css/creator.css">
-    <link rel="stylesheet" href="../css/fonts.css">
+    <link rel="stylesheet" href="/app/resources/css/creator.css">
+    <link rel="stylesheet" href="/app/resources/css/fonts.css">
 </head>
 
 <body>
     <header>
-        <img class="logo" src="../css/img/VectorVerwertBarLogo.svg" draggable="false" alt="logo">
+        <img class="logo" src="/app/resources/css/img/VectorVerwertBarLogo.svg" draggable="false" alt="logo">
         <nav>
             <ul class="nav-links">
                 <li id="recipes-link"><a class="nav-link" href="../../index.html">Rezepte</a></li>
@@ -24,7 +24,7 @@
     <section class="recipe-creator-section">
         
         <div class="creator-header">
-            <img class="creator-cancel" src="../../resources/css/img/VectorCancel.svg" draggable="false">
+            <img class="creator-cancel" src="/app/resources/css/img/VectorCancel.svg" draggable="false">
         </div>
             
         <div>
@@ -44,11 +44,22 @@
             </div>
 
             <div class="ingredient-input-container">
-                <p>Zutaten</p>
-                <input type="text" class="ingredient-input" placeholder="Suche nach Zutaten...">
-                <!-- append ingredients -->
-                <button class="creator-add-ingredient">+</button>
+                <div class="ingredient-input-header">
+                    <input class="ingredient-input" type="text" placeholder="Search...">
+                    
+                </div>
+                <div class="ingredient-search-results">
+
+                    <!--Append search ingredients here-->
+
+                </div>
             </div>
+            <div class="ingredients-container">
+
+                <!--Append selected ingredients here-->
+
+            </div>
+
             <div class="creator-steps">
                 <p>Zubereitung</p>
                 <input type="text" class="creator-step-input" placeholder="Füge Schritt hinzu...">
@@ -63,12 +74,7 @@
         </div>
     </section>
 
-   <script type="module" src="../../src/creator.js"></script>
+   <script type="module" src="/app/src/creator.js"></script>
 </body>
-
-<template id="recipe-creator-template">
-    
-</template>
-
 
 </html>
