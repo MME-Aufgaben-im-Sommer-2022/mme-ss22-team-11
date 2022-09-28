@@ -15,12 +15,21 @@ class Login {
         let user = new User(email, username, id);
         
         let json = JSON.stringify(user);
-        // TODO: appwrite add user to db
+        this.appwrite.safeUserInDB(id, json);
 
     }
 
     login(id) {
-        // TODO: get user by id with appwrite -> return user;
+        let json = this.appwrite.getUserFromDB(id);
+
+        let user = new User(json.email, json.username, id);
+        user.createdCocktails = json.createdCocktails;
+        user.favorites = json.favorites;
+        user.blackListedIngredients = json.blackListedIngredients;
+        user.allIngredients = json.allIngredients;
+        user.givenRatings = json.givenRatings;
+
+        return user;
     }
 
     // für anonyme Nutzer
