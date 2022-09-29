@@ -25,8 +25,14 @@ class CocktailListManager extends Observable {
         // Diese Liste soll immer angezeigt werden
         this.displayList = this.allCocktails;
 
+        this.getCocktailsFromDB();
+
         //TODO: listener hinzufügen um zu sehen wann daten bereit sind
 
+    }
+
+    async getCocktailsFromDB() {
+        let test = await this.appwrite.getDocument("a");
     }
 
     getAllCommunityCocktails() {
