@@ -1,3 +1,39 @@
+// TODO Remove or refactor console logs before release
+/* eslint-disable no-console */ 
+
+import AppwriteConnector from "./appwrite/AppwriteConnector.js";
+
+async function testAppwriteConnector() {
+    let result, connector = new AppwriteConnector();
+
+    // Testing account creation
+    //console.log("Creating account");
+    //let result = await connector.createAccount("A Test User", "a.test.user-v4@appwrite.com", "12345678");
+
+    // Testing login
+    console.log("Logging in with account");
+    result = await connector.createSession("a.test.user-v3@appwrite.com", "12345678");
+    console.log(result); // Current session
+
+    // Testing preferences: Retrieving
+    console.log("Retrieving preferences for currently logged in user");
+    result = await connector.getPreferences();
+    console.log(result); // Current preferences
+
+    // Testing preferences: updating
+    console.log("Updating (overwriting) preferences for current user");
+    await connector.setPreferences({
+        blacklistedIngredients: ["Sugar", "Milk", "Nuts"],
+        favourites: ["22222", "11111", "33333"],
+    });
+    console.log("Retrieving updated preferences for currently logged in user");
+    result = await connector.getPreferences();
+    console.log(result); // Current preferences
+}
+
+testAppwriteConnector();
+
+/*
 import { HtmlManipulator } from "./ui/RecipeHtmlManipulator.js";
 import { CocktailListManager } from "./cocktailData/cocktailListManager.js";
 import { IngredientFilterManager } from "./cocktailData/ingredientFilterManager.js";
@@ -6,6 +42,8 @@ import { IngredientListView } from "./ui/ingredients/IngredientListView.js";
 import { CocktailView } from "./ui/cocktail/CocktailView.js";
 import { User } from "./profile/user.js";
 import { Login } from "./profile/login.js";
+
+
 
 let htmlManipulator = new HtmlManipulator();
 let cocktailListManager = new CocktailListManager();
@@ -19,13 +57,15 @@ let showCocktails = () => {
 
 //TODO: LOGIN (standarduser, der nix kann, sign/log-in)
 // Login soll benutzt werden, um nutzer zu erstellen, abzurufen oder einen anonymen User zu erstellen
+console.log("before: new Login()");
+
 let login = new Login();
 let user;
 login.addEventListener("SIGN_UP", (event) => {
     user = event.data; 
     console.log(user);
 });
-// login.singUp("Gix", "georg_dechant@web.de", "IchBinEinPasswort");
+login.singUp("Gix", "georg_dechant@web.de", "IchBinEinPasswort");
 
 cocktailListManager.addEventListener("DATA_READY", (event) => showCocktails());
 cocktailListManager.addEventListener("DATA_UPDATED", (event) => showCocktails());
@@ -81,4 +121,4 @@ searchInputIngredient.addEventListener('keyup', function () {
         ingredientFilterManager.searchIngredientByName(searchInputIngredient.value)
     }, responseDelay);
 
-})
+})*/

@@ -12,14 +12,13 @@ class Login extends Observable {
     }
 
     singUp(username, email, password) {
-        this.appwrite.createAccount(username, email, password);
         let id = email.replace("@", "_");
         let user = new User(email, username, id);
 
         let json = user.toJSON();
         console.log("JSON: ", json);
-        this.appwrite.safeUserInDB(id, json);
-        this.notifyAll(new Event("SIGN_UP", user));
+        this.appwrite.safeUserInDB(id, json);/*
+        this.notifyAll(new Event("SIGN_UP", user));*/
 
     }
 

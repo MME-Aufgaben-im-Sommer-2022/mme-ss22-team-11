@@ -1,197 +1,122 @@
-/* 
-    global Appwrite
-*/
-const
-  API_KEY = "5baa5fb4c8b2ae1502f7773b11fe748dbc7e95cd8d4dbd967cb4b757d243db439183f8b8a774d2376a40d447f89f001542ced75e9e5e02871b96f4a7b4862d2e76f65c82e7b77cfb0c29fd570e12ba2afaa05419152a75cd836122f0908631496cc01a796aaf2eb102c2eb645b52ef87f77437381f822eda95ee73f087d15e3c",
-  DB_ID = "633441b010a3d7ab7519",
-  USER_COLLECTION_ID = "633441b6674e76102ea8",
-  RECIPE_COM_COLLECTION_ID = "633442068d24b2efce9b",
-  COMMUNITY_RECIPES_DOC_ID = "communityRecipes";
+/* global Appwrite */
 
+import Config from "./AppwriteConfig.js";
+import CreateUserTask from "./tasks/CreateUserTask.js";
+import CreateUserSessionTask from "./tasks/CreateUserSessionTask.js";
+import DeleteUserSessionTask from "./tasks/DeleteUserSessionTask.js";
+import GetUserPreferencesTask from "./tasks/GetUserPreferencesTask.js";
+import UpdateUserPreferencesTask from "./tasks/UpdateUserPrefrencesTask.js";
 
+function createClient() {
+  let client = new Appwrite.Client();
+  client.setEndpoint(Config.endpoint).setProject(Config.project);
+  return client;
+}
+
+/**
+ * Der AppwriteConnector bildet die Brücke zwischen der Appwrite-Datenbank auf dem Server und
+ * der Client-Anwendung im Browser. Für alle zentralen DB-Anfragen ist hier eine öffentliche,
+ * asynchrone Methode definiert, in der die gesamte Kommunikation mit dem Appwrite-Server
+ * durchgeführt und ein passendes Ergebnis generiert wird. Die eigentlichen Operationen sind dabei
+ * in separate Task-Objekte ausgelagert. Dieser erhalten zur Durchführung (run-Methode) alle
+ * Parameter übergeben, die neben dem bereits beim Erstellen des Tasks übergebenen, aktuellen
+ * Appwrite-Client, für die Durchführung der spezifischen Aufgabe notwendig sind.
+ * 
+ * Werden während der weiteren Implementierung der Anwendung weitere Aufgaben bzw. Aktionen mit
+ * der Appwrite-Datenbank notwendig, so werden diese wie folgt ergänzt:
+ * 
+ * - Unter "tasks" wird ein neues Modul für die jeweilige Aufgabe erstellt
+ * - Im neuen Modul wird eine neues Task-Objekt durch Erweiterung von AppwriteTask erstellt
+ * - Im neuen Task-Objekt muss nur die createResult-Methode überschrieben und dort das spezifische
+ * Verhalten dieses Tasks implementiert werden
+ * - Im AppwriteConnector wird eine neue, öffentliche Methode ergänzt, mit der der neue Task in der 
+ * restlichen Anwendung verwendet werden kann. Notwendige, externe Informationen werden als Parameter 
+ * an die Methode übergeben. In der Methode wird das neue Task-Objekt erstellt, dessen run-Methode 
+ * ausgeführt und das asynchron produzierte Ergebnisse innerhalb des Connectors weiterverarbeitet
+ * oder direkt an die aufrufende Stelle weitergegeben.
+ */
 class AppwriteConnector {
 
-  // using the constructer creates the Appwrite Client
-  // only initiate 1 time!
   constructor() {
-    this.client = new Appwrite.Client();
-    this.client
-      .setEndpoint(
-        "https://appwrite.software-engineering.education/v1") // parameter an konstruktor übergeben
-      .setProject("62ecf9068d60a3eb72ab");
-    this.database = new Appwrite.Databases(this.client);
-    this.account = new Appwrite.Account(this.client);
+    this.client = createClient(); // erstellt ein Appwrite.Client-Objekt für den Zugriff auf den Server
+    this.currentSession = undefined; // Enthält, falls vorhanden, die Session-Informationen des aktuell eingeloggten Users
   }
 
-  // method used when creating a new account
+  /**
+   * Erzeugt einen neuen Account auf dem Appwrite-Server
+   * @param {*} name Der Name des neuen Accounts
+   * @param {*} email Die E-Mail-Adresse des neuen Accounts
+   * @param {*} password Das Passwort des neuen Accounts
+   * @returns Den neu erstellten Account
+   * @throws Fehler, die beim Erstellen des Accounts aufgetreten sind
+   */
   async createAccount(name, email, password) {
-    let result,
-      userId = email.replace('@', '_'); // Bsp.: max.mustermann_email.de
-    try {
-      result = await this.account.create(userId, email, password, name);
-
-      console.log(result);
-      return result;
-    } catch (error) {
-      console.error(error);
-    }
-
-    // TODO: Listener -> erstell neuen user
-  }
-
-  async login(email, password) {
-    const promise = await this.account.createEmailSession(email, password);
-    promise.then(response => {
-      console.log(response);
-      // this.createDocumentForDB(USER_DB_ID, USER_COLLECTION_ID, userId, account)
-    }, error => {
-      console.log(error);
-      // display error message in ui?
+    let task = new CreateUserTask(this.client);
+    return await task.run({
+      email: email,
+      password: password,
+      name: name,
     });
   }
 
-  async createDocumentForDB(databaseId, collectionId, documentId, data) { // data as json object
-    console.log("DATA: ", data);
-    const promise = await this.database.createDocument(databaseId, collectionId, documentId, data);
-    promise.then(response => {
-      console.log(response);
-    }, error => {
-      console.log(error);
+  /**
+   * Meldet einen bestehenden, über die Parameter authentifizierten, Account beim Appwrite-Server an
+   * @param {*} email Die E-Mail-Adresse des anzumeldenden Accounts
+   * @param {*} password Das Passwort des anzumeldenten Accounts
+   * @returns Die durch den Anmeldevorgang erzeugte Sitzung als Session-Objekt
+   * @throws Fehler, die beim Anmelden des Accounts aufgetreten sind
+   */
+  async createSession(email, password) {
+    let task = new CreateUserSessionTask(this.client);
+    /**
+     * Die jeweils aktuelle Sitzung wird auch im AppwriteConnector gespeichert, um diese Informationen
+     * bei Bedarf an weitere Tasks weiter geben zu können.
+     */
+    this.currentSession = await task.run({
+      email: email,
+      password: password,
+    });
+    return this.currentSession;
+  }
+
+  /**
+   * Meldet den aktuell angemeldeten Account beim Appwrite-Server an und zersört damit die aktuelle Sitzung
+   * @returns -
+   * @throws Fehler, die beim Abmelden des Accounts aufgetreten sind
+   */
+  async deleteSession() {
+    let task = new DeleteUserSessionTask(this.client);
+    await task.run({
+      session: this.currentSession,
+    });
+    // Nach Abmeldung wird zusätzlich die lokal gespeicherte Sitzung entfernt
+    this.currentSession = undefined;
+    return;
+  }
+
+  /**
+   * Gibt die Preferences des angemeldeten Accounts als JavaScript-Objekt zurück
+   * @returns Die aktuellen Prefernces des angemeldeten Accounts
+   * @throws Fehler, die beim Zugriff auf die Preferences aufgetreten sind
+   */
+  async getPreferences() {
+    let task = new GetUserPreferencesTask(this.client);
+    return await task.run({});
+  }
+
+  /**
+   * Überschreibt die Preferences des angemeldeten Accounts mit dem übergebenen Objekt
+   * @param {*} preferences Das JavaScript-Objekt, dass die Preferences des Accounts auf dem Server ersetzen soll
+   * @returns Die jetzt überschriebenen, aktuellen Preferences des angemeldeten Accounts
+   * @throws  Fehler, die beim Überschreiben der Preferences aufgetreten sind
+   */
+  async setPreferences(preferences) {
+    let task = new UpdateUserPreferencesTask(this.client);
+    return await task.run({
+      preferences: preferences,
     });
   }
 
-  async updateDocumentFromDB(databaseId, collectionId, documentId, data) {
-    const promise = await this.database.updateDocument(databaseId, collectionId, documentId,
-      data);
-    promise.then(response => {
-      console.log(response);
-    }, error => {
-      console.log(error);
-    });
-  }
-
-  async getDocumentFromDB(databaseId, collectionId, documentId) { // not id, but email? wrap with "contains",
-    // TODO: don't know if this works out with the current userId
-    const promise = await this.database.getDocument(databaseId, collectionId, documentId);
-    promise.then(response => {
-      console.log(response);
-    }, error => {
-      console.log(error);
-      return undefined;
-    });
-    return promise;
-  }
-
-  // RECIPE_DB_ID, RECIPE_COM_COLLECTION_ID, COMMUNITY_RECIPES_DOC_ID
-  // TODO: test
-  async createOrUpdateCommunityRecipes(data) {
-
-    if (this.getDocumentFromDB(DB_ID, RECIPE_COM_COLLECTION_ID, COMMUNITY_RECIPES_DOC_ID) == undefined) {
-      this.createDocumentForDB(DB_ID, RECIPE_COM_COLLECTION_ID, COMMUNITY_RECIPES_DOC_ID, data);
-    } else {
-      this.updateDocumentFromDB(DB_ID, RECIPE_COM_COLLECTION_ID, COMMUNITY_RECIPES_DOC_ID, data);
-    }
-  }
-
-  safeUserInDB(userId, data) {
-    this.createDocumentForDB(DB_ID, USER_COLLECTION_ID, userId, data);
-  }
-
-  updateUserData(userId, data) {
-    this.updateDocumentFromDB(DB_ID, USER_COLLECTION_ID, userId, data);
-  }
-
-  getUserFromDB(userId) {
-    return this.getDocumentFromDB(DB_ID, USER_COLLECTION_ID, userId);
-  }
-
 }
-/*
-
-// account: register & login
-function setEmail(email) {
-  this.email = email;
-}
-
-function setPassword(password) {
-  this.password = password;
-}
-
-function setName(name) {
-  this.name = name;
-}
-
-// TODO: nicht sicher ob in der account.create methode bereits ein "bereits existieren check" eingebaut ist
-// sonst -> methode mit return
-function createAccount(email, password, name) {
-  indexOfAt = email.indexOf('@');
-  emailSpliced = email.substring(0, indexOfAt);
-  userId = emailSpliced + name.replace(/ /g,
-  '_'); // Bsp.: max.mustermannMax_Mustermann
-
-  account.create("unique()", email, password, name).then(response => {
-    console.log(response);
-    createDocumentForDB(USER_DB_ID, USER_COLLECTION_ID, userId, response)
-    // creates a new document for each user with a custom_id combining email-name and user-name
-  }, error => {
-    console.log(error);
-  });
-}
-
-function accountExistenceCheck(userId) {
-
-}
-
-function login(email, password) {
-  const promise = account.createEmailSession(email, password);
-  promise.then(response => {
-    console.log(response);
-  }, error => {
-    console.log(error);
-    // display error message in ui?
-  });
-}
-
-// database 
-function createDocumentForDB(databaseId, collectionId, documentId,
-data) { // data as json object
-  const promise = database.createDocument(databaseId, collectionId, documentId,
-    data);
-  promise.then(response => {
-    console.log(response);
-  }, error => {
-    console.log(error);
-  });
-}
-
-function getDocumentFromDB(documentId) {
-  const promise = database.getDocument(documentId);
-  promise.then(response => {
-    console.log(response);
-  }, error => {
-    console.log(error);
-  });
-  return promise;
-}
-
-function updateDocumentFromDB(databaseId, collectionId, documentId, data) {
-  const promise = database.updateDocument(databaseId, collectionId, documentId,
-    data);
-  promise.then(response => {
-    console.log(response);
-  }, error => {
-    console.log(error);
-  });
-}
-
-function deleteDocumentFromDB(databaseId, collectionId, documentId) {
-  const promise = database.deleteDocument(databaseId, collectionId, documentId);
-  promise.then(response => {
-    console.log(response);
-  }, error => {
-    console.log(error);
-  });
-}
-*/
 
 export default AppwriteConnector;
