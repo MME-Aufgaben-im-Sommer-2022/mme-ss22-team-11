@@ -7,6 +7,7 @@ import DeleteUserSessionTask from "./tasks/DeleteUserSessionTask.js";
 import GetUserPreferencesTask from "./tasks/GetUserPreferencesTask.js";
 import UpdateUserPreferencesTask from "./tasks/UpdateUserPrefrencesTask.js";
 import CreateDocumentTask from "./tasks/CreateDokumentTask.js";
+import GetCollectionTask from "./tasks/GetCollectionTask.js";
 
 function createClient() {
   let client = new Appwrite.Client();
@@ -118,12 +119,41 @@ class AppwriteConnector {
     });
   }
 
+  /**
+   * Speichert ein als Objekt übergebenes Rezept in der Appwrite-Datenbank
+   * @param {*} recipe Das Rezept als JavaScript-Objekt, dessen Struktur sich an den vorgegebenen Dokument-Attributen der Appwrite-Collection orientieren muss
+   * @returns Das auf dem Server gespeicherte Dokument
+   * @throws  Fehler, die beim Speichern des Dokuments aufgetreten sind
+   */
   async createRecipeOnServer(recipe) {
     let task = new CreateDocumentTask(this.client);
     return await task.run({
       database: Config.database.id,
       collection: Config.database.collections.recipes.id,
-      document: recipe,
+      document: recipe, // TODO Move JSON conversion of ingredient list here
+    });
+  }
+
+  /**
+   * Liest alle Rezepte aus der Appwrite-Datenbank aus
+   * @returns Ein Array mit allen Rezepten aus der Appwrite-Datenbank
+   */
+  async fetchRecipesFromServer() {
+    let task = new GetCollectionTask(this.client),
+    collection = await task.run({
+      database: Config.database.id,
+      collection: Config.database.collections.recipes.id,
+    });
+    return collection.documents.map((document) => {
+      return { // TODO User Recipe class with factory method
+        name: document.name,
+        author: document.author,
+        fromCommunity: document.fromCommunity,
+        image: document.image,
+        steps: document.steps,
+        ingredients: document.ingredients.map((i) => JSON.parse(i)),
+        dekoIngredients:  document.dekoIngredients.map((i) => JSON.parse(i)),
+      };
     });
   }
 

@@ -31,16 +31,8 @@ async function testAppwriteConnector() {
     console.log(result); // Current preferences
 }
 
-//testAppwriteConnector();
-
-/**
- * "0": {
- 
-  "deko_ingredients": {},
- },
- */
-async function initDatabase() {
-    console.log("in: initDatabase()");
+async function initDatabaseWithLocalRecipes() { // Run only once (!!!!) to fill server collection with recipes
+    console.log("in: initDatabaseWithLocalRecipes()");
     let connector = AppwriteConnector,
         recipes = await (await fetch("./src/cocktailData/JSON/recipes.json")).json(),
         ingredients = await (await fetch("./src/cocktailData/JSON/ingredients.json")).json(),
@@ -88,7 +80,14 @@ async function initDatabase() {
         });
 }
 
-initDatabase();
+async function testRecipeDatabase() {
+    console.log("in: testRecipeDatabase()");
+    let connector = AppwriteConnector,
+    recipes = await connector.fetchRecipesFromServer();
+    console.log(recipes);
+}
+
+testRecipeDatabase();
 
 /*
 import { HtmlManipulator } from "./ui/RecipeHtmlManipulator.js";
