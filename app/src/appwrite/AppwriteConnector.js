@@ -40,14 +40,14 @@ class AppwriteConnector {
   }
 
   async login(email, password) {
-    const promise = await this.account.createEmailSession(email, password);
-    promise.then(response => {
-      console.log(response);
-      // this.createDocumentForDB(USER_DB_ID, USER_COLLECTION_ID, userId, account)
-    }, error => {
-      console.log(error);
-      // display error message in ui?
-    });
+    console.log("IN: APPWRITE LOGIN");
+    try {
+      let session = await this.account.createEmailSession(email, password);
+      return session;
+    } catch (error) {
+      console.error(error);
+      throw new Error("Error while trying to create a session");
+    }
   }
 
   async createDocumentForDB(databaseId, collectionId, documentId, data) { // data as json object
@@ -94,25 +94,36 @@ class AppwriteConnector {
   }
 
   // banned ingredients + favorites (json format)
-  getUserPreferences() {
+  async getUserPreferences() {
     let promise;
     try {
-      promise = this.account.getPrefs();
-      console.log(promise);
+      return await this.account.getPrefs();
     } catch (error) {
       console.error(error);
     }
     return promise;
   }
 
-  updateUserPreferences(prefs) {
+  async updateUserPreferences(prefs) {
     try {
-      const promise = this.account.updatePrefs(prefs); // ({}) json 
+      const promise = await this.account.updatePrefs(prefs); // ({}) json 
       console.log(promise);
     } catch (error) {
       console.error(error);
     }
   }
+
+
+  async setPreferences(preferences) {
+
+  let account = new Appwrite.Account(this.client);
+  try {
+    return await account.updatePrefs({ user: preferences });
+  } catch (error) {
+    console.log(error);
+    throw new Error("Error while trying to create new account");
+  }
+}
 }
 
 export default AppwriteConnector;
