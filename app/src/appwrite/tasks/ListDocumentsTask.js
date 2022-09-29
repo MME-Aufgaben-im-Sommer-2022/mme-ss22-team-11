@@ -6,10 +6,9 @@ export default class ListDocumentsTask extends AppwriteTask {
     async createResult() {
       let database = new this.appwrite.Databases(this.client, Config.database);
       try {
-        return await database.getDocument(Config.database.collections.recipe);
+        return await database.listDocuments(Config.database.collections.recipe.id);
       } catch (error) {
-        console.error(error);
-        throw new Error("Error while trying to list thea documents.");
+        return undefined;
       }
     }
   

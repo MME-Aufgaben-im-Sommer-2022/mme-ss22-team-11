@@ -25,14 +25,14 @@ class CocktailListManager extends Observable {
         // Diese Liste soll immer angezeigt werden
         this.displayList = this.allCocktails;
 
-        this.getCocktailsFromDB();
+       // this.getCocktailsFromDB();
 
         //TODO: listener hinzufügen um zu sehen wann daten bereit sind
 
     }
 
     async getCocktailsFromDB() {
-        let test = await this.appwrite.getDocument("a");
+        let test = await this.appwrite.listDocuments();
         console.log(test);
     }
 
@@ -52,7 +52,7 @@ class CocktailListManager extends Observable {
     }
 
     //TODO: fertig machen
-    cocktailsToJSON() {
+    async cocktailsToJSON() {
 
         let obj = {};
         this.allCocktails.forEach(cocktail => {
@@ -75,9 +75,13 @@ class CocktailListManager extends Observable {
 
         let json = JSON.stringify(obj);
 
-        // console.log(json);
+        console.log(json);
 
-        // this.appwrite.createOrUpdateCommunityRecipes(json);
+        if (await this.appwrite.listDocuments() == undefined){
+            await this.appwrite.createDocument("cocktails", json);
+            return;
+        }
+        await this.appwrite.updateDocument("cocktails", json);
 
     }
 
@@ -134,6 +138,9 @@ class CocktailListManager extends Observable {
     }
 
     getIngredientAndCocktailData() {
+
+        this.getCocktailsFromJson();
+
         fetch('./src/cocktailData/JSON/ingredients.json')
             .then((response) => response.json())
             .then((json) => {
@@ -145,8 +152,6 @@ class CocktailListManager extends Observable {
                     this.ingredientList.addIngredient(new Ingredient(i, data.display_name, alcoholic));
 
                 }
-
-                this.getCocktailsFromJson();
 
             });
     }

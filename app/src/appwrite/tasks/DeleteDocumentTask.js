@@ -6,7 +6,7 @@ export default class DeleteDocumentTask extends AppwriteTask {
   async createResult(id) {
     let database = new this.appwrite.Databases(this.client, Config.database);
     try {
-      await database.createDocument(Config.collections.recipe, id);
+      await database.createDocument(Config.database.collections.recipe, id);
     } catch (error) {
       console.error(error);
       throw new Error("Error while trying to create a document.");
