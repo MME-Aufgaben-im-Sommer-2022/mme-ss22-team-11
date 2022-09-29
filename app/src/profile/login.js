@@ -13,10 +13,9 @@ class Login extends Observable {
 
     singUp(username, email, password) {
         this.appwrite.createAccount(username, email, password);
-        let id = email.replace("@", "_");
-        let user = new User(email, username, id);
-
-        let json = user.toJSON();
+        let id = email.replace("@", "_"),
+        user = new User(email, username, id), 
+        json = user.toJSON();
         console.log("JSON: ", json);
         this.appwrite.safeUserInDB(id, json);
         this.notifyAll(new Event("SIGN_UP", user));
@@ -24,9 +23,8 @@ class Login extends Observable {
     }
 
     login(id) {
-        let json = this.appwrite.getUserFromDB(id);
-
-        let user = new User(json.email, json.username, id);
+        let json = this.appwrite.getUserFromDB(id), 
+        user = new User(json.email, json.username, id);
         user.createdCocktails = json.createdCocktails;
         user.favorites = json.favorites;
         user.blackListedIngredients = json.blackListedIngredients;
