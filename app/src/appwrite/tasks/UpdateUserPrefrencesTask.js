@@ -8,7 +8,7 @@ export default class UpdateUserPrefrencesTask extends AppwriteTask {
    return await account.updatePrefs(input.preferences);
   } catch (error) {
    console.log(error);
-   throw new Error("Error while trying to create new account");
+   throw new Error("Error while trying to update user preferences");
   }
  }
 

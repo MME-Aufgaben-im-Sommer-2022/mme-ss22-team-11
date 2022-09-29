@@ -6,6 +6,7 @@ import CreateUserSessionTask from "./tasks/CreateUserSessionTask.js";
 import DeleteUserSessionTask from "./tasks/DeleteUserSessionTask.js";
 import GetUserPreferencesTask from "./tasks/GetUserPreferencesTask.js";
 import UpdateUserPreferencesTask from "./tasks/UpdateUserPrefrencesTask.js";
+import CreateDocumentTask from "./tasks/CreateDokumentTask.js";
 
 function createClient() {
   let client = new Appwrite.Client();
@@ -117,6 +118,17 @@ class AppwriteConnector {
     });
   }
 
+  async createRecipeOnServer(recipe) {
+    let task = new CreateDocumentTask(this.client);
+    return await task.run({
+      database: Config.database.id,
+      collection: Config.database.collections.recipes.id,
+      document: recipe,
+    });
+  }
+
 }
 
-export default AppwriteConnector;
+const connector = new AppwriteConnector();
+// Aus dem Modul wird nur der bereits erstellte Connector exportiert, um eine mehrfache Instanzierung zu verhindern
+export default connector;

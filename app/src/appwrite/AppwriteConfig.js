@@ -3,20 +3,12 @@
  */
 export default {
  endpoint: "https://appwrite.software-engineering.education/v1", // API-Endpoint
- project: "62ecf9068d60a3eb72ab", // Projekt-ID für Anwendung
+ project: "6335a58aa19909992afa", // Projekt-ID für Anwendung (war 62ecf9068d60a3eb72ab)
  database: {
-  id: "633441b010a3d7ab7519",
+  id: "6335a5aa99af8c2ed6c9", // war 633441b010a3d7ab7519
   collections: {
-   user: {
-    id: "633441b6674e76102ea8",
-   },
-   recipe: {
-    id: "633442068d24b2efce9b",
-   },
-  },
-  documents: {
-   communityRecipes: {
-    id: "communityRecipes",
+   recipes: {
+    id: "6335a5d1974b0e133a20", // war 633442068d24b2efce9b
    },
   },
  },

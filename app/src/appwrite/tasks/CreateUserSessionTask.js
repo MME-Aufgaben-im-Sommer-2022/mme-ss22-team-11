@@ -9,7 +9,7 @@ export default class CreateUserSessionTask extends AppwriteTask {
    return session;
   } catch (error) {
    console.log(error);
-   throw new Error("Error while trying to create new account");
+   throw new Error("Error while trying to create user session");
   }
  }
 
