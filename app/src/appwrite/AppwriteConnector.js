@@ -10,6 +10,7 @@ import CreateDocumentTask from "./tasks/CreateDocumentTask.js";
 import GetDocumentTask from "./tasks/GetDocumentTask.js";
 import UpdateDocumentTask from "./tasks/UpdateDocumentTask.js";
 import DeleteDocumentTask from "./tasks/DeleteDocumentTask.js";
+import ListDocumentsTask from "./tasks/ListDocumentsTask.js";
 
 function createClient() {
   let client = new Appwrite.Client();
@@ -127,6 +128,11 @@ class AppwriteConnector {
       id: id,
       data: data,
     });
+  }
+
+  async listDocuments() {
+    let task = new ListDocumentsTask(this.client);
+    return await task.run({});
   }
 
   async getDocument(id) {
