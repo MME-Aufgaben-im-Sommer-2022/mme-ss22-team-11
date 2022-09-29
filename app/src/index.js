@@ -22,11 +22,11 @@ let showCocktails = () => {
 let login = new Login();
 let user;
 login.addEventListener("SIGN_UP", (event) => {
-    user = event.data; 
+    user = event.data;
     console.log(user);
 });
-login.singUp("Gix", "georg_dechant@web.de", "IchBinEinPasswort");
-// login.login("georg_dechant@web.de", "IchBinEinPasswort");
+// login.singUp("Gix", "georg_dechant@web.de", "IchBinEinPasswort");
+login.login("georg_dechant@web.de", "IchBinEinPasswort");
 
 
 cocktailListManager.addEventListener("DATA_READY", (event) => showCocktails());

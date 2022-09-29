@@ -4,39 +4,38 @@ import { User } from "./user.js";
 
 // soll in index.js benutzt werden um den user festzustellen
 
+let result;
+
 class Login extends Observable {
 
     constructor() {
         super();
-        this.appwrite = new AppwriteConnector();
+        result, this.appwrite = new AppwriteConnector();
     }
 
-    singUp(username, email, password) {
-        this.appwrite.createAccount(username, email, password);
-        // this.appwrite.login(email, password);
-        let id = email.replace("@", "_"),
-            user = new User(email, username, id),
-            json = user.toJSON();
+    async singUp(username, email, password) {
+        await this.appwrite.createAccount(username, email, password);
+        await this.appwrite.createSession(email, password);
+        let user = new User(email, username),
+            json = user.toSavedObj();
         console.log("JSON: ", json);
-        this.appwrite.setPreferences(json);
+        await this.appwrite.setPreferences(json);
         this.notifyAll(new Event("SIGN_UP", user));
 
     }
 
-    login(email, password) {
-        this.appwrite.login(email, password);
-        let id = email.replace("@", "_");
-        let json = this.appwrite.getUserPreferences();
-        let user = new User(json.email, json.username, id);
+    async login(email, password) {
+        this.appwrite.createSession(email, password);
+        let json = await this.appwrite.getPreferences();
+        let user = new User(email, json.username);
+
         user.createdCocktails = json.createdCocktails;
         user.favorites = json.favorites;
         user.blackListedIngredients = json.blackListedIngredients;
-        user.allIngredients = json.allIngredients;
         user.givenRatings = json.givenRatings;
 
-        console.log(json)
+        this.notifyAll(new Event("SIGN_UP", user));
 
-        this.notifyAll(new Event("LOGIN", user));
     }
 
     // für anonyme Nutzer

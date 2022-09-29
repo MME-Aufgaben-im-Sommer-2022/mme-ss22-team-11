@@ -5,7 +5,7 @@ import CreateUserTask from "./tasks/CreateUserTask.js";
 import CreateUserSessionTask from "./tasks/CreateUserSessionTask.js";
 import DeleteUserSessionTask from "./tasks/DeleteUserSessionTask.js";
 import GetUserPreferencesTask from "./tasks/GetUserPreferencesTask.js";
-import UpdateUserPreferencesTask from "./tasks/UpdateUserPrefrencesTask.js";
+import UpdateUserPreferencesTask from "./tasks/UpdateUserPreferencesTask.js";
 import CreateDocumentTask from "./tasks/CreateDocumentTask.js";
 import GetDocumentTask from "./tasks/GetDocumentTask.js";
 import UpdateDocumentTask from "./tasks/UpdateDocumentTask.js";

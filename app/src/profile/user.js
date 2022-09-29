@@ -5,12 +5,11 @@ import { Observable, Event } from "../utils/Observable.js";
 
 class User extends Observable {
 
-    constructor(email, username, id) {
+    constructor(email, username) {
 
         super();
 
         this.email = email;
-        this.id = id;
         this.username = username;
         this.createdCocktails = [];
         this.favorites = [];
@@ -24,16 +23,15 @@ class User extends Observable {
 
     }
 
-    toJSON() {
+    toSavedObj() {
         let data = {};
-        data.email = this.email;
-        data.id = this.id;
         data.username = this.username;
         data.favorites = this.favorites;
         data.blackListedIngredients = this.blackListedIngredients;
         data.givenRatings = this.givenRatings;
+        data.createdCocktails = this.createdCocktails;
 
-        return JSON.stringify(data);
+        return data;
     }
 
     fillAllIngredients(data) {
