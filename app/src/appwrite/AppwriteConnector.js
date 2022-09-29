@@ -6,6 +6,10 @@ import CreateUserSessionTask from "./tasks/CreateUserSessionTask.js";
 import DeleteUserSessionTask from "./tasks/DeleteUserSessionTask.js";
 import GetUserPreferencesTask from "./tasks/GetUserPreferencesTask.js";
 import UpdateUserPreferencesTask from "./tasks/UpdateUserPrefrencesTask.js";
+import CreateDocumentTask from "./tasks/CreateDocumentTask.js";
+import GetDocumentTask from "./tasks/GetDocumentTask.js";
+import UpdateDocumentTask from "./tasks/UpdateDocumentTask.js";
+import DeleteDocumentTask from "./tasks/DeleteDocumentTask.js";
 
 function createClient() {
   let client = new Appwrite.Client();
@@ -114,6 +118,36 @@ class AppwriteConnector {
     let task = new UpdateUserPreferencesTask(this.client);
     return await task.run({
       preferences: preferences,
+    });
+  }
+
+  async createDocument(id, data) {
+    let task = new CreateDocumentTask(this.client);
+    return await task.run({
+      id: id,
+      data: data,
+    });
+  }
+
+  async getDocument(id) {
+    let task = new GetDocumentTask(this.client);
+    return await task.run({
+      id: id,
+    });
+  }
+
+  async updateDocument(id, data) {
+    let task = new UpdateDocumentTask(this.client);
+    return await task.run({
+      id: id,
+      data: data,
+    });
+  }
+
+  async deleteDocument(id) {
+    let task = new DeleteDocumentTask(this.client);
+    return await task.run({
+      id: id,
     });
   }
 
