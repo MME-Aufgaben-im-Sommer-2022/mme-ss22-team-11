@@ -33,6 +33,7 @@ class CocktailListManager extends Observable {
 
     async getCocktailsFromDB() {
         let test = await this.appwrite.getDocument("a");
+        console.log(test);
     }
 
     getAllCommunityCocktails() {
