@@ -4,13 +4,15 @@ import { Ingredient, IngredientList, CustomIngredientMaker } from "./ingredient.
 import { Observable, Event } from "../utils/Observable.js"
 import AppwriteConnector from "../appwrite/AppwriteConnector.js";
 
+let result;
+
 class CocktailListManager extends Observable {
 
     constructor() {
 
         super();
 
-        //this.appwrite = new AppwriteConnector();
+        result, this.appwrite = new AppwriteConnector();
 
         //TODO: aus Datenbank/API laden
         this.allCocktails = [];
@@ -66,9 +68,9 @@ class CocktailListManager extends Observable {
 
         let json = JSON.stringify(obj);
 
-        //console.log(json);
+        // console.log(json);
 
-        //this.appwrite.createOrUpdateCommunityRecipes(json);
+        // this.appwrite.createOrUpdateCommunityRecipes(json);
 
     }
 

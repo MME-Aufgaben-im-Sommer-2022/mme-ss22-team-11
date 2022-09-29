@@ -69,6 +69,13 @@ class IngredientList extends Observable {
         this.list.push(ingredient);
     }
 
+    removeIngredient(ingredient) {
+        if (!this.list.includes(ingredient)) {
+            return;
+        }
+        this.list.splice(this.list.indexOf(ingredient), 1);
+    }
+
     addIngredientDisplay(ingredient) {
         this.displayNames.push(ingredient);
     }

@@ -21,8 +21,9 @@ let showCocktails = () => {
 // Login soll benutzt werden, um nutzer zu erstellen, abzurufen oder einen anonymen User zu erstellen
 let login = new Login();
 let user;
-login.addEventListener("SIGN_UP", (event) => {
+login.addEventListener("LOGIN", (event) => {
     user = event.data;
+    user.addEventListener("USER_DATA_CHANGED", (event) => login.updateUser(event.data));
     console.log(user);
 });
 // login.singUp("Gix", "georg_dechant@web.de", "IchBinEinPasswort");

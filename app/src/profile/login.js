@@ -17,10 +17,9 @@ class Login extends Observable {
         await this.appwrite.createAccount(username, email, password);
         await this.appwrite.createSession(email, password);
         let user = new User(email, username),
-            json = user.toSavedObj();
-        console.log("JSON: ", json);
-        await this.appwrite.setPreferences(json);
-        this.notifyAll(new Event("SIGN_UP", user));
+            toSave = user.toSavedObj();
+        await this.appwrite.setPreferences(toSave);
+        this.notifyAll(new Event("LOGIN", user));
 
     }
 
@@ -34,8 +33,13 @@ class Login extends Observable {
         user.blackListedIngredients = json.blackListedIngredients;
         user.givenRatings = json.givenRatings;
 
-        this.notifyAll(new Event("SIGN_UP", user));
+        this.notifyAll(new Event("LOGIN", user));
 
+    }
+
+    // wenn sich was am user ändert, wird diese Methode aufgerufen
+    async updateUser(data) {
+        await this.appwrite.setPreferences(data);
     }
 
     // für anonyme Nutzer
