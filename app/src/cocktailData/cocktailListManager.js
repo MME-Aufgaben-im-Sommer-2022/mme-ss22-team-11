@@ -17,41 +17,64 @@ class CocktailListManager extends Observable {
         //TODO: aus Datenbank/API laden
         this.allCocktails = [];
         this.ingredientList = new IngredientList();
+        this.ingredientList.addEventListener("INGREDIENTS_READY", (event) => this.fillAllIngredients(event.data));
+        this.ingredientList.getAllIngredientsFromJSON();
 
         // setTimeout(() => this.getCocktailsFromJson(), 100);
 
-        this.getCocktailsFromDB();
+        
 
         // Diese Liste soll immer angezeigt werden
         this.displayList = this.allCocktails;
 
-        //TODO: listener hinzufügen um zu sehen wann daten bereit sind
+        // TODO: listener hinzufügen um zu sehen wann daten bereit sind
 
     }
 
+    onReadyForCocktails() {
+        this.getCocktailsFromDB();
+    }
+
+    fillAllIngredients(data) {
+        this.allIngredients = new IngredientList();
+        data.forEach(el => this.allIngredients.addIngredient(el));
+        console.log("JETZT")
+        this.notifyAll(new Event("READY_FOR_COCKTAILS"));
+    }
+
     async emptyDB() {
-        while (await this.appwrite.listDocuments.total > 0) {
 
-            let docs = await this.appwrite.listDocuments.documents;
+        let docs = await this.appwrite.listDocuments();
+        console.log(docs);
 
-            docs.forEach(data => {
+        while (docs.total > 0) {
+
+            docs.documents.forEach(data => {
                 console.log(data.$id)
                 this.appwrite.deleteDocument(data.$id);
             })
+
+            docs = await this.appwrite.listDocuments();
+
         }
     }
 
     // read all docs to get cocktails
     async getCocktailsFromDB() {
 
+        console.log(this.ingredientList);
+
         let cocktailDataFromDB = await this.appwrite.listDocuments();
 
         console.log(cocktailDataFromDB);
+        
 
         // if there are no Cocktails in the DB, the cocktails from the json will be loaded
         if (cocktailDataFromDB.total == 0) {
             this.getIngredientAndCocktailData();
         }
+
+        this.getIngredientData();
 
         let docs = [];
 
@@ -181,9 +204,11 @@ class CocktailListManager extends Observable {
     }
 
     getIngredientAndCocktailData() {
-
+        this.getIngredientData();
         this.getCocktailsFromJson();
+    }
 
+    getIngredientData() {
         fetch('./src/cocktailData/JSON/ingredients.json')
             .then((response) => response.json())
             .then((json) => {

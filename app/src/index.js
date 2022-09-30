@@ -34,6 +34,7 @@ login.addEventListener("LOGIN", (event) => {
 
 cocktailListManager.addEventListener("DATA_READY", (event) => showCocktails());
 cocktailListManager.addEventListener("DATA_UPDATED", (event) => showCocktails());
+cocktailListManager.addEventListener("READY_FOR_COCKTAILS", (event) => cocktailListManager.onReadyForCocktails());
 // user.addEventListener("RATING_READY", (event) => cocktailListManager.rateCocktail(event.data));
 
 

@@ -1,8 +1,11 @@
 import { Observable, Event } from "../utils/Observable.js";
 
-class Ingredient {
+class Ingredient extends Observable {
 
     constructor(name, displayName, alcoholic) {
+        
+        super();
+
         this.name = name;
         this.displayName = displayName;
         this.alcoholic = alcoholic;
@@ -87,6 +90,9 @@ class IngredientList extends Observable {
         let returnList = [];
 
         this.list.forEach(ingredient => {
+
+            console.log(ingredient);
+
             if (ingredient.displayName === query) {
                 returnList.push(ingredient);
             }
@@ -113,7 +119,7 @@ class IngredientList extends Observable {
 
         this.list.forEach(ingredient => {
 
-            if (ingredient.name === query) {
+            if (ingredient.name == query) {
                 returnString = ingredient.displayName;
             }
         });
