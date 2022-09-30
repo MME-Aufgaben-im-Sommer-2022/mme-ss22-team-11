@@ -1,12 +1,10 @@
-const SETTINGS_NAV_LINKS = document.querySelectorAll("#settings-nav .nav-link");
-const SETTINGS_FRAME = document.querySelector(".settings-frame");
-
-const BANNED_INGREDIENTS_SECTION_TEMPLATE = document.querySelector("#banned-ingredients-section-template").innerHTML.trim();
-const COCKTAIL_LIST_SECTION_TEMPLATE = document.querySelector("#cocktail-list-section-template").innerHTML.trim();
-const REVIEWS_SECTION_TEMPLATE = document.querySelector("#reviews-section-template").innerHTML.trim();
+const SETTINGS_NAV_LINKS = document.querySelectorAll("#settings-nav .nav-link"),
+    SETTINGS_FRAME = document.querySelector(".settings-frame"),
+    BANNED_INGREDIENTS_SECTION_TEMPLATE = document.querySelector("#banned-ingredients-section-template").innerHTML.trim(),
+    COCKTAIL_LIST_SECTION_TEMPLATE = document.querySelector("#cocktail-list-section-template").innerHTML.trim(),
+    REVIEWS_SECTION_TEMPLATE = document.querySelector("#reviews-section-template").innerHTML.trim();
 
 SETTINGS_FRAME.append(getViewFromTemplate(COCKTAIL_LIST_SECTION_TEMPLATE));
-
 
 function getViewFromTemplate(template) {
     let el = document.createElement("div");
@@ -48,29 +46,29 @@ class HtmlManipulator {
                     SETTINGS_FRAME.querySelectorAll(".review-header a").forEach(el => {
                         el.addEventListener("click", (event) => {
                             console.log("open cocktail");
-                        })
-                    })
+                        });
+                    });
 
                     SETTINGS_FRAME.querySelectorAll(".review-delete").forEach(el => {
                         el.addEventListener("mouseover", (event) => {
                             el.src = "../css/img/VectorTrashCanHover.svg";
-                        })
+                        });
                         el.addEventListener("mouseout", (event) => {
                             el.src = "../css/img/VectorTrashCan.svg";
-                        })
+                        });
                         el.addEventListener("click", (event) => {
                             console.log("delete review");
-                        })
-                    })
+                        });
+                    });
                 }
         
                 for (let item of SETTINGS_NAV_LINKS) {
                     if (item.classList.contains("active")) {
-                        item.classList.remove("active")
+                        item.classList.remove("active");
                     }
                 }
-                item.classList.add("active")
-            })
+                item.classList.add("active");
+            });
         }
     }
 

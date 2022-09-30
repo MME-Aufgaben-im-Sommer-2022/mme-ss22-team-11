@@ -25,8 +25,8 @@ class Login extends Observable {
 
     async login(email, password) {
         this.appwrite.createSession(email, password);
-        let json = await this.appwrite.getPreferences();
-        let user = new User(email, json.username);
+        let json = await this.appwrite.getPreferences(),
+            user = new User(email, json.username);
 
         user.createdCocktails = json.createdCocktails;
         user.favorites = json.favorites;

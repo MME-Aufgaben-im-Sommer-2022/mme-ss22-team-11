@@ -1,7 +1,7 @@
 import { Cocktail } from "./cocktail.js";
-import { Component, Recipe } from "./recipe.js"
-import { Ingredient, IngredientList, CustomIngredientMaker } from "./ingredient.js"
-import { Observable, Event } from "../utils/Observable.js"
+import { Component, Recipe } from "./recipe.js";
+import { Ingredient, IngredientList, CustomIngredientMaker } from "./ingredient.js";
+import { Observable, Event } from "../utils/Observable.js";
 import AppwriteConnector from "../appwrite/AppwriteConnector.js";
 
 let result;
@@ -22,8 +22,6 @@ class CocktailListManager extends Observable {
 
         // setTimeout(() => this.getCocktailsFromJson(), 100);
 
-        
-
         // Diese Liste soll immer angezeigt werden
         this.displayList = this.allCocktails;
 
@@ -38,7 +36,7 @@ class CocktailListManager extends Observable {
     fillAllIngredients(data) {
         this.allIngredients = new IngredientList();
         data.forEach(el => this.allIngredients.addIngredient(el));
-        console.log("JETZT")
+        console.log("JETZT");
         this.notifyAll(new Event("READY_FOR_COCKTAILS"));
     }
 
@@ -50,9 +48,9 @@ class CocktailListManager extends Observable {
         while (docs.total > 0) {
 
             docs.documents.forEach(data => {
-                console.log(data.$id)
+                console.log(data.$id);
                 this.appwrite.deleteDocument(data.$id);
-            })
+            });
 
             docs = await this.appwrite.listDocuments();
 
@@ -80,8 +78,8 @@ class CocktailListManager extends Observable {
 
         // die ids von 0 bis 99 sind offiziell
         for (let i = 0; i < cocktailDataFromDB.total; i++) {
-            let id = "cocktailNr" + i.toString();
-            let doc = await this.appwrite.getDocument(id);
+            let id = "cocktailNr" + i.toString(),
+                doc = await this.appwrite.getDocument(id);
             docs.push(doc);
         }
 
@@ -92,11 +90,10 @@ class CocktailListManager extends Observable {
 
             let id = data.$id.substring(10);
 
-            let recipe = JSON.parse(data.recipe);
-            let ratings = JSON.parse(data.ratings);
-
-            let steps = {}
-            let stepNr = 1;
+            let recipe = JSON.parse(data.recipe),
+                ratings = JSON.parse(data.ratings),
+                steps = {},
+                stepNr = 1;
             data.steps.forEach(stepDesc => {
                 steps[stepNr] = stepDesc;
                 stepNr += 1;
@@ -134,8 +131,8 @@ class CocktailListManager extends Observable {
     async cocktailsToJSON() {
 
         this.allCocktails.forEach(cocktail => {
-            let id = "cocktailNr" + cocktail.id;
-            let data = cocktail.toDBObject();
+            let id = "cocktailNr" + cocktail.id,
+                data = cocktail.toDBObject();
             this.addCocktailToDB(id, data);
 
         });
@@ -200,7 +197,7 @@ class CocktailListManager extends Observable {
                 }
 
             }
-        })
+        });
     }
 
     getIngredientAndCocktailData() {
@@ -215,8 +212,8 @@ class CocktailListManager extends Observable {
 
                 for (let i in json) {
 
-                    let data = json[i];
-                    let alcoholic = data.alcoholic == 1;
+                    let data = json[i],
+                        alcoholic = data.alcoholic == 1;
                     this.ingredientList.addIngredient(new Ingredient(i, data.display_name, alcoholic));
 
                 }
@@ -227,8 +224,8 @@ class CocktailListManager extends Observable {
     addCustomCocktail(name, recipe, image, tags, description, steps, author) {
 
         // TODO: letzte id aus db auslesen (daraus neue errechnen)
-        let id = -1;
-        let cocktail = new Cocktail(id, name, recipe, image, [], tags, description, steps, author);
+        let id = -1,
+            cocktail = new Cocktail(id, name, recipe, image, [], tags, description, steps, author);
         console.log(cocktail);
         this.allCocktails.push(cocktail);
         // TODO: db aktualisieren
@@ -253,8 +250,8 @@ class CocktailListManager extends Observable {
 
                 for (let i in json) {
 
-                    let data = json[i];
-                    let recipe = this.getRecipeFromData(data);
+                    let data = json[i],
+                        recipe = this.getRecipeFromData(data);
 
                     this.addCocktailFromJSON(i, data.name, recipe, data.img, data.description, data.steps, data.author);
                 }
@@ -274,7 +271,7 @@ class CocktailListManager extends Observable {
         let returnList = [];
         this.allCocktails.forEach(cocktail => {
             // make cocktail name & query lowercase for comparing
-            let name = cocktail.name.toLowerCase()
+            let name = cocktail.name.toLowerCase();
             query = query.toLowerCase();
             if (name.startsWith(query)) {
                 returnList.push(cocktail);
@@ -286,8 +283,8 @@ class CocktailListManager extends Observable {
 
     filterCocktailsByBannedIngredient(bannedIngredients) {
 
-        let bannedIds = this.checkIngredientBanList(bannedIngredients);
-        let returnList = [];
+        let bannedIds = this.checkIngredientBanList(bannedIngredients),
+            returnList = [];
         this.displayList.forEach(cocktail => {
             if (bannedIds.indexOf(cocktail.id) == -1) {
                 returnList.push(cocktail);
@@ -303,7 +300,7 @@ class CocktailListManager extends Observable {
         let returnList = [];
         this.allCocktails.forEach(cocktail => {
             if (cocktail.checkIfCocktailHasOnlyTheseIngredients(ingredients, withDeco)) {
-                returnList.push(cocktail)
+                returnList.push(cocktail);
             }
         })
         this.updateDisplayList(returnList);
@@ -325,7 +322,7 @@ class CocktailListManager extends Observable {
 
     checkIngredientBanList(bannedIngredients) {
 
-        let bannedIds = []
+        let bannedIds = [];
 
         this.allCocktails.forEach(cocktail => {
 
@@ -333,11 +330,11 @@ class CocktailListManager extends Observable {
 
             cocktail.recipe.mainIngredients.forEach(component => {
                 ingredients.push(component.ingredient);
-            })
+            });
 
             cocktail.recipe.decoIngredients.forEach(component => {
                 ingredients.push(component.ingredient);
-            })
+            });
 
             bannedIngredients.forEach(bannedIngredient => {
                 if (ingredients.indexOf(bannedIngredient) != -1) {
@@ -353,23 +350,23 @@ class CocktailListManager extends Observable {
         let recipe = new Recipe();
 
         Object.entries(data.main_ingredients).forEach((entry) => {
-            let [key, value] = entry;
-            let ingredient = this.getIngredientFromKey(key);
+            let [key, value] = entry,
+                ingredient = this.getIngredientFromKey(key);
             recipe.addMainIngredient(ingredient, value[0], value[1]);
-        })
+        });
 
         Object.entries(data.deko_ingredients).forEach((entry) => {
-            let [key, value] = entry;
-            let ingredient = this.getIngredientFromKey(key);
+            let [key, value] = entry,
+                ingredient = this.getIngredientFromKey(key);
             recipe.addMainIngredient(ingredient, value[0], value[1]);
-        })
+        });
 
         return recipe;
     }
 
     getIngredientFromKey(key) {
-        let alcoholic = this.ingredientList.isIngredientAlcoholic(key);
-        let displayName = this.ingredientList.getDisplayNameFromName(key);
+        let alcoholic = this.ingredientList.isIngredientAlcoholic(key),
+            displayName = this.ingredientList.getDisplayNameFromName(key);
         return new Ingredient(key, displayName, alcoholic);
     }
 

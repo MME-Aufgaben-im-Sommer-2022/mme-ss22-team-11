@@ -1,11 +1,11 @@
-import {Observable, Event} from "../../utils/Observable.js";
+import {Observable} from "../../utils/Observable.js";
 
 const COCKTAIL_PAGE_TEMPLATE = document.getElementById("cocktail-section-element-template").innerHTML.trim();
 
 function createCocktailPageElement() {
     let el = document.createElement("div");
     el.innerHTML = COCKTAIL_PAGE_TEMPLATE;
-    return el.querySelector(".cocktail-section")
+    return el.querySelector(".cocktail-section");
 }
 
 function createIngredients(el, ingredients) {
@@ -57,7 +57,7 @@ function initializeFavEventListeners(favButton, cocktailView) {
             console.log("Cocktail marked as fav");
             favButton.src = "./resources/css/img/VectorFavFilled.svg";
         }
-    })
+    });
 }
 
 class CocktailView extends Observable {
@@ -80,8 +80,8 @@ class CocktailView extends Observable {
         
         this.el.querySelector(".name").textContent = this.cocktail.name;
 
-        let backButton = this.el.querySelector(".cocktail-back");
-        let favButton = this.el.querySelector(".cocktail-fav");
+        let backButton = this.el.querySelector(".cocktail-back"),
+            favButton = this.el.querySelector(".cocktail-fav");
 
         initializeBackEventListeners(backButton, this);
         initializeFavEventListeners(favButton, this);

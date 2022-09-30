@@ -8,4 +8,4 @@ class Rating {
 
 }
 
-export { Rating }
+export { Rating };

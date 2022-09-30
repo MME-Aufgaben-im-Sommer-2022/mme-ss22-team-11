@@ -2,7 +2,6 @@ import {Observable, Event} from "../../utils/Observable.js";
 
 const INGREDIENT_ELEMENT_TEMPLATE = document.getElementById("ingredient-element-template").innerHTML.trim();
 
-
 function createIngredientElementForView() {
     let el = document.createElement("div");
     el.innerHTML = INGREDIENT_ELEMENT_TEMPLATE;
@@ -17,7 +16,7 @@ class IngredientView extends Observable {
         this.ingredient = ingredient;
         this.el = createIngredientElementForView();
         //this.el.textContent = ingredient.displayName;
-        this.el.textContent = ingredient
+        this.el.textContent = ingredient;
 
         this.el.addEventListener("click", (event) => this.notifyAll(new Event("INGREDIENT CLICKED", [this.el, this.ingredient])));
     }
@@ -27,7 +26,7 @@ class IngredientView extends Observable {
     }
 
     remove() {
-        this.el.remove()
+        this.el.remove();
     }
 
 }

@@ -18,7 +18,6 @@ class Cocktail {
         this.author = author;
         this.isAlcoholic = this.getIsAlcoholic();
 
-
     }
 
     toDBObject() {
@@ -45,7 +44,7 @@ class Cocktail {
     }
 
     getRating() {
-        if (this.ratings.length = 0) {
+        if (this.ratings.length == 0) {
             return undefined;
         }
 
@@ -85,14 +84,14 @@ class Cocktail {
             if (ingredients.indexOf(component.ingredient.displayName) == -1 && component.ingredient.displayName != "Eiswürfel" && component.ingredient.displayName != "Crushed Ice") {
                 bool = false;
             }
-        })
+        });
 
         if (withDeco) {
             this.recipe.decoIngredients.forEach(component => {
                 if (ingredients.indexOf(component.ingredient.displayName) == -1) {
                     bool = false;
                 }
-            })
+            });
         }
 
         return bool;
@@ -102,8 +101,8 @@ class Cocktail {
     // Hat der Cocktail mindestens die angegebenen Zutaten?
     checkIfCocktailHasIngredients(ingredients, withDeco) {
 
-        let bool = true;
-        let lst = [];
+        let bool = true,
+            lst = [];
 
         this.recipe.mainIngredients.forEach(component => {
             lst.push(component.ingredient.displayName);
@@ -119,7 +118,7 @@ class Cocktail {
             if (lst.indexOf(ingredient.ingredient) == -1) {
                 bool = false;
             }
-        })
+        });
 
         return bool;
 
@@ -137,7 +136,7 @@ class Cocktail {
             if (displayNames.indexOf(component.ingredient.displayName) == -1) {
                 displayNames.push(component.ingredient.displayName);
             }
-        })
+        });
 
         return displayNames;
 

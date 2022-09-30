@@ -19,7 +19,7 @@ class CocktailCreator extends Observable {
             this.cocktailListManager.addCustomCocktail("name", recipe, "jannis.jpg", [], "", "", "");
             
         } else {
-            console.log("cocktail creation failed: invalid input")
+            console.log("cocktail creation failed: invalid input");
         }
 
         //console.log(items)

@@ -21,7 +21,7 @@ class ListView extends Observable {
 
     removeAllCocktails() {
         cocktailListViews.forEach((view) => view.remove());
-        cocktailListViews.splice(0, cocktailListViews.length)
+        cocktailListViews.splice(0, cocktailListViews.length);
     }
 
     addAllCocktails(cocktails) {
