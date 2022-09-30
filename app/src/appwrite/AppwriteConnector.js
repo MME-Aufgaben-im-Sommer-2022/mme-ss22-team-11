@@ -2,15 +2,20 @@
 
 import Config from "./AppwriteConfig.js";
 import CreateUserTask from "./tasks/CreateUserTask.js";
-import CreateUserSessionTask from "./tasks/CreateUserSessionTask.js";
+import CreateUserSessionTask from "./tasks/account/CreateUserSessionTask.js";
 import DeleteUserSessionTask from "./tasks/DeleteUserSessionTask.js";
 import GetUserPreferencesTask from "./tasks/GetUserPreferencesTask.js";
 import UpdateUserPreferencesTask from "./tasks/UpdateUserPreferencesTask.js";
-import CreateDocumentTask from "./tasks/CreateDocumentTask.js";
+import CreateDocumentTask from "./tasks/database/CreateDocumentTask.js";
 import GetDocumentTask from "./tasks/GetDocumentTask.js";
 import UpdateDocumentTask from "./tasks/UpdateDocumentTask.js";
 import DeleteDocumentTask from "./tasks/DeleteDocumentTask.js";
 import ListDocumentsTask from "./tasks/ListDocumentsTask.js";
+import CreateFileTask from "./tasks/storage/CreateFileTask.js";
+import ListFilesTask from "./tasks/storage/ListFilesTask.js";
+import GetFileTask from "./tasks/storage/GetFileTask.js";
+import UpdateFileTask from "./tasks/storage/UpdateFileTask.js";
+import DeleteFileTask from "./tasks/storage/DeleteFileTask.js";
 
 function createClient() {
   let client = new Appwrite.Client();
@@ -152,6 +157,41 @@ class AppwriteConnector {
 
   async deleteDocument(id) {
     let task = new DeleteDocumentTask(this.client);
+    return await task.run({
+      id: id,
+    });
+  }
+
+  async createFile(id, file) {
+    let task = new CreateFileTask(this.client);
+    return await task.run({
+      id: id,
+      file: file,
+    });
+  }
+
+  async listFiles() {
+    let task = new ListFilesTask(this.client);
+    return await task.run({});
+  }
+
+  async getFile(id) {
+    let task = new GetFileTask(this.client);
+    return await task.run({
+      id: id,
+    });
+  }
+
+  async updateFile(id, file) {
+    let task = new UpdateFileTask(this.client);
+    return await task.run({
+      id: id,
+      file: file,
+    });
+  }
+
+  async deleteFile(id) {
+    let task = new DeleteFileTask(this.client);
     return await task.run({
       id: id,
     });
