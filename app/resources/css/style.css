@@ -184,6 +184,10 @@ nav {
 .ingredients-section h1 {
     margin: auto;
     background: none;
+    text-align: center;
+    font-size: 1.75rem;
+    word-wrap: normal;
+    width: 80%;
 }
 
 .ingredient-input-container {

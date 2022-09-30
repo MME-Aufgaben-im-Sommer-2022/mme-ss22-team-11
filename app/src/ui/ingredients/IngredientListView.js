@@ -49,26 +49,9 @@ class IngredientListView extends Observable {
         ingredientView.addEventListener("INGREDIENT CLICKED", (event) => {
             event.data[0].remove();
             selectedList.splice(selectedList.indexOf(ingredientView), 1);
-            this.addToSearchResults(ingredient);
             this.notifyAll(new Event("INGREDIENT_UNSELECTED"))
         })
     }
-
-    /*
-    removeAllSelected() {
-        selectedList.forEach((view) => view.remove());
-        selectedList.splice(0, selectedList.length)
-    }
-
-    addAllSelected(ingredients) {
-        ingredients.forEach(ingredient => this.addToSelected(ingredient));
-    }
-
-    refreshSelected(ingredients) {
-        this.removeAllSelected();
-        this.addAllSelected(ingredients);
-    }
-    */
 
     getAllSelected() {
         return selectedList;
