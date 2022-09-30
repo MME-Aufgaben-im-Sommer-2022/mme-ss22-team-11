@@ -43,8 +43,8 @@ cocktailListManager.addEventListener("READY_FOR_COCKTAILS", (event) => cocktailL
 ingredientFilterManager.addEventListener("INGREDIENT_DATA_READY", (event) => showIngredients());
 ingredientFilterManager.addEventListener("INGREDIENT_DATA_UPDATED", (event) => showIngredients());
 
-ingredientListView.addEventListener("INGREDIENT_SELECTED", (event) => filterCocktails())
-ingredientListView.addEventListener("INGREDIENT_UNSELECTED", (event) => filterCocktails())
+ingredientListView.addEventListener("INGREDIENT_SELECTED", (event) => filterCocktails());
+ingredientListView.addEventListener("INGREDIENT_UNSELECTED", (event) => filterCocktails());
 
 let filterCocktails = () => {
     let selected = ingredientListView.getAllSelected();

@@ -3,7 +3,7 @@ import { CocktailCreator } from "./cocktailData/cocktailCreator.js";
 
 let htmlManipulator = new HtmlManipulator(),
     cocktailCreator = new CocktailCreator(),
-    cocktailSubmit = document.querySelector('.creator-upload-button');
+    cocktailSubmit = document.querySelector(".creator-upload-button");
 console.log(cocktailSubmit);
 
 // TODO: listener for button input
