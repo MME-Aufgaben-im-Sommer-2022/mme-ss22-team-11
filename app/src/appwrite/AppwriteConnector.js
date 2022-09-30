@@ -2,15 +2,20 @@
 
 import Config from "./AppwriteConfig.js";
 import CreateUserTask from "./tasks/CreateUserTask.js";
-import CreateUserSessionTask from "./tasks/CreateUserSessionTask.js";
+import CreateUserSessionTask from "./tasks/account/CreateUserSessionTask.js";
 import DeleteUserSessionTask from "./tasks/DeleteUserSessionTask.js";
 import GetUserPreferencesTask from "./tasks/GetUserPreferencesTask.js";
 import UpdateUserPreferencesTask from "./tasks/UpdateUserPreferencesTask.js";
-import CreateDocumentTask from "./tasks/CreateDocumentTask.js";
+import CreateDocumentTask from "./tasks/database/CreateDocumentTask.js";
 import GetDocumentTask from "./tasks/GetDocumentTask.js";
 import UpdateDocumentTask from "./tasks/UpdateDocumentTask.js";
 import DeleteDocumentTask from "./tasks/DeleteDocumentTask.js";
 import ListDocumentsTask from "./tasks/ListDocumentsTask.js";
+import CreateFileTask from "./tasks/storage/CreateFileTask.js";
+import ListFilesTask from "./tasks/storage/ListFilesTask.js";
+import GetFileTask from "./tasks/storage/GetFileTask.js";
+import UpdateFileTask from "./tasks/storage/UpdateFileTask.js";
+import DeleteFileTask from "./tasks/storage/DeleteFileTask.js";
 
 function createClient() {
   let client = new Appwrite.Client();
@@ -122,6 +127,12 @@ class AppwriteConnector {
     });
   }
 
+  /**
+   * Erstellt ein Dokument welches in der Datenbank gespeichert wird
+   * @param {*} id Ein String um das Dokument zu identifizieren
+   * @param {*} data Ein JSON-Objekt welches unter der id gespeichert wird
+   * @returns 
+   */
   async createDocument(id, data) {
     let task = new CreateDocumentTask(this.client);
     return await task.run({
@@ -130,11 +141,20 @@ class AppwriteConnector {
     });
   }
 
+  /**
+   * Listet alle Dokumente aus der Datenbank auf
+   * @returns eine Liste mit allen Dokumenten aus der Datenbank
+   */
   async listDocuments() {
     let task = new ListDocumentsTask(this.client);
     return await task.run({});
   }
 
+  /**
+   * Gibt das gesuchte Dokument zurück
+   * @param {*} id Ein String um das Dokument zu spezifizieren
+   * @returns JSON-Objekt welches unter der id gespeichert ist
+   */
   async getDocument(id) {
     let task = new GetDocumentTask(this.client);
     return await task.run({
@@ -142,6 +162,12 @@ class AppwriteConnector {
     });
   }
 
+  /**
+   * Ersetzt ein vorhandenes Dokument mit neuen Daten
+   * @param {*} id Identifikation für das Dokument
+   * @param {*} data Neue Daten in JSON-Format
+   * @returns 
+   */
   async updateDocument(id, data) {
     let task = new UpdateDocumentTask(this.client);
     return await task.run({
@@ -150,8 +176,74 @@ class AppwriteConnector {
     });
   }
 
+  /**
+   * Löscht das gewünschte Dokument
+   * @param {*} id Identifikation für das Dokument
+   * @returns 
+   */
   async deleteDocument(id) {
     let task = new DeleteDocumentTask(this.client);
+    return await task.run({
+      id: id,
+    });
+  }
+
+  /**
+   * Erstellt ein File welches in der Storage gespeichert wird
+   * @param {*} id Identifikation für das File
+   * @param {*} file File Objekt welches gespeichert wird
+   * @returns 
+   */
+  async createFile(id, file) {
+    let task = new CreateFileTask(this.client);
+    return await task.run({
+      id: id,
+      file: file,
+    });
+  }
+
+  /**
+   * Gibt eine Liste zurück, die zeigt welche Files in der Storage sind
+   * @returns 
+   */
+  async listFiles() {
+    let task = new ListFilesTask(this.client);
+    return await task.run({});
+  }
+
+  /**
+   * Gibt das gesuchte File zurück
+   * @param {*} id Identifikation für das gewünschte File
+   * @returns File-Objekt
+   */
+  async getFile(id) {
+    let task = new GetFileTask(this.client);
+    return await task.run({
+      id: id,
+    });
+  }
+
+  /**
+   * Ersetzt ein vorhandenes File mit einem neuen
+   * @param {*} id Identifikation des Files
+   * @param {*} file Neues File-Objekt
+   * @returns 
+   */
+  async updateFile(id, file) {
+    let task = new UpdateFileTask(this.client);
+    return await task.run({
+      id: id,
+      file: file,
+    });
+  }
+
+  /**
+   * Löscht ein File aus der Storage
+   * @param {*} id Identifkation des Files
+   * @returns 
+   */
+  async deleteFile(id) {
+    let task = new DeleteFileTask(this.client);
     return await task.run({
       id: id,
     });
