@@ -5,7 +5,7 @@ import CreateUserTask from "./tasks/CreateUserTask.js";
 import CreateUserSessionTask from "./tasks/CreateUserSessionTask.js";
 import DeleteUserSessionTask from "./tasks/DeleteUserSessionTask.js";
 import GetUserPreferencesTask from "./tasks/GetUserPreferencesTask.js";
-import UpdateUserPreferencesTask from "./tasks/UpdateUserPrefrencesTask.js";
+import UpdateUserPreferencesTask from "./tasks/UpdateUserPreferencesTask.js";
 import CreateDocumentTask from "./tasks/CreateDokumentTask.js";
 import GetCollectionTask from "./tasks/GetCollectionTask.js";
 
@@ -19,7 +19,7 @@ function createClient() {
  * Der AppwriteConnector bildet die Brücke zwischen der Appwrite-Datenbank auf dem Server und
  * der Client-Anwendung im Browser. Für alle zentralen DB-Anfragen ist hier eine öffentliche,
  * asynchrone Methode definiert, in der die gesamte Kommunikation mit dem Appwrite-Server
- * durchgeführt und ein passendes Ergebnis generiert wird. Die eigentlichen Operationen sind dabei
+ * durchgeführt und dabei ein passendes Ergebnis generiert wird. Die eigentlichen Operationen sind dabei
  * in separate Task-Objekte ausgelagert. Dieser erhalten zur Durchführung (run-Methode) alle
  * Parameter übergeben, die neben dem bereits beim Erstellen des Tasks übergebenen, aktuellen
  * Appwrite-Client, für die Durchführung der spezifischen Aufgabe notwendig sind.
@@ -41,14 +41,14 @@ class AppwriteConnector {
 
   constructor() {
     this.client = createClient(); // erstellt ein Appwrite.Client-Objekt für den Zugriff auf den Server
-    this.currentSession = undefined; // Enthält, falls vorhanden, die Session-Informationen des aktuell eingeloggten Users
+    this.currentSession = undefined; // Enthält, falls vorhanden, die Session-Informationen des aktuell eingeloggten Accounts
   }
 
   /**
    * Erzeugt einen neuen Account auf dem Appwrite-Server
-   * @param {*} name Der Name des neuen Accounts
-   * @param {*} email Die E-Mail-Adresse des neuen Accounts
-   * @param {*} password Das Passwort des neuen Accounts
+   * @param {String} name Der Name des neuen Accounts
+   * @param {String} email Die E-Mail-Adresse des neuen Accounts
+   * @param {String} password Das Passwort des neuen Accounts
    * @returns Den neu erstellten Account
    * @throws Fehler, die beim Erstellen des Accounts aufgetreten sind
    */
@@ -63,8 +63,8 @@ class AppwriteConnector {
 
   /**
    * Meldet einen bestehenden, über die Parameter authentifizierten, Account beim Appwrite-Server an
-   * @param {*} email Die E-Mail-Adresse des anzumeldenden Accounts
-   * @param {*} password Das Passwort des anzumeldenten Accounts
+   * @param {String} email Die E-Mail-Adresse des anzumeldenden Accounts
+   * @param {String} password Das Passwort des anzumeldenden Accounts
    * @returns Die durch den Anmeldevorgang erzeugte Sitzung als Session-Objekt
    * @throws Fehler, die beim Anmelden des Accounts aufgetreten sind
    */
@@ -82,7 +82,7 @@ class AppwriteConnector {
   }
 
   /**
-   * Meldet den aktuell angemeldeten Account beim Appwrite-Server an und zersört damit die aktuelle Sitzung
+   * Meldet den aktuell angemeldeten Account beim Appwrite-Server an und zerstört damit die aktuelle Sitzung
    * @returns -
    * @throws Fehler, die beim Abmelden des Accounts aufgetreten sind
    */
@@ -98,7 +98,7 @@ class AppwriteConnector {
 
   /**
    * Gibt die Preferences des angemeldeten Accounts als JavaScript-Objekt zurück
-   * @returns Die aktuellen Prefernces des angemeldeten Accounts
+   * @returns Die aktuellen Preferences des angemeldeten Accounts
    * @throws Fehler, die beim Zugriff auf die Preferences aufgetreten sind
    */
   async getPreferences() {
@@ -108,7 +108,7 @@ class AppwriteConnector {
 
   /**
    * Überschreibt die Preferences des angemeldeten Accounts mit dem übergebenen Objekt
-   * @param {*} preferences Das JavaScript-Objekt, dass die Preferences des Accounts auf dem Server ersetzen soll
+   * @param {Object} preferences Das JavaScript-Objekt, das die Preferences des Accounts auf dem Server ersetzen soll
    * @returns Die jetzt überschriebenen, aktuellen Preferences des angemeldeten Accounts
    * @throws  Fehler, die beim Überschreiben der Preferences aufgetreten sind
    */
@@ -121,7 +121,7 @@ class AppwriteConnector {
 
   /**
    * Speichert ein als Objekt übergebenes Rezept in der Appwrite-Datenbank
-   * @param {*} recipe Das Rezept als JavaScript-Objekt, dessen Struktur sich an den vorgegebenen Dokument-Attributen der Appwrite-Collection orientieren muss
+   * @param {Object} recipe Das Rezept als JavaScript-Objekt, dessen Struktur sich an den vorgegebenen Dokument-Attributen der Appwrite-Collection orientieren muss
    * @returns Das auf dem Server gespeicherte Dokument
    * @throws  Fehler, die beim Speichern des Dokuments aufgetreten sind
    */
@@ -160,5 +160,5 @@ class AppwriteConnector {
 }
 
 const connector = new AppwriteConnector();
-// Aus dem Modul wird nur der bereits erstellte Connector exportiert, um eine mehrfache Instanzierung zu verhindern
+// Aus dem Modul wird nur der bereits erstellte Connector exportiert, um eine mehrfache Instanziierung zu verhindern
 export default connector;

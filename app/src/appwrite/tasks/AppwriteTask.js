@@ -1,5 +1,12 @@
 /* global Appwrite */
 
+/**
+ * Vorlage für alle Tasks zur Kapselung unabhängiger Datenbankoperationen. Beim Erstellen des
+ * Tasks wird der Appwrite-Client übergeben. Weitere, zur Ausführung notwendige Parameter, erhält
+ * die run-Methode in Form eines Parameter-Objekts. In dieser Methode wird die createResult-Methode
+ * ausgeführt und deren Ergebnis zurückgegeben. Spezifische Tasks überschreiben createResult zur
+ * Generierung der jeweiligen Ergebnisse. Tasks sind als "single-use"-Komponenten gedacht.
+ */
 class AppwriteTask {
 
  #consumed;
