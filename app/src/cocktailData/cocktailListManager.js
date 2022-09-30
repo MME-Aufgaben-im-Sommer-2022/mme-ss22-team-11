@@ -29,19 +29,24 @@ class CocktailListManager extends Observable {
 
     }
 
+    async emptyDB() {
+        while (await this.appwrite.listDocuments.total > 0) {
+
+            let docs = await this.appwrite.listDocuments.documents;
+
+            docs.forEach(data => {
+                console.log(data.$id)
+                this.appwrite.deleteDocument(data.$id);
+            })
+        }
+    }
+
     // read all docs to get cocktails
     async getCocktailsFromDB() {
 
         let cocktailDataFromDB = await this.appwrite.listDocuments();
 
-        console.log(cocktailDataFromDB)
-
-
-        // wurde zum testen benutzt
-        // docs.forEach(data => {
-        //     console.log(data.$id)
-        //     this.appwrite.deleteDocument(data.$id);
-        // })
+        console.log(cocktailDataFromDB);
 
         // if there are no Cocktails in the DB, the cocktails from the json will be loaded
         if (cocktailDataFromDB.total == 0) {
