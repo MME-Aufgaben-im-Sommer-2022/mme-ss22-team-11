@@ -86,6 +86,7 @@ class CocktailListManager extends Observable {
 
         });
 
+        this.allCocktails.sort((a, b) => a.id - b.id);
         this.updateDisplayList(this.allCocktails);
  
 
