@@ -26,8 +26,10 @@ login.addEventListener("LOGIN", (event) => {
     user.addEventListener("USER_DATA_CHANGED", (event) => login.updateUser(event.data));
     console.log(user);
 });
+
+// testing:
 // login.singUp("Gix", "georg_dechant@web.de", "IchBinEinPasswort");
-login.login("georg_dechant@web.de", "IchBinEinPasswort");
+// login.login("georg_dechant@web.de", "IchBinEinPasswort");
 
 
 cocktailListManager.addEventListener("DATA_READY", (event) => showCocktails());

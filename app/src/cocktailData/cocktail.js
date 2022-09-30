@@ -7,12 +7,37 @@ class Cocktail {
         this.image = image;
         this.ratings = ratings;
         this.tags = tags;
-        this.description = description;
+
+        if (description == undefined) {
+            this.description = "";
+        } else {
+            this.description = description;
+        }
+
         this.steps = steps;
         this.author = author;
         this.isAlcoholic = this.getIsAlcoholic();
 
 
+    }
+
+    toDBObject() {
+        let data = {};
+
+        data.name = this.name;
+
+        data.recipe = JSON.stringify(this.recipe);
+        data.ratings = JSON.stringify(this.ratings);
+        data.description = this.description;
+        data.tags = this.tags;
+        data.author = this.author;
+
+        data.steps = [];
+        for (let val of Object.values(this.steps)) {
+            data.steps.push(val);
+        }
+
+        return data;
     }
 
     addRating(rating) {

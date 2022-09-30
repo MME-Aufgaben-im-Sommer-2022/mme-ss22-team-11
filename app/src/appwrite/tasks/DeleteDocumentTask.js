@@ -3,10 +3,10 @@ import AppwriteTask from "./AppwriteTask.js";
 
 export default class DeleteDocumentTask extends AppwriteTask {
 
-  async createResult(id) {
-    let database = new this.appwrite.Databases(this.client, Config.database);
+  async createResult(input) {
+    let database = new this.appwrite.Databases(this.client, Config.database.id);
     try {
-      await database.createDocument(Config.database.collections.recipe, id);
+      await database.deleteDocument(Config.database.collections.recipe.id, input.id);
     } catch (error) {
       console.error(error);
       throw new Error("Error while trying to create a document.");

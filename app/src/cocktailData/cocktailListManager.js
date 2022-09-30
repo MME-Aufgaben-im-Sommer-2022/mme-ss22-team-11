@@ -18,22 +18,72 @@ class CocktailListManager extends Observable {
         this.allCocktails = [];
         this.ingredientList = new IngredientList();
 
-        this.getIngredientAndCocktailData();
-
         // setTimeout(() => this.getCocktailsFromJson(), 100);
+
+        this.getCocktailsFromDB();
 
         // Diese Liste soll immer angezeigt werden
         this.displayList = this.allCocktails;
-
-       // this.getCocktailsFromDB();
 
         //TODO: listener hinzufügen um zu sehen wann daten bereit sind
 
     }
 
+    // read all docs to get cocktails
     async getCocktailsFromDB() {
-        let test = await this.appwrite.listDocuments();
-        console.log(test);
+
+        let cocktailDataFromDB = await this.appwrite.listDocuments();
+
+        console.log(cocktailDataFromDB)
+
+
+        // wurde zum testen benutzt
+        // docs.forEach(data => {
+        //     console.log(data.$id)
+        //     this.appwrite.deleteDocument(data.$id);
+        // })
+
+        // if there are no Cocktails in the DB, the cocktails from the json will be loaded
+        if (cocktailDataFromDB.total == 0) {
+            this.getIngredientAndCocktailData();
+        }
+
+        let docs = [];
+
+        // die ids von 0 bis 99 sind offiziell
+        for (let i = 0; i < cocktailDataFromDB.total; i++) {
+            let id = "cocktailNr" + i.toString();
+            let doc = await this.appwrite.getDocument(id);
+            docs.push(doc);
+        }
+
+        console.log("docs: ", docs);
+
+
+        docs.forEach(data => {
+
+            let id = data.$id.substring(10);
+
+            let recipe = JSON.parse(data.recipe);
+            let ratings = JSON.parse(data.ratings);
+
+            let steps = {}
+            let stepNr = 1;
+            data.steps.forEach(stepDesc => {
+                steps[stepNr] = stepDesc;
+                stepNr += 1;
+            });
+
+            // TODO: image
+            let cocktail = new Cocktail(id, data.name, recipe, data.image, ratings, data.tags, data.description, steps, data.author);
+
+            this.allCocktails.push(cocktail);
+
+        });
+
+        this.updateDisplayList(this.allCocktails);
+ 
+
     }
 
     getAllCommunityCocktails() {
@@ -54,35 +104,22 @@ class CocktailListManager extends Observable {
     //TODO: fertig machen
     async cocktailsToJSON() {
 
-        let obj = {};
         this.allCocktails.forEach(cocktail => {
-
-            // getCocktailData
-            let data = {};
-            data.name = cocktail.name;
-            data.author = cocktail.author;
-            data.main_ingredients = cocktail.mainIngredients;
-            data.deko_ingredients = cocktail.decoIngredients;
-            data.steps = cocktail.steps;
-            data.img = cocktail.image;
-            data.description = cocktail.description;
-            data.tags = cocktail.tags;
-            data.ratings = cocktail.ratings;
-
-            obj[cocktail.id] = data;
+            let id = "cocktailNr" + cocktail.id;
+            let data = cocktail.toDBObject();
+            this.addCocktailToDB(id, data);
 
         });
 
-        let json = JSON.stringify(obj);
+    }
 
-        console.log(json);
+    async addCocktailToDB(id, data) {
 
-        if (await this.appwrite.listDocuments() == undefined){
-            await this.appwrite.createDocument("cocktails", json);
+        if (await this.appwrite.getDocument(id) != undefined) {
             return;
         }
-        await this.appwrite.updateDocument("cocktails", json);
 
+        await this.appwrite.createDocument(id, data);
     }
 
     //TODO: aus Datenbank auslesen
