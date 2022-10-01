@@ -1,4 +1,4 @@
-import AppwriteTask from "./AppwriteTask.js";
+import AppwriteTask from "../AppwriteTask.js";
 
 export default class GetUserPrefrencesTask extends AppwriteTask {
 

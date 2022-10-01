@@ -1,5 +1,5 @@
-import Config from "../AppwriteConfig.js";
-import AppwriteTask from "./AppwriteTask.js";
+import Config from "../../AppwriteConfig.js";
+import AppwriteTask from "../AppwriteTask.js";
 
 export default class UpdateDocumentTask extends AppwriteTask {
 
