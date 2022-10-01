@@ -147,7 +147,9 @@ class AppwriteConnector {
    */
   async listDocuments() {
     let task = new ListDocumentsTask(this.client);
-    return await task.run({});
+    return await task.run({
+        query : "cocktailNr",
+    });
   }
 
   /**
