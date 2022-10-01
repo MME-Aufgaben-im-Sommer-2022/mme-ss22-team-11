@@ -62,7 +62,7 @@ class HtmlManipulator {
 
             NEW_RECIPE_FAB.addEventListener("click", (event) => {
                 console.log("open recipe-creator");
-                window.location.href = "./resources/html/creator.html";
+                window.location.href = "./creator.html";
             });
         }
 

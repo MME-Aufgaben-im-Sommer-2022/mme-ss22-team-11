@@ -36,7 +36,6 @@ class CocktailListManager extends Observable {
     fillAllIngredients(data) {
         this.allIngredients = new IngredientList();
         data.forEach(el => this.allIngredients.addIngredient(el));
-        console.log("JETZT");
         this.notifyAll(new Event("READY_FOR_COCKTAILS"));
     }
 
@@ -224,7 +223,7 @@ class CocktailListManager extends Observable {
     addCustomCocktail(name, recipe, image, tags, description, steps, author) {
 
         // TODO: letzte id aus db auslesen (daraus neue errechnen)
-        let id = -1,
+        let id = 200,
             cocktail = new Cocktail(id, name, recipe, image, [], tags, description, steps, author);
         console.log(cocktail);
         this.allCocktails.push(cocktail);
