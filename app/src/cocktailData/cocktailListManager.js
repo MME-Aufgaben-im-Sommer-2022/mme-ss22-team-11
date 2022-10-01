@@ -69,6 +69,7 @@ class CocktailListManager extends Observable {
         // if there are no Cocktails in the DB, the cocktails from the json will be loaded
         if (cocktailDataFromDB.total == 0) {
             this.getIngredientAndCocktailData();
+            return;
         }
 
         this.getIngredientData();

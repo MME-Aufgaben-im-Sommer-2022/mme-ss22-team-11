@@ -35,7 +35,7 @@
                 </form>
             </div>
             <div>
-                <input type="text" placeholder="Name">
+                <input type="text" id="name" placeholder="Name">
             </div>
             <div class="creator-tags">
                 <input type="text" class="creator-tag-input" placeholder="Suche nach Tags...">
@@ -43,21 +43,26 @@
                 <button class="creator-add-ingredient">+</button>
             </div>
 
-            <div class="ingredient-input-container">
-                <div class="ingredient-input-header">
-                    <input class="ingredient-input" type="text" placeholder="Search...">
-                    
+            <div>
+                <div class="ingredients-section">
+                    <p>Zutaten</p>
+                    <div class="ingredient-input-container">
+                        <div class="ingredient-input-header">
+                            <input class="ingredient-input" type="text" placeholder="Search...">
+                            <img class="ingredient-search" src="./resources/css/img/VectorSearch.svg" draggable="false">
+                        </div>
+                        <div class="ingredient-search-results">
+        
+                            <!--Append search ingredients here-->
+        
+                        </div>
+                    </div>
+                    <div class="ingredients-container">
+        
+                        <!--Append selected ingredients here-->
+        
+                    </div>
                 </div>
-                <div class="ingredient-search-results">
-
-                    <!--Append search ingredients here-->
-
-                </div>
-            </div>
-            <div class="ingredients-container">
-
-                <!--Append selected ingredients here-->
-
             </div>
 
             <div class="creator-steps">
@@ -75,6 +80,13 @@
     </section>
 
    <script type="module" src="/app/src/creator.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/appwrite@9.0.1/dist/iife/sdk.min.js"></script>
 </body>
+
+<template id="ingredient-element-template">
+    <div class="ingredient">
+        Zutat
+    </div>
+</template>
 
 </html>
