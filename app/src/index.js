@@ -13,8 +13,8 @@ let htmlManipulator = new HtmlManipulator(),
     listView = new ListView(),
     ingredientListView = new IngredientListView(),
     showCocktails = () => {
-    listView.refreshCocktails(cocktailListManager.displayList);
-},  
+        listView.refreshCocktails(cocktailListManager.displayList);
+    },
     login = new Login(),
     user;
 
@@ -50,9 +50,9 @@ let filterCocktails = () => {
     let selected = ingredientListView.getAllSelected();
     cocktailListManager.getCocktailsWithIngredients(selected, false);
 },
-showIngredients = () => {
-    ingredientListView.refreshSearchResults(ingredientFilterManager.displayList);
-};
+    showIngredients = () => {
+        ingredientListView.refreshSearchResults(ingredientFilterManager.displayList);
+    };
 
 listView.addEventListener("COCKTAIL CLICKED", (event) => {
     let cocktailView = new CocktailView(event.data);

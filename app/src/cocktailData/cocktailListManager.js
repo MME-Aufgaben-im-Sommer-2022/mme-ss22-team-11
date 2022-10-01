@@ -20,8 +20,6 @@ class CocktailListManager extends Observable {
         this.ingredientList.addEventListener("INGREDIENTS_READY", (event) => this.fillAllIngredients(event.data));
         this.ingredientList.getAllIngredientsFromJSON();
 
-        // setTimeout(() => this.getCocktailsFromJson(), 100);
-
         // Diese Liste soll immer angezeigt werden
         this.displayList = this.allCocktails;
 
@@ -64,11 +62,12 @@ class CocktailListManager extends Observable {
         let cocktailDataFromDB = await this.appwrite.listDocuments();
 
         console.log(cocktailDataFromDB);
-        
+
 
         // if there are no Cocktails in the DB, the cocktails from the json will be loaded
         if (cocktailDataFromDB.total == 0) {
             this.getIngredientAndCocktailData();
+            return;
         }
 
         this.getIngredientData();
@@ -98,8 +97,17 @@ class CocktailListManager extends Observable {
                 stepNr += 1;
             });
 
-            // TODO: image
-            let cocktail = new Cocktail(id, data.name, recipe, data.image, ratings, data.tags, data.description, steps, data.author);
+            let img = data.image;
+
+            // TODO: Storage beim befüllen statt hier auslesen und datei aus Storage holen
+            // TODO: beim erstellen von einem Cocktail soll "STORAGE" als img vom cocktail gespeichert werden
+            //if (data.image == "STORAGE") {
+            //    img = this.getImgForID(id, data.image);
+            //} else {
+            //    img = data.image;
+            //}
+
+            let cocktail = new Cocktail(id, data.name, recipe, img, ratings, data.tags, data.description, steps, data.author);
 
             this.allCocktails.push(cocktail);
 
@@ -107,8 +115,12 @@ class CocktailListManager extends Observable {
 
         this.allCocktails.sort((a, b) => a.id - b.id);
         this.updateDisplayList(this.allCocktails);
- 
 
+
+    }
+
+    async getImgForID(id) {
+        return await this.appwrite.getFile(id);
     }
 
     getAllCommunityCocktails() {
@@ -259,6 +271,10 @@ class CocktailListManager extends Observable {
                 this.notifyAll(new Event("DATA_READY"));
 
             });
+    }
+
+    async createImage(data) {
+        return await this.appwrite.createFile(i, data);
     }
 
     updateDisplayList(returnList) {
