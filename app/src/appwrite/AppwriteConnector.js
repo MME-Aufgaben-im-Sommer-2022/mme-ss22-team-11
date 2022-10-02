@@ -145,10 +145,10 @@ class AppwriteConnector {
    * Listet alle Dokumente aus der Datenbank auf
    * @returns eine Liste mit allen Dokumenten aus der Datenbank
    */
-  async listDocuments() {
+  async listDocuments(query) {
     let task = new ListDocumentsTask(this.client);
     return await task.run({
-        query : "cocktailNr",
+        query : query,
     });
   }
 
