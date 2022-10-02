@@ -137,8 +137,8 @@ class CocktailListManager extends Observable {
     //TODO: aus Datenbank auslesen
     jsonToCommunityCocktails() {
         let json = this.appwrite.getDocumentFromDB(
-            this.appwrite.RECIPE_DB_ID, 
-            this.appwrite.RECIPE_COM_COLLECTION_ID, 
+            this.appwrite.RECIPE_DB_ID,
+            this.appwrite.RECIPE_COM_COLLECTION_ID,
             this.appwrite.COMMUNITY_RECIPES_DOC_ID);
 
         // TODO: json zu liste und zu allcocktails hinzufügen (listener mit data ready)
@@ -195,6 +195,7 @@ class CocktailListManager extends Observable {
                     let data = json[i],
                         alcoholic = data.alcoholic == 1;
                     this.ingredientList.addIngredient(new Ingredient(i, data.display_name, alcoholic));
+
                 }
             });
     }
@@ -318,14 +319,15 @@ class CocktailListManager extends Observable {
         Object.entries(data.deko_ingredients).forEach((entry) => {
             let [key, value] = entry,
                 ingredient = this.getIngredientFromKey(key);
-            recipe.addMainIngredient(ingredient, value[0], value[1]);
+            recipe.addDecoIngredient(ingredient, value[0], value[1]);
         });
+
         return recipe;
     }
 
     getIngredientFromKey(key) {
-        let alcoholic = this.ingredientList.isIngredientAlcoholic(key),
-            displayName = this.ingredientList.getDisplayNameFromName(key);
+        let alcoholic = this.allIngredients.isIngredientAlcoholic(key),
+            displayName = this.allIngredients.getDisplayNameFromName(key);
         return new Ingredient(key, displayName, alcoholic);
     }
 
