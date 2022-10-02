@@ -116,62 +116,6 @@ nav {
 
 /**/
 
-#filter {
-    position: fixed;
-    background-color: var(--primary-darker);
-    width: 22.5vw;
-    height: calc(100vh - 150px);
-    z-index: 1;
-    box-shadow: 0px 0px 50px 13px rgba(132,120,169,0.25);
-    top: 150px;
-
-    overflow-x: hidden;
-    overflow-y: scroll;
-
-    font-family: 'Josefin';
-    font-size: 1.5rem;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    gap: 3vh;
-    padding: 50px 25px;
-
-
-
-}
-
-.filter-header {
-    height: 50px;
-    width: 100%;
-    background: none;
-}
-
-.filter-header h1 {
-    text-align: center;
-    margin: auto;
-    background: none;
-}
-
-.filter-header img {
-    background: none;
-    height: 30px;
-    width: auto;
-    position: absolute;
-    top: 50px;
-    right: 25px;
-    transition: all 250ms ease-in-out;
-    cursor: pointer;
-}
-
-.filter-header .hidden {
-    opacity: 0;
-}
-
-.filter-header .hidden:hover{
-    opacity: 1;
-}
-
 .ingredients-section {
     position: relative;
     display: flex;

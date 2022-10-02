@@ -34,13 +34,19 @@
                     <input type="submit">
                 </form>
             </div>
+
             <div>
                 <input type="text" id="name" placeholder="Name">
             </div>
-            <div class="creator-tags">
-                <input type="text" class="creator-tag-input" placeholder="Suche nach Tags...">
-                <!-- append tags -->
-                <button class="creator-add-ingredient">+</button>
+
+            <div class="tags-section">
+                <div class="tags-container">
+                    <input type="text" class="tag-input" placeholder="Suche nach Tags...">
+
+                    <!--Append selected tags here-->
+
+                </div>
+                <button class="tags-add">+</button>
             </div>
 
             <div>
@@ -65,12 +71,19 @@
                 </div>
             </div>
 
-            <div class="creator-steps">
+            <div class="steps-section">
                 <p>Zubereitung</p>
-                <input type="text" class="creator-step-input" placeholder="Füge Schritt hinzu...">
-                <!-- append steps -->
-                <button class="creator-add-step">+</button>
+                
+                <div class="steps-container">
+                    <input type="text" class="steps-input" placeholder="Füge Schritt hinzu...">
+
+                    <!--Append selected steps here-->
+    
+                </div>
+
+                <button class="steps-add">+</button>
             </div>
+
             <div class="creator-upload">
                 <button class="creator-upload-button">
                     Hochladen
@@ -82,6 +95,12 @@
    <script type="module" src="/app/src/creator.js"></script>
    <script src="https://cdn.jsdelivr.net/npm/appwrite@9.0.1/dist/iife/sdk.min.js"></script>
 </body>
+
+<template id="tag-element-template">
+    <div class="tag">
+        Tag
+    </div>
+</template>
 
 <template id="ingredient-element-template">
     <div class="ingredient">

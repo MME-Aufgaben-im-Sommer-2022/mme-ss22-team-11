@@ -21,10 +21,10 @@ class CocktailCreator extends Observable {
     collectInput() {
         let name = document.getElementById("name").value;
 
-        let stepList = []
-        let steps = document.querySelector(".creator-steps").getElementsByClassName("creator-step-input");
-        for (let i = 0; i < steps.length; i++) {
-            stepList.push(steps[i].value);
+        let tagList = [];
+        let tags = document.querySelector(".tags-container").getElementsByClassName("tag-input");
+        for (let i = 0; i < tags.length; i++) {
+            tagList.push(tags[i].innerHTML);
         }
         
         let ingredientList = [];
@@ -33,6 +33,11 @@ class CocktailCreator extends Observable {
             ingredientList.push({"name": ingredients[i].innerHTML, "amount": undefined, "unit": undefined});
         }
         
+        let stepList = []
+        let steps = document.querySelector(".steps-container").getElementsByClassName("steps-input");
+        for (let i = 0; i < steps.length; i++) {
+            stepList.push(steps[i].value);
+        }
 
 
         let data = {name, stepList, ingredientList}
