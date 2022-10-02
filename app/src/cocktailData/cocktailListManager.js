@@ -39,7 +39,7 @@ class CocktailListManager extends Observable {
 
     async emptyDB() {
 
-        let docs = await this.appwrite.listDocuments();
+        let docs = await this.appwrite.countDocuments();
         console.log(docs);
 
         while (docs.total > 0) {
@@ -49,13 +49,19 @@ class CocktailListManager extends Observable {
                 this.appwrite.deleteDocument(data.$id);
             });
 
-            docs = await this.appwrite.listDocuments();
+            docs = await this.appwrite.countDocuments();
 
         }
     }
 
     // read all docs to get cocktails
     async getCocktailsFromDB() {
+
+        // this.emptyDB();
+        // return;
+
+        let total = await this.appwrite.countDocuments();
+        console.log(total);
 
         console.log(this.ingredientList);
 

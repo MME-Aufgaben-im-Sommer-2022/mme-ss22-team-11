@@ -31,6 +31,7 @@ class Cocktail {
         data.tags = this.tags;
         data.author = this.author;
         data.image = this.image;
+        data.id = this.id;
 
         data.steps = [];
         for (let val of Object.values(this.steps)) {

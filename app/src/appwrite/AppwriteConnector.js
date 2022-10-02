@@ -11,6 +11,7 @@ import GetDocumentTask from "./tasks/database/GetDocumentTask.js";
 import UpdateDocumentTask from "./tasks/database/UpdateDocumentTask.js";
 import DeleteDocumentTask from "./tasks/database/DeleteDocumentTask.js";
 import ListDocumentsTask from "./tasks/database/ListDocumentsTask.js";
+import CountDocumentsTask from "./tasks/database/CountDocumentsTask.js";
 import CreateFileTask from "./tasks/storage/CreateFileTask.js";
 import ListFilesTask from "./tasks/storage/ListFilesTask.js";
 import GetFileTask from "./tasks/storage/GetFileTask.js";
@@ -150,6 +151,14 @@ class AppwriteConnector {
     return await task.run({
         query : query,
     });
+  }
+
+  /**
+   * Gibt zurück, wie viele Dokumente existieren.
+   */
+  async countDocuments() {
+    let task = new CountDocumentsTask(this.client);
+    return await task.run({});
   }
 
   /**
