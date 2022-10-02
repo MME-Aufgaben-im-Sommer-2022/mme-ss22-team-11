@@ -324,8 +324,8 @@ class CocktailListManager extends Observable {
     }
 
     getIngredientFromKey(key) {
-        let alcoholic = this.ingredientList.isIngredientAlcoholic(key),
-            displayName = this.ingredientList.getDisplayNameFromName(key);
+        let alcoholic = this.allIngredients.isIngredientAlcoholic(key),
+            displayName = this.allIngredients.getDisplayNameFromName(key);
         return new Ingredient(key, displayName, alcoholic);
     }
 
