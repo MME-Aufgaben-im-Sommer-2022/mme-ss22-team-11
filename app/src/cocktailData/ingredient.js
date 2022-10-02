@@ -113,6 +113,18 @@ class IngredientList extends Observable {
         return alcoholic;
     }
 
+    isDisplayNameAlcoholic(query) {
+
+        let alcoholic = false;
+
+        this.list.forEach(ingredient => {
+            if (ingredient.displayName === query) {
+                alcoholic = ingredient.alcoholic;
+            }
+        });
+        return alcoholic;
+    }
+
     getDisplayNameFromName(query) {
 
         let returnString = query;
