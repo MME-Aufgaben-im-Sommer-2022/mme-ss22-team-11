@@ -8,6 +8,44 @@ function createCocktailPageElement() {
     return el.querySelector(".cocktail-section");
 }
 
+function createTags(el, cocktail) {
+    let tags = []
+    tags = cocktail.tags;
+
+    if (tags.length === 0) return;
+    
+    let text = "";
+    for (let i = 0; i < tags.length; i++) {
+        text += tags[i];
+        if (i < tags.length - 1) text += ", "
+    }
+
+    let span = el.getElementsByClassName("tags")[0];
+    span.innerHTML = text;
+}
+
+function createRating(el, cocktail) {
+    let rating = cocktail.getRating();
+
+    if (rating == undefined) {
+        let noRating = document.createElement("div");
+        noRating.innerHTML = "Keine Bewertungen";
+        el.querySelector(".avg-rating").append(noRating);
+        return;
+    }
+    
+    for (let i = 0; i < 5; i++) {
+        let star = document.createElement("img");
+        star.setAttribute("draggable", "false");
+        if (i < rating) {
+            star.src = "./resources/css/img/VectorStarFilledBlack.svg";
+        } else {
+            star.src = "./resources/css/img/VectorStarHollowBlack.svg";
+        }
+        el.querySelector(".avg-rating").append(star);
+    }
+}
+
 function createIngredients(el, ingredients) {
     ingredients.forEach(element => {
         let li = document.createElement("li");
@@ -23,6 +61,7 @@ function createInstructions(el, instructions) {
         el.querySelector(".instructions").append(li);
     }
 }
+
 
 function initializeBackEventListeners(backButton, cocktailView) {
     backButton.addEventListener("mouseover", (event) => {
@@ -73,11 +112,6 @@ class CocktailView extends Observable {
     fillHtml() {
         this.el.querySelector(".cocktail-image").style.background = `url(${this.cocktail.image}) center`;
         this.el.querySelector(".cocktail-image").style.backgroundSize = "cover";
-
-        //TODO: Change this when tags aren't empty any more
-        //this.el.querySelector(".tags").textContent = this.cocktail.tags;
-        this.el.querySelector(".tags").textContent = "TAGS TAGS TAGS";
-        
         this.el.querySelector(".name").textContent = this.cocktail.name;
 
         let backButton = this.el.querySelector(".cocktail-back"),
@@ -86,6 +120,8 @@ class CocktailView extends Observable {
         initializeBackEventListeners(backButton, this);
         initializeFavEventListeners(favButton, this);
 
+        createTags(this.el, this.cocktail);
+        createRating(this.el, this.cocktail);
         createIngredients(this.el, this.cocktail.recipe.mainIngredients);
         createInstructions(this.el, this.cocktail.steps);
     }
