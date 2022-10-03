@@ -43,6 +43,7 @@ class Cocktail {
 
     addRating(rating) {
         this.ratings.push(rating);
+        // TODO: update Cocktail in db
     }
 
     getRating() {
