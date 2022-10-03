@@ -24,7 +24,7 @@ class CocktailListView extends Observable {
         this.cocktail = cocktail;
         this.el = createCocktailElementForView();
 
-        this.el.addEventListener("click", (event) => this.notifyAll(new Event("COCKTAIL CLICKED", this.cocktail)))
+        this.el.addEventListener("click", (event) => this.notifyAll(new Event("COCKTAIL CLICKED", this.cocktail)));
     }
 
     fillHtml() {

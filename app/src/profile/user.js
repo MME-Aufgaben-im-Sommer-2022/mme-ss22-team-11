@@ -2,7 +2,6 @@ import { IngredientList } from "../cocktailData/ingredient.js";
 import { Rating } from "../cocktailData/rating.js";
 import { Observable, Event } from "../utils/Observable.js";
 
-
 class User extends Observable {
 
     constructor(email, username) {
@@ -19,7 +18,6 @@ class User extends Observable {
 
         this.allIngredients.addEventListener("INGREDIENTS_READY", (event) => this.fillAllIngredients(event.data))
         this.allIngredients.getAllIngredientsFromJSON();
-
 
     }
 
@@ -42,12 +40,12 @@ class User extends Observable {
     //RATINGS
     // wird aufgerufen, wenn eine Bewertung erstellt wird
     makeRating(cocktailID, stars, text) {
-        let data = {}
+        let data = {};
         data.cocktailID = cocktailID;
         data.rating = new Rating(stars, text, this.username);
 
         //TODO: listener in cocktailManager oder ähnlichem nutzen
-        this.notifyAll(new Event("RATING_READY", data))
+        this.notifyAll(new Event("RATING_READY", data));
 
         this.givenRatings.push(data);
 
@@ -60,9 +58,9 @@ class User extends Observable {
         let newRatings = [];
         this.givenRatings.forEach(rating => {
             if (rating.cocktailID != cocktailID) {
-                newRatings.push(rating)
+                newRatings.push(rating);
             }
-        })
+        });
         this.givenRatings = newRatings;
         // User changed => update in db
         this.notifyAll(new Event("USER_DATA_CHANGED", this.toSavedObj()));

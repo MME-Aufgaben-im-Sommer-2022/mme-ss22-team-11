@@ -21,11 +21,15 @@ let htmlManipulator = new HtmlManipulator(),
 //TODO: LOGIN (standarduser, der nix kann, sign/log-in)
 // Login soll benutzt werden, um nutzer zu erstellen, abzurufen oder einen anonymen User zu erstellen
 
+// 
 login.addEventListener("LOGIN", (event) => {
     user = event.data;
     user.addEventListener("USER_DATA_CHANGED", (event) => login.updateUser(event.data));
     console.log(user);
 });
+// user.setEventListener(RATING_READY, (event) => { 
+// cocktailListManager.rateCocktail(event.data);});
+// user.makeRating(cocktailID, stars, text);
 
 // testing:
 // login.singUp("Gix", "georg_dechant@web.de", "IchBinEinPasswort");
@@ -43,8 +47,8 @@ cocktailListManager.addEventListener("READY_FOR_COCKTAILS", (event) => cocktailL
 ingredientFilterManager.addEventListener("INGREDIENT_DATA_READY", (event) => showIngredients());
 ingredientFilterManager.addEventListener("INGREDIENT_DATA_UPDATED", (event) => showIngredients());
 
-ingredientListView.addEventListener("INGREDIENT_SELECTED", (event) => filterCocktails())
-ingredientListView.addEventListener("INGREDIENT_UNSELECTED", (event) => filterCocktails())
+ingredientListView.addEventListener("INGREDIENT_SELECTED", (event) => filterCocktails());
+ingredientListView.addEventListener("INGREDIENT_UNSELECTED", (event) => filterCocktails());
 
 let filterCocktails = () => {
     let selected = ingredientListView.getAllSelected();
