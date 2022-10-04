@@ -76,17 +76,39 @@ class Cocktail {
         return alcoholic;
     }
 
-    // nur displaynames werden berücksichtigt
-    checkIfCocktailHasOnlyTheseIngredients(ingredients, withDeco) {
+    // Reste verwerten:
+    checkIfCocktailHasOnlyTheseIngredients(ingredients, withDeco, subs) {
 
         //TODO: Eiswürfel ignorieren? (vielleicht mit checkbox)
         let bool = true;
 
+        let ings = [];
+        ingredients.forEach(ingredient => {
+            ings.push(ingredient.ingredient);
+        });
+
         this.recipe.mainIngredients.forEach(component => {
 
-            if (ingredients.indexOf(component.ingredient.displayName) == -1 && component.ingredient.displayName != "Eiswürfel" && component.ingredient.displayName != "Crushed Ice") {
-                bool = false;
+            if (ings.indexOf(component.ingredient.displayName) == -1 && component.ingredient.displayName != "Eiswürfel" && component.ingredient.displayName != "Crushed Ice") {
+
+                let ingredientSubs = subs[component.ingredient.displayName];
+                let foundSub = false;
+
+
+                ingredientSubs.forEach(sub => {
+                    if (ings.indexOf(sub) != -1) {
+                        foundSub = true;
+                    }
+                });
+
+                // undefined, wenn die Zutat durch eine Vorhandene Zutat ersetzt werden kann
+                if ((foundSub && bool) || (foundSub && bool == undefined)) {
+                    bool = undefined;
+                } else {
+                    bool = false;
+                }
             }
+
         });
 
         if (withDeco) {
@@ -102,7 +124,7 @@ class Cocktail {
     }
 
     // Hat der Cocktail mindestens die angegebenen Zutaten?
-    checkIfCocktailHasIngredients(ingredients, withDeco) {
+    checkIfCocktailHasIngredients(ingredients, withDeco, subs) {
 
         let bool = true,
             lst = [];
@@ -117,9 +139,31 @@ class Cocktail {
             });
         }
 
+        let ings = [];
         ingredients.forEach(ingredient => {
-            if (lst.indexOf(ingredient.ingredient) == -1) {
-                bool = false;
+            ings.push(ingredient.ingredient);
+        });
+
+        ings.forEach(ingredient => {
+            if (lst.indexOf(ingredient) == -1) {
+
+                let ingredientSubs = subs[ingredient];
+
+                let foundSub = false;
+
+                ingredientSubs.forEach(sub => {
+
+                    if (lst.indexOf(sub) != -1) {
+                        foundSub = true;
+                    }
+                });
+
+                // undefined, wenn die Zutat durch eine Vorhandene Zutat ersetzt werden kann
+                if ((foundSub && bool) || (foundSub && bool == undefined)) {
+                    bool = undefined;
+                } else {
+                    bool = false;
+                }
             }
         });
 

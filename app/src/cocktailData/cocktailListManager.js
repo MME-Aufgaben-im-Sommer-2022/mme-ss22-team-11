@@ -14,16 +14,32 @@ class CocktailListManager extends Observable {
 
         result, this.appwrite = new AppwriteConnector();
 
+        // wenn die CocktailID hier ist, muss mindestens eine Zutat ersetzt werden um der Suche zu entsprechen;
+        this.markedIDs = [];
+
         //TODO: aus Datenbank/API laden
         this.allCocktails = [];
         this.ingredientList = new IngredientList();
         this.ingredientList.addEventListener("INGREDIENTS_READY", (event) => this.fillAllIngredients(event.data));
         this.ingredientList.getAllIngredientsFromJSON();
+        this.substitutes = {};
+        this.fillReplacements();
 
         // Diese Liste soll immer angezeigt werden
         this.displayList = this.allCocktails;
 
         // TODO: listener hinzufügen um zu sehen wann daten bereit sind
+    }
+
+    fillReplacements() {
+        fetch('./src/cocktailData/JSON/substitute.json')
+            .then((response) => response.json())
+            .then((json) => {
+                for (let i in json) {
+                    let data = json[i];
+                    this.substitutes[i] = data;
+                }
+            });
     }
 
     onReadyForCocktails() {
@@ -72,8 +88,6 @@ class CocktailListManager extends Observable {
                 docs.push(d);
             });
         }
-
-        console.log("docs: ", docs);
 
         docs.forEach(data => {
             let id = data.$id.substring(10),
@@ -137,8 +151,8 @@ class CocktailListManager extends Observable {
     //TODO: aus Datenbank auslesen
     jsonToCommunityCocktails() {
         let json = this.appwrite.getDocumentFromDB(
-            this.appwrite.RECIPE_DB_ID, 
-            this.appwrite.RECIPE_COM_COLLECTION_ID, 
+            this.appwrite.RECIPE_DB_ID,
+            this.appwrite.RECIPE_COM_COLLECTION_ID,
             this.appwrite.COMMUNITY_RECIPES_DOC_ID);
 
         // TODO: json zu liste und zu allcocktails hinzufügen (listener mit data ready)
@@ -256,13 +270,15 @@ class CocktailListManager extends Observable {
     }
 
     filterCocktailsByBannedIngredient(bannedIngredients) {
-        let bannedIds = this.checkIngredientBanList(bannedIngredients),
-            returnList = [];
+        let data = this.checkIngredientBanList(bannedIngredients);
+        let returnList = [];
         this.displayList.forEach(cocktail => {
-            if (bannedIds.indexOf(cocktail.id) == -1) {
+            if (data.bannedIds.indexOf(cocktail.id) == -1) {
                 returnList.push(cocktail);
             }
-        })
+        });
+        data.subIds.forEach(id => this.markedIDs.push(id));
+        console.log(this.markedIDs);
         this.updateDisplayList(returnList);
 
     }
@@ -270,42 +286,77 @@ class CocktailListManager extends Observable {
     // Zum Reste verwerten: nur cocktails mit ausschließlich den gewünschten Zutaten werden angezeigt
     getCocktailsFromIngredients(ingredients, withDeco) {
         let returnList = [];
+        this.markedIDs = [];
         this.allCocktails.forEach(cocktail => {
-            if (cocktail.checkIfCocktailHasOnlyTheseIngredients(ingredients, withDeco)) {
+            let bool = cocktail.checkIfCocktailHasOnlyTheseIngredients(ingredients, withDeco, this.substitutes)
+            if (bool) {
                 returnList.push(cocktail);
+            } else if (bool == undefined) {
+                returnList.push(cocktail);
+                this.markedIDs.push(cocktail.id);
             }
-        })
+        });
         this.updateDisplayList(returnList);
     }
 
     // Alle Cocktails die mindestens alle angegebenen Zutaten benötigen
     getCocktailsWithIngredients(ingredients, withDeco) {
+        this.markedIDs = [];
         let returnList = [];
         this.allCocktails.forEach(cocktail => {
-            if (cocktail.checkIfCocktailHasIngredients(ingredients, withDeco)) {
+            let bool = cocktail.checkIfCocktailHasIngredients(ingredients, withDeco, this.substitutes);
+            if (bool) {
                 returnList.push(cocktail);
+            } else if (bool == undefined) {
+                returnList.push(cocktail);
+                this.markedIDs.push(cocktail.id);
             }
-        })
+        });
         this.updateDisplayList(returnList);
     }
 
     checkIngredientBanList(bannedIngredients) {
+
         let bannedIds = [];
+        let subIds = [];
+
         this.allCocktails.forEach(cocktail => {
             let ingredients = [];
             cocktail.recipe.mainIngredients.forEach(component => {
-                ingredients.push(component.ingredient);
+                ingredients.push(component.ingredient.displayName);
             });
             cocktail.recipe.decoIngredients.forEach(component => {
-                ingredients.push(component.ingredient);
+                ingredients.push(component.ingredient.displayName);
             });
+
             bannedIngredients.forEach(bannedIngredient => {
+
                 if (ingredients.indexOf(bannedIngredient) != -1) {
-                    bannedIds.push(cocktail.id);
+
+                    let canBeSubstituted = false;
+
+                    // wenn ein Ersatz für die gesperrte Zutat möglich ist, soll der Cocktail markiert angezeigt werden
+                    this.substitutes[bannedIngredient].forEach(sub => {
+
+                        // wenn die bannedIngredient durch eine nicht gebannte Zutat ersetzt werden kann
+                        if (bannedIngredients.indexOf(sub) == -1) {
+                            canBeSubstituted = true;
+                            console.log(sub);
+                        }
+
+                    });
+                    
+                    if (canBeSubstituted) {
+                        subIds.push(cocktail.id);
+                    } else {
+                        bannedIds.push(cocktail.id);
+                        subIds = subIds.filter(item => item != cocktail.id);
+                    }
+
                 }
             });
         });
-        return bannedIds;
+        return { subIds, bannedIds };
     }
 
     getRecipeFromData(data) {

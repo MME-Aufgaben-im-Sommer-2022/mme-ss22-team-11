@@ -24,12 +24,14 @@ let htmlManipulator = new HtmlManipulator(),
 login.addEventListener("LOGIN", (event) => {
     user = event.data;
     user.addEventListener("USER_DATA_CHANGED", (event) => login.updateUser(event.data));
+    user.deleteIngredientFromBlackList("Cachaca");
+    //user.addIngredientToBlackList("Cachaca");
     console.log(user);
 });
 
 // testing:
 // login.singUp("Gix", "georg_dechant@web.de", "IchBinEinPasswort");
-// login.login("georg_dechant@web.de", "IchBinEinPasswort");
+login.login("georg_dechant@web.de", "IchBinEinPasswort");
 
 cocktailListManager.addEventListener("DATA_READY", (event) => showCocktails());
 cocktailListManager.addEventListener("DATA_UPDATED", (event) => showCocktails());
@@ -48,7 +50,8 @@ ingredientListView.addEventListener("INGREDIENT_UNSELECTED", (event) => filterCo
 
 let filterCocktails = () => {
     let selected = ingredientListView.getAllSelected();
-    cocktailListManager.getCocktailsWithIngredients(selected, false);
+    cocktailListManager.getCocktailsFromIngredients(selected, false);
+    addIngredientFilter();
 },
     showIngredients = () => {
         ingredientListView.refreshSearchResults(ingredientFilterManager.displayList);
@@ -70,6 +73,7 @@ searchInput.addEventListener('keyup', function () {
     clearTimeout(timeout);
     timeout = setTimeout(() => {
         cocktailListManager.searchCocktailByName(searchInput.value);
+        addIngredientFilter();
     }, responseDelay);
 
 });
@@ -84,3 +88,12 @@ searchInputIngredient.addEventListener('keyup', function () {
     }, responseDelay);
 
 });
+
+function addIngredientFilter() {
+    if (user == undefined) {
+        return;
+    }
+    if (user.username != undefined) {
+        cocktailListManager.filterCocktailsByBannedIngredient(user.blackListedIngredients);
+    }
+}

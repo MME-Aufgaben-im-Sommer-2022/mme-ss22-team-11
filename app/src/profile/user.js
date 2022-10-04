@@ -13,7 +13,7 @@ class User extends Observable {
         this.username = username;
         this.createdCocktails = [];
         this.favorites = [];
-        this.blackListedIngredients = new IngredientList();
+        this.blackListedIngredients = [];
         this.allIngredients = new IngredientList();
         this.givenRatings = [];
 
@@ -73,12 +73,9 @@ class User extends Observable {
     // wird aufgerufen, wenn eine Zutat gesperrt werden soll
     addIngredientToBlackList(displayName) {
 
-        // get all ingredients with the not wanted displayname
-        let ingredients = this.allIngredients.getAllIngredientsForDisplayName(displayName);
-        // add all those ingredients to the blackList
-        ingredients.forEach(ingredient => {
-            this.blackListedIngredients.addIngredient(ingredient);
-        });
+        this.blackListedIngredients.push(displayName)
+
+        console.log(this.blackListedIngredients);
 
         // User changed => update in db
         this.notifyAll(new Event("USER_DATA_CHANGED", this.toSavedObj()));
@@ -86,12 +83,14 @@ class User extends Observable {
 
     deleteIngredientFromBlackList(displayName) {
 
-        // get all ingredients with the not wanted displayname
-        let ingredients = this.allIngredients.getAllIngredientsForDisplayName(displayName);
-        // add all those ingredients to the blackList
-        ingredients.forEach(ingredient => {
-            this.blackListedIngredients.removeIngredient(ingredient);
+        let lst = [];
+        this.blackListedIngredients.forEach(ingredient => {
+            if (ingredient != displayName) {
+                lst.push(ingredient);
+            }
         });
+
+        this.blackListedIngredients = lst;
 
         // User changed => update in db
         this.notifyAll(new Event("USER_DATA_CHANGED", this.toSavedObj()));
