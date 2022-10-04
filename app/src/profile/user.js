@@ -64,7 +64,10 @@ class User extends Observable {
         this.givenRatings = newRatings;
         // User changed => update in db
         this.notifyAll(new Event("USER_DATA_CHANGED", this.toSavedObj()));
-
+        let data = {}
+        data.cocktailID = cocktailID;
+        data.username = this.username;
+        this.notifyAll(new Event("DELETE_RATING", data));
     }
 
     // BLACKLIST

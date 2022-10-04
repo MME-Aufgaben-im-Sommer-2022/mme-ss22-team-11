@@ -20,23 +20,26 @@ let htmlManipulator = new HtmlManipulator(),
 
 //TODO: LOGIN (standarduser, der nix kann, sign/log-in)
 // Login soll benutzt werden, um nutzer zu erstellen, abzurufen oder einen anonymen User zu erstellen
-
+login.login("masterofzago@gmail.com", "12345678");
 // 
 login.addEventListener("LOGIN", (event) => {
     user = event.data;
     user.addEventListener("USER_DATA_CHANGED", (event) => login.updateUser(event.data));
-    user.setEventListener("RATING_READY", (event) => { 
-        cocktailListManager.rateCocktail(event.data);});
+    user.addEventListener("RATING_READY", (event) => { 
+        cocktailListManager.rateCocktail(event.data);
+    });
+    user.addEventListener("DELETE_RATING", (event) => {
+        cocktailListManager.deleteCocktailRating(event.data);
+    });
+
     console.log(user);
 });
 
-    //user.makeRating(cocktailID, stars, text);
-
-// testing:
-// login.singUp("Gix", "georg_dechant@web.de", "IchBinEinPasswort");
-// login.login("georg_dechant@web.de", "IchBinEinPasswort");
+// TODO: rating abgeben über knopf oder so
+// user.makeRating(cocktailID, stars, text);
 
 cocktailListManager.addEventListener("DATA_READY", (event) => showCocktails());
+//cocktailListManager.addEventListener("DATA_READY", (event) => user.makeRating(92, 4, "Dorime, Ameno Dorime"));
 cocktailListManager.addEventListener("DATA_UPDATED", (event) => showCocktails());
 cocktailListManager.addEventListener("READY_FOR_COCKTAILS", (event) => cocktailListManager.onReadyForCocktails());
 // user.addEventListener("RATING_READY", (event) => cocktailListManager.rateCocktail(event.data));
