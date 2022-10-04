@@ -176,6 +176,7 @@ class CocktailListManager extends Observable {
                 });
                 if (allowed) {
                     cocktail.addRating(data.rating);
+                    data.user.makeRating(data.cocktailID, data.stars, data.text);
                     // TODO: update cocktail in db
                 }
             }

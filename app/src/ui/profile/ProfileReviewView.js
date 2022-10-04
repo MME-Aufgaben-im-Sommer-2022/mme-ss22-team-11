@@ -11,7 +11,7 @@ function createProfileReviewElement() {
 
 // let id = "cocktailNr" + cocktail.id,
 // data = cocktail.toDBObject();
-class ProfileReviewViewList extends Observable {
+class ProfileReviewView extends Observable {
   constructor(data) {
     super();
     this.cocktailID = data.cocktailID;
@@ -31,7 +31,7 @@ class ProfileReviewViewList extends Observable {
   }
 
   fillHtml() {
-    this.el.querySelector(".")
+    this.el.querySelector("");
   }
 
   appendTo(parent) {

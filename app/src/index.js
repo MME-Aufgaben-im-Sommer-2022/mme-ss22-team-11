@@ -25,11 +25,12 @@ let htmlManipulator = new HtmlManipulator(),
 login.addEventListener("LOGIN", (event) => {
     user = event.data;
     user.addEventListener("USER_DATA_CHANGED", (event) => login.updateUser(event.data));
+    user.setEventListener("RATING_READY", (event) => { 
+        cocktailListManager.rateCocktail(event.data);});
     console.log(user);
 });
-// user.setEventListener(RATING_READY, (event) => { 
-// cocktailListManager.rateCocktail(event.data);});
-// user.makeRating(cocktailID, stars, text);
+
+    //user.makeRating(cocktailID, stars, text);
 
 // testing:
 // login.singUp("Gix", "georg_dechant@web.de", "IchBinEinPasswort");
