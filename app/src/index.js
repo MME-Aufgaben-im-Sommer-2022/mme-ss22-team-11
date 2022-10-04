@@ -28,9 +28,6 @@ login.addEventListener("LOGIN", (event) => {
     user.addEventListener("RATING_READY", (event) => { 
         cocktailListManager.rateCocktail(event.data);
     });
-    user.addEventListener("DELETE_RATING", (event) => {
-        cocktailListManager.deleteCocktailRating(event.data);
-    });
 
     console.log(user);
 });
