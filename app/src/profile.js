@@ -3,7 +3,7 @@ import { Login } from "./profile/login.js";
 import { User } from "./profile/user.js";
 import { HtmlManipulator } from "./ui/ProfileHtmlManipulator.js";
 
-let htmlManipulator = new HtmlManipulator,
+let htmlManipulator = new HtmlManipulator(),
   user,
   login = new Login(),
   cocktailListManager = new CocktailListManager();

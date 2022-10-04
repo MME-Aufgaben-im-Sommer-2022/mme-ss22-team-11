@@ -20,7 +20,7 @@ let htmlManipulator = new HtmlManipulator(),
 
 //TODO: LOGIN (standarduser, der nix kann, sign/log-in)
 // Login soll benutzt werden, um nutzer zu erstellen, abzurufen oder einen anonymen User zu erstellen
-login.login("masterofzago@gmail.com", "12345678");
+//login.login("masterofzago@gmail.com", "12345678");
 // 
 login.addEventListener("LOGIN", (event) => {
     user = event.data;
