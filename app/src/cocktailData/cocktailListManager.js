@@ -213,13 +213,35 @@ class CocktailListManager extends Observable {
             });
     }
 
-    addCustomCocktail(name, recipe, image, tags, description, steps, author) {
+    // soll beim Event "COCKTAIL_CREATION_REQUESTED" ausgeführt werden
+    addCustomCocktail(data) {
+
+        let name = data.name,
+            recipe = data.recipe,
+            image = data.image,
+            tags = data.tags,
+            description = data.description,
+            steps = data.steps,
+            author = data.username,
+            id = this.getNewID();
+
         // TODO: letzte id aus db auslesen (daraus neue errechnen)
-        let id = 200,
-            cocktail = new Cocktail(id, name, recipe, image, [], tags, description, steps, author);
+        let cocktail = new Cocktail(id, name, recipe, image, [], tags, description, steps, author);
         console.log(cocktail);
         this.allCocktails.push(cocktail);
         // TODO: db aktualisieren
+    }
+
+    getNewID() {
+
+        let ids = [];
+        this.allCocktails.forEach(cocktail => {
+            ids.push(cocktail.id);
+        });
+        let max = Math.max(ids);
+
+        return max + 1;
+
     }
 
     addCocktailFromJSON(id, name, recipe, image, description, steps, author) {
@@ -345,7 +367,7 @@ class CocktailListManager extends Observable {
                         }
 
                     });
-                    
+
                     if (canBeSubstituted) {
                         subIds.push(cocktail.id);
                     } else {

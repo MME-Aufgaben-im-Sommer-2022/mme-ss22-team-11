@@ -125,6 +125,19 @@ class User extends Observable {
         this.notifyAll(new Event("USER_DATA_CHANGED", this.toSavedObj()));
     }
 
+    // soll aufgerufen werden, wenn ein Cocktail erstellt werden soll
+    createCocktail(name, recipe, image, tags, description, steps) {
+        let data = {}
+        data.name = name;
+        data.recipe = recipe;
+        data.image = image;
+        data.tags = tags;
+        data.description = description;
+        data.steps = steps;
+        data.username = this.username;
+        this.notifyAll(new Event("COCKTAIL_CREATION_REQUESTED"), data);
+    }
+
     // wenn ein cocktail von diesem User gelöscht wurde
     onCocktailDeleted(cocktailID) {
         if (!this.createdCocktails.includes(cocktailID)) {
