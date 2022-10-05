@@ -229,6 +229,7 @@ class CocktailListManager extends Observable {
         let cocktail = new Cocktail(id, name, recipe, image, [], tags, description, steps, author);
         console.log(cocktail);
         this.allCocktails.push(cocktail);
+        this.notifyAll(new Event("COCKTAIL_CREATION_DONE"), cocktail.id);
         // TODO: db aktualisieren
     }
 
