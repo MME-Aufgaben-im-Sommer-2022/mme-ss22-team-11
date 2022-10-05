@@ -19,10 +19,10 @@ class ProfileReviewView extends Observable {
     this.el = createProfileReviewElement();
     this.el.addEventListener("click", (event) =>
       this.notifyAll(new Event(
-        "RATING CLICKED", this.openReview(this.cocktailID))));
+        "RATING CLICKED", this.openReviewedCocktail(this.cocktailID))));
   }
 
-  openReview(cocktailId) {
+  openReviewedCocktail(cocktailId) {
     /*
     let cocktailView = new CocktailView();
     cocktailView.fillHtml();
@@ -42,3 +42,5 @@ class ProfileReviewView extends Observable {
     this.el.remove();
   }
 }
+
+export default ProfileReviewView;

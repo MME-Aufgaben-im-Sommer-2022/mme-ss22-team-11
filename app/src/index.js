@@ -20,7 +20,8 @@ let htmlManipulator = new HtmlManipulator(),
 
 //TODO: LOGIN (standarduser, der nix kann, sign/log-in)
 // Login soll benutzt werden, um nutzer zu erstellen, abzurufen oder einen anonymen User zu erstellen
-//login.login("masterofzago@gmail.com", "12345678");
+
+login.login("masterofzago@gmail.com", "12345678");
 // 
 login.addEventListener("LOGIN", (event) => {
     user = event.data;
@@ -36,7 +37,7 @@ login.addEventListener("LOGIN", (event) => {
 // user.makeRating(cocktailID, stars, text);
 
 cocktailListManager.addEventListener("DATA_READY", (event) => showCocktails());
-//cocktailListManager.addEventListener("DATA_READY", (event) => user.makeRating(92, 4, "Dorime, Ameno Dorime"));
+cocktailListManager.addEventListener("DATA_READY", (event) => user.makeRating(92, 4, "Dorime, Ameno Dorime"));
 cocktailListManager.addEventListener("DATA_UPDATED", (event) => showCocktails());
 cocktailListManager.addEventListener("READY_FOR_COCKTAILS", (event) => cocktailListManager.onReadyForCocktails());
 // user.addEventListener("RATING_READY", (event) => cocktailListManager.rateCocktail(event.data));
