@@ -1,1 +1,411 @@
-{"Cachaca": ["Wodka", "Rum"], "Martini Rosato": [], "Tequila": ["Rum", "Mezcal"], "Rohrzucker": ["Zucker", "Honig", "Marmelade", "Ahornsirup"], "Zitrone": ["Grapefruit", "Limette"], "Limette": ["Grapefruit", "Zitrone"], "Wodka": ["Gin", "Rum (weiß)"], "Mineralwasser": ["Soda"], "Pitu": ["Cachaca", "Rum"], "Ginger Ale": ["Sprite"], "Minze": [], "Kokoslikör": [], "Honig": ["Zucker", "Marmelade", "Ahornsirup"], "Campari": ["Amaro (Bitter)", "Aperol"], "Sekt": ["Prosecco"], "Orange": [], "Gin Tonic": ["Wodka"], "Cranberrysaft": [], "Soda": ["Mineralwasser"], "Schlagsahne": ["Milch"], "Limettensaft": ["Zitronensaft"], "Himbeergeist": ["Obstgeist"], "Brombeerlikör": ["Süßer Schnapps"], "Almdudler": ["Ginger Ale"], "Vermouth Rosso": [], "Beeren": [], "Ginger Beer": [], "Zitronensaft": ["Limettensaft"], "Kokosmilch": ["Sahne", "Sojamilch", "Mandelmilch"], "Cream of Coconut": ["Kokosmilch"], "Amaretto": ["Kaffeelikör", "Schokoladenlikör", "Haselnusslikör"], "Mango": [], "Tabasco": [], "Apricot Brandy": ["Brandy"], "Erdbeeren": [], "Johannisbeersaft": [], "Rum (braun)": ["Tequila"], "Worcestersauce": [], "Tonic Water": ["Bitter Lemon", "Dry Tonic Water", "Indian Tonic Water"], "Fanta": ["Orangenlimonade"], "Grenadine": [], "Rum (dunkel)": ["Tequila", "Rum", "Bourbon"], "Rum (weiß)": ["Tequila", "Gin", "Rum", "Bourbon"], "Rum (hochprozentig)": [], "Kaffeebohnen": [], "Tomatensaft": [], "Apfel": [], "Eigelb": [], "Kaffeelikör": ["Schokoladenlikör", "Haselnusslikör", "Amaretto"], "Mangosirup": [], "Orangensaft": [], "Pfirsich": [], "Cocktailkirsche": [], "Holunderblütensaft": ["Traubensaft"], "Prosecco": ["Sekt"], "Mangolikör": [], "Melonenlikör": [], "Passoa": [], "Wacholderbeeren": [], "Johannisbeerlikör": [], "Gurke": [], "Pink Gin": ["Wodka", "Gin"], "Gin": ["Wodka", "Pink Gin", "Rum (weiß)"], "Orgeat": [], "Absinth": [], "Grenadinesirup": [], "Ananas": [], "Indian Tonic Water": ["Tonic Water", "Dry Tonic Water"], "Olive": [], "Maracujasirup": [], "Ananassaft": [], "Weißwein": [], "Johannisbeernektar": [], "Erdbeersirup": [], "Scotch Whisky": ["Whisky"], "Creme de Cassis": [], "Bitter Lemon": ["Tonic Water", "Dry Tonic Water", "Indian Tonic Water"], "Pfirsichlikör": [], "Cola": [], "Zucker": ["Stevia"], "London Dry Gin": ["Wodka", "Gin"], "Kirschsaft": [], "Eiswürfel": ["Tiefkühlbeeren", "Tiefkühlfrüchte"], "Rum": ["Tequila", "Bourbon"], "Salz": [], "Mandelsirup": [], "Galliano": ["Jägermeister", "Blutwurz", "Bärwurz", "Hubertus"], "Apfelsaft": [], "Maracujanektar": [], "Orangenlikör": ["Cointreau", "Triple Sec Likör"], "Espresso": [], "Milch": [], "Whisky": ["Scotch Whisky"], "Grapefruitsaft": [], "Holunderblütensirup": [], "Aperol": [], "Zimt": [], "Dry Gin": ["Wodka"], "Crushed Ice": [], "Erdbeerlikör": ["Süßer Schnapps"], "Martini Asti": [], "Kokossirup": [], "Blue Curacao": [], "Baileys": [], "Erdbeersaft": [], "Champagner": [], "Vermouth Dry": [], "Apfellikör": ["Süßer Schnapps"], "Malibu": [], "Pfeffer": [], "Averna": ["Ramazotti", "Amaro (Bitter)"], "Kristallzucker": ["Zucker", "Honig", "Marmelade", "Ahornsirup"], "Zuckersirup": ["Zucker", "Honig", "Marmelade", "Ahornsirup"], "Mangopulpe": [], "Bananensirup": [], "Jamaika Rum": ["Tequila"], "Triple Sec Likör": ["Cointreau"], "Maracujasaft": [], "Banane": [], "Kokosnusssaft": [], "Cointreau": ["Orangenlikör", "Triple Sec Likör"], "Zitronenlimonade": [], "Mezcal": [], "Marmelade": [], "Ahornsirup": [], "Grapefruit": [], "Sprite": [], "Amaro (Bitter)": [], "Obstgeist": [], "Süßer Schnapps": [], "Sahne": [], "Sojamilch": [], "Mandelmilch": [], "Schokoladenlikör": [], "Haselnusslikör": [], "Brandy": [], "Dry Tonic Water": [], "Orangenlimonade": [], "Bourbon": [], "Traubensaft": [], "Stevia": [], "Tiefkühlbeeren": [], "Tiefkühlfrüchte": [], "Jägermeister": [], "Blutwurz": [], "Bärwurz": [], "Hubertus": [], "Ramazotti": []}
+{
+    "Cachaca": [
+        "Wodka",
+        "Rum"
+    ],
+    "Martini Rosato": [],
+    "Tequila": [
+        "Rum",
+        "Mezcal"
+    ],
+    "Rohrzucker": [
+        "Zucker",
+        "Honig",
+        "Marmelade",
+        "Ahornsirup"
+    ],
+    "Zitrone": [
+        "Grapefruit",
+        "Limette"
+    ],
+    "Limette": [
+        "Grapefruit",
+        "Zitrone"
+    ],
+    "Wodka": [
+        "Gin",
+        "Rum (weiß)"
+    ],
+    "Mineralwasser": [
+        "Soda"
+    ],
+    "Pitu": [
+        "Cachaca",
+        "Rum"
+    ],
+    "Ginger Ale": [
+        "Sprite"
+    ],
+    "Minze": [],
+    "Kokoslikör": [],
+    "Honig": [
+        "Zucker",
+        "Marmelade",
+        "Ahornsirup"
+    ],
+    "Campari": [
+        "Amaro (Bitter)",
+        "Aperol"
+    ],
+    "Sekt": [
+        "Prosecco"
+    ],
+    "Orange": [],
+    "Gin Tonic": [
+        "Wodka"
+    ],
+    "Cranberrysaft": [],
+    "Soda": [
+        "Mineralwasser"
+    ],
+    "Schlagsahne": [
+        "Milch"
+    ],
+    "Limettensaft": [
+        "Zitronensaft"
+    ],
+    "Himbeergeist": [
+        "Obstgeist"
+    ],
+    "Brombeerlikör": [
+        "Süßer Schnapps"
+    ],
+    "Almdudler": [
+        "Ginger Ale"
+    ],
+    "Vermouth Rosso": [],
+    "Beeren": [],
+    "Ginger Beer": [],
+    "Zitronensaft": [
+        "Limettensaft"
+    ],
+    "Kokosmilch": [
+        "Sahne",
+        "Sojamilch",
+        "Mandelmilch"
+    ],
+    "Cream of Coconut": [
+        "Kokosmilch"
+    ],
+    "Amaretto": [
+        "Kaffeelikör",
+        "Schokoladenlikör",
+        "Haselnusslikör"
+    ],
+    "Mango": [],
+    "Tabasco": [],
+    "Apricot Brandy": [
+        "Brandy"
+    ],
+    "Erdbeeren": [],
+    "Johannisbeersaft": [],
+    "Rum (braun)": [
+        "Tequila"
+    ],
+    "Worcestersauce": [],
+    "Tonic Water": [
+        "Bitter Lemon",
+        "Dry Tonic Water",
+        "Indian Tonic Water"
+    ],
+    "Fanta": [
+        "Orangenlimonade"
+    ],
+    "Grenadine": [],
+    "Rum (dunkel)": [
+        "Tequila",
+        "Rum",
+        "Bourbon"
+    ],
+    "Rum (weiß)": [
+        "Tequila",
+        "Gin",
+        "Rum",
+        "Bourbon"
+    ],
+    "Rum (hochprozentig)": [],
+    "Kaffeebohnen": [],
+    "Tomatensaft": [],
+    "Apfel": [],
+    "Eigelb": [],
+    "Kaffeelikör": [
+        "Schokoladenlikör",
+        "Haselnusslikör",
+        "Amaretto"
+    ],
+    "Mangosirup": [],
+    "Orangensaft": [],
+    "Pfirsich": [],
+    "Cocktailkirsche": [],
+    "Holunderblütensaft": [
+        "Traubensaft"
+    ],
+    "Prosecco": [
+        "Sekt"
+    ],
+    "Mangolikör": [],
+    "Melonenlikör": [],
+    "Passoa": [],
+    "Wacholderbeeren": [],
+    "Johannisbeerlikör": [],
+    "Gurke": [],
+    "Pink Gin": [
+        "Wodka",
+        "Gin"
+    ],
+    "Gin": [
+        "Wodka",
+        "Pink Gin",
+        "Rum (weiß)"
+    ],
+    "Orgeat": [],
+    "Absinth": [],
+    "Grenadinesirup": [],
+    "Ananas": [],
+    "Indian Tonic Water": [
+        "Tonic Water",
+        "Dry Tonic Water"
+    ],
+    "Olive": [],
+    "Maracujasirup": [],
+    "Ananassaft": [],
+    "Weißwein": [],
+    "Johannisbeernektar": [],
+    "Erdbeersirup": [],
+    "Scotch Whisky": [
+        "Whisky"
+    ],
+    "Creme de Cassis": [],
+    "Bitter Lemon": [
+        "Tonic Water",
+        "Dry Tonic Water",
+        "Indian Tonic Water"
+    ],
+    "Pfirsichlikör": [],
+    "Cola": [],
+    "Zucker": [
+        "Stevia"
+    ],
+    "London Dry Gin": [
+        "Wodka",
+        "Gin"
+    ],
+    "Kirschsaft": [],
+    "Eiswürfel": [
+        "Tiefkühlbeeren",
+        "Tiefkühlfrüchte"
+    ],
+    "Rum": [
+        "Tequila",
+        "Bourbon"
+    ],
+    "Salz": [],
+    "Mandelsirup": [],
+    "Galliano": [
+        "Jägermeister",
+        "Blutwurz",
+        "Bärwurz",
+        "Hubertus"
+    ],
+    "Apfelsaft": [],
+    "Maracujanektar": [],
+    "Orangenlikör": [
+        "Cointreau",
+        "Triple Sec Likör"
+    ],
+    "Espresso": [],
+    "Milch": [
+        "Kokosmilch",
+        "Sahne",
+        "Sojamilch",
+        "Mandelmilch"
+    ],
+    "Whisky": [
+        "Scotch Whisky"
+    ],
+    "Grapefruitsaft": [],
+    "Holunderblütensirup": [],
+    "Aperol": [
+        "Amaro (Bitter)",
+        "Ramazotti",
+        "Averna",
+        "Campari"
+    ],
+    "Zimt": [],
+    "Dry Gin": [
+        "Wodka"
+    ],
+    "Crushed Ice": [],
+    "Erdbeerlikör": [
+        "Süßer Schnapps"
+    ],
+    "Martini Asti": [],
+    "Kokossirup": [],
+    "Blue Curacao": [],
+    "Baileys": [],
+    "Erdbeersaft": [],
+    "Champagner": [],
+    "Vermouth Dry": [],
+    "Apfellikör": [
+        "Süßer Schnapps"
+    ],
+    "Malibu": [],
+    "Pfeffer": [],
+    "Averna": [
+        "Ramazotti",
+        "Amaro (Bitter)"
+    ],
+    "Kristallzucker": [
+        "Zucker",
+        "Honig",
+        "Marmelade",
+        "Ahornsirup"
+    ],
+    "Zuckersirup": [
+        "Zucker",
+        "Honig",
+        "Marmelade",
+        "Ahornsirup"
+    ],
+    "Mangopulpe": [],
+    "Bananensirup": [],
+    "Jamaika Rum": [
+        "Tequila"
+    ],
+    "Triple Sec Likör": [
+        "Cointreau"
+    ],
+    "Maracujasaft": [],
+    "Banane": [],
+    "Kokosnusssaft": [],
+    "Cointreau": [
+        "Orangenlikör",
+        "Triple Sec Likör"
+    ],
+    "Zitronenlimonade": [
+        "Sprite"
+    ],
+    "Mezcal": [
+        "Rum",
+        "Tequila"
+    ],
+    "Marmelade": [
+        "Zuckersirup",
+        "Zucker",
+        "Honig",
+        "Marmelade",
+        "Ahornsirup"
+    ],
+    "Ahornsirup": [
+        "Kristallzucker",
+        "Zucker",
+        "Honig",
+        "Marmelade",
+        "Zuckersirup"
+    ],
+    "Grapefruit": [
+        "Zitrone",
+        "Limette"
+    ],
+    "Sprite": [
+        "Ginger Ale"
+    ],
+    "Amaro (Bitter)": [
+        "Ramazotti",
+        "Averna",
+        "Campari",
+        "Aperol"
+    ],
+    "Obstgeist": [
+        "Himbeergeist"
+    ],
+    "Süßer Schnapps": [
+        "Apfellikör",
+        "Brombeerlikör",
+        "Erdbeerlikör"
+    ],
+    "Sahne": [
+        "Mandelmilch",
+        "Kokosmilch",
+        "Sojamilch"
+    ],
+    "Sojamilch": [
+        "Mandelmilch",
+        "Kokosmilch",
+        "Sahne"
+    ],
+    "Mandelmilch": [
+        "Kokosmilch",
+        "Sahne",
+        "Sojamilch"
+    ],
+    "Schokoladenlikör": [
+        "Kaffeelikör",
+        "Haselnusslikör",
+        "Amaretto"
+    ],
+    "Haselnusslikör": [
+        "Kaffeelikör",
+        "Schokoladenlikör",
+        "Amaretto"
+    ],
+    "Brandy": [
+        "Apricot Brandy"
+    ],
+    "Dry Tonic Water": [
+        "Tonic Water",
+        "Bitter Lemon",
+        "Indian Tonic Water"
+    ],
+    "Orangenlimonade": [
+        "Fanta"
+    ],
+    "Bourbon": [
+        "Rum (weiß)",
+        "Tequila",
+        "Gin",
+        "Rum"
+    ],
+    "Traubensaft": [
+        "Holunderblütensaft"
+    ],
+    "Stevia": [
+        "Zucker"
+    ],
+    "Tiefkühlbeeren": [
+        "Eiswürfel",
+        "Tiefkühlfrüchte"
+    ],
+    "Tiefkühlfrüchte": [
+        "Eiswürfel",
+        "Tiefkühlbeeren"
+    ],
+    "Jägermeister": [
+        "Hubertus",
+        "Galliano",
+        "Blutwurz",
+        "Bärwurz"
+    ],
+    "Blutwurz": [
+        "Bärwurz",
+        "Galliano",
+        "Jägermeister",
+        "Hubertus"
+    ],
+    "Bärwurz": [
+        "Galliano",
+        "Jägermeister",
+        "Blutwurz",
+        "Hubertus"
+    ],
+    "Hubertus": [
+        "Galliano",
+        "Jägermeister",
+        "Blutwurz",
+        "Bärwurz"
+    ],
+    "Ramazotti": [
+        "Averna",
+        "Amaro (Bitter)"
+    ]
+}
