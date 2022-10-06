@@ -7,7 +7,12 @@ class Cocktail {
     this.name = name;
     this.recipe = recipe;
     this.image = image;
-    this.ratings = ratings;
+
+    if (ratings == undefined) {
+      this.ratings = [];
+    } else {
+      this.ratings = ratings;
+    }
     this.tags = tags;
 
     if (description == undefined) {
@@ -23,6 +28,9 @@ class Cocktail {
   }
 
   toDBObject() {
+
+    console.log(this.ratings, this.description);
+
     let data = {};
 
     data.name = this.name;
@@ -87,40 +95,40 @@ class Cocktail {
     return alcoholic;
   }
 
-    // Reste verwerten:
-    checkIfCocktailHasOnlyTheseIngredients(ingredients, withDeco, subs) {
+  // Reste verwerten:
+  checkIfCocktailHasOnlyTheseIngredients(ingredients, withDeco, subs) {
 
     //TODO: Eiswürfel ignorieren? (vielleicht mit checkbox)
     let bool = true;
 
-        let ings = [];
-        ingredients.forEach(ingredient => {
-            ings.push(ingredient.ingredient);
+    let ings = [];
+    ingredients.forEach(ingredient => {
+      ings.push(ingredient.ingredient);
+    });
+
+    this.recipe.mainIngredients.forEach(component => {
+
+      if (ings.indexOf(component.ingredient.displayName) == -1 && component.ingredient.displayName != "Eiswürfel" && component.ingredient.displayName != "Crushed Ice") {
+
+        let ingredientSubs = subs[component.ingredient.displayName];
+        let foundSub = false;
+
+
+        ingredientSubs.forEach(sub => {
+          if (ings.indexOf(sub) != -1) {
+            foundSub = true;
+          }
         });
 
-        this.recipe.mainIngredients.forEach(component => {
+        // undefined, wenn die Zutat durch eine Vorhandene Zutat ersetzt werden kann
+        if ((foundSub && bool) || (foundSub && bool == undefined)) {
+          bool = undefined;
+        } else {
+          bool = false;
+        }
+      }
 
-            if (ings.indexOf(component.ingredient.displayName) == -1 && component.ingredient.displayName != "Eiswürfel" && component.ingredient.displayName != "Crushed Ice") {
-
-                let ingredientSubs = subs[component.ingredient.displayName];
-                let foundSub = false;
-
-
-                ingredientSubs.forEach(sub => {
-                    if (ings.indexOf(sub) != -1) {
-                        foundSub = true;
-                    }
-                });
-
-                // undefined, wenn die Zutat durch eine Vorhandene Zutat ersetzt werden kann
-                if ((foundSub && bool) || (foundSub && bool == undefined)) {
-                    bool = undefined;
-                } else {
-                    bool = false;
-                }
-            }
-
-        });
+    });
 
     if (withDeco) {
       this.recipe.decoIngredients.forEach(component => {
@@ -135,8 +143,8 @@ class Cocktail {
   }
 
 
-    // Hat der Cocktail mindestens die angegebenen Zutaten?
-    checkIfCocktailHasIngredients(ingredients, withDeco, subs) {
+  // Hat der Cocktail mindestens die angegebenen Zutaten?
+  checkIfCocktailHasIngredients(ingredients, withDeco, subs) {
 
     let bool = true,
       lst = [];
@@ -152,33 +160,33 @@ class Cocktail {
     }
 
 
-        let ings = [];
-        ingredients.forEach(ingredient => {
-            ings.push(ingredient.ingredient);
+    let ings = [];
+    ingredients.forEach(ingredient => {
+      ings.push(ingredient.ingredient);
+    });
+
+    ings.forEach(ingredient => {
+      if (lst.indexOf(ingredient) == -1) {
+
+        let ingredientSubs = subs[ingredient];
+
+        let foundSub = false;
+
+        ingredientSubs.forEach(sub => {
+
+          if (lst.indexOf(sub) != -1) {
+            foundSub = true;
+          }
         });
 
-        ings.forEach(ingredient => {
-            if (lst.indexOf(ingredient) == -1) {
-
-                let ingredientSubs = subs[ingredient];
-
-                let foundSub = false;
-
-                ingredientSubs.forEach(sub => {
-
-                    if (lst.indexOf(sub) != -1) {
-                        foundSub = true;
-                    }
-                });
-
-                // undefined, wenn die Zutat durch eine Vorhandene Zutat ersetzt werden kann
-                if ((foundSub && bool) || (foundSub && bool == undefined)) {
-                    bool = undefined;
-                } else {
-                    bool = false;
-                }
-            }
-        });
+        // undefined, wenn die Zutat durch eine Vorhandene Zutat ersetzt werden kann
+        if ((foundSub && bool) || (foundSub && bool == undefined)) {
+          bool = undefined;
+        } else {
+          bool = false;
+        }
+      }
+    });
 
 
     return bool;

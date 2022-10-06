@@ -1,4 +1,5 @@
 import { CocktailCreator } from "../cocktailData/cocktailCreator.js";
+import { Observable, Event} from "../utils/Observable.js";
 
 const NAV_LINKS = document.getElementsByClassName("nav-link"),
     INGREDIENT_CONTAINER = document.getElementsByClassName("ingredients-container")[0],
@@ -8,12 +9,12 @@ const NAV_LINKS = document.getElementsByClassName("nav-link"),
     FILTER_ING_RESULTS = document.getElementsByClassName("ingredient-search-results")[0],
     NEW_RECIPE_FAB = document.getElementsByClassName("new-recipe-fab")[0];
 
-let cocktailCreator = new CocktailCreator();
-
-
-class HtmlManipulator {
+class HtmlManipulator extends Observable {
 
     constructor() {
+
+        super();
+        
         for (let item of NAV_LINKS) {
             item.addEventListener("click", (event) => {
                 for (let item of NAV_LINKS) {
@@ -66,8 +67,7 @@ class HtmlManipulator {
             });
 
             NEW_RECIPE_FAB.addEventListener("click", (event) => {
-                //TODO: Put this in cocktailCreator.js
-                cocktailCreator.initializeCreator();
+                this.notifyAll(new Event("COCKTAILCREATOR"));
             });
         }
     }

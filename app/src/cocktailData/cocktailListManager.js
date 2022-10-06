@@ -81,12 +81,17 @@ class CocktailListManager extends Observable {
 
         let docs = [];
 
-        for (let i = BATCH_SIZE; i <= count.total; i += BATCH_SIZE) {
+        console.log(count.total);
+        let counter = 1;
+
+        for (let i = BATCH_SIZE; i <= count.total + BATCH_SIZE; i += BATCH_SIZE) {
             let batch = await this.appwrite.listDocuments(i);
             let batchDocs = batch.documents;
             batchDocs.forEach(d => {
                 docs.push(d);
             });
+            console.log("counter: ", counter)
+            counter += 1;
         }
 
         docs.forEach(data => {
@@ -113,6 +118,7 @@ class CocktailListManager extends Observable {
 
             this.allCocktails.push(cocktail);
         });
+        console.log(this.allCocktails);
         this.allCocktails.sort((a, b) => a.id - b.id);
         this.updateDisplayList(this.allCocktails);
     }
@@ -222,6 +228,8 @@ class CocktailListManager extends Observable {
     // soll beim Event "COCKTAIL_CREATION_REQUESTED" ausgeführt werden
     addCustomCocktail(data) {
 
+        console.log(data);
+
         let name = data.name,
             recipe = data.recipe,
             image = data.image,
@@ -231,21 +239,33 @@ class CocktailListManager extends Observable {
             author = data.username,
             id = this.getNewID();
 
+        if (image != "NO_IMAGE") {
+            this.appwrite.createFile(id, image);
+            image = "STORAGE";
+        }
+
         // TODO: letzte id aus db auslesen (daraus neue errechnen)
         let cocktail = new Cocktail(id, name, recipe, image, [], tags, description, steps, author);
         console.log(cocktail);
         this.allCocktails.push(cocktail);
         this.notifyAll(new Event("COCKTAIL_CREATION_DONE"), cocktail.id);
         // TODO: db aktualisieren
+        let dbID = "cocktailNr" + cocktail.id,
+            dbData = cocktail.toDBObject();
+        this.addCocktailToDB(dbID, dbData);
+
     }
 
     getNewID() {
 
         let ids = [];
         this.allCocktails.forEach(cocktail => {
-            ids.push(cocktail.id);
+            ids.push(Number(cocktail.id));
         });
-        let max = Math.max(ids);
+
+        console.log(ids);
+        let max = Math.max.apply(null, ids);
+        console.log(max);
 
         return max + 1;
 
