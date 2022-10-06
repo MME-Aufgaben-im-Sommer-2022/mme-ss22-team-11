@@ -1,3 +1,6 @@
+import { IngredientFilterManager } from "./cocktailData/ingredientFilterManager.js"
+import { CreatorIngredientListView } from "./ui/ingredients/CreatorIngredientListView.js"
+
 const IMAGE_INPUT = document.querySelector(".image-input")
 const IMAGE_INPUT_LABEL = document.querySelector(".image-input-label")
 
@@ -16,19 +19,19 @@ const CREATOR_ING_INPUT_CONTAINER_TEMPLATE = document.querySelector("#creator-in
 const CREATOR_INS_INPUT_CONTAINER_TEMPLATE = document.querySelector("#creator-instructions-input-container-template").innerHTML.trim()
 
 
-function validateFileType(event){
+function validateFileType(event) {
     var fileName = IMAGE_INPUT.value;
     var idxDot = fileName.lastIndexOf(".") + 1;
     var extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
-    if (extFile=="jpg" || extFile=="jpeg" || extFile=="png"){
-        
+    if (extFile == "jpg" || extFile == "jpeg" || extFile == "png") {
+
         let getImagePath = URL.createObjectURL(event.target.files[0]);
         IMAGE_INPUT_LABEL.style.background = `url(${getImagePath}) center`;
         IMAGE_INPUT_LABEL.style.backgroundSize = "cover";
 
         IMAGE_INPUT_LABEL.querySelector("img").remove();
-        
-    }else{
+
+    } else {
         alert("Only jpg/jpeg and png files are allowed!");
     }
 }
@@ -54,7 +57,39 @@ function createInstructionsInputContainer() {
     INGREDIENTS
 */
 
-for (let i = 0; i < CREATOR_ING_INPUT_CONTAINER.length; i++){
+
+
+function fillIngredientList(container, input) {
+    let ingredientFilterManager = new IngredientFilterManager();
+    let ingredientListView = new CreatorIngredientListView(container, input);
+
+    ingredientFilterManager.addEventListener("INGREDIENT_DATA_READY", () => {
+        ingredientListView.refreshSearchResults(ingredientFilterManager.displayList);
+    });
+
+    ingredientFilterManager.addEventListener("INGREDIENT_DATA_UPDATED", () => {
+        ingredientListView.refreshSearchResults(ingredientFilterManager.displayList);
+    });
+
+    // search functionality
+    let timeout = null,
+        responseDelay = 500;
+
+    input.addEventListener('keyup', function () {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+            ingredientFilterManager.searchIngredientByName(input.value);
+        }, responseDelay);
+
+    });
+
+    ingredientListView.addEventListener("INGREDIENT_SELECTED", function () {
+        ingredientFilterManager.searchIngredientByName(input.value);
+    });
+}
+
+
+for (let i = 0; i < CREATOR_ING_INPUT_CONTAINER.length; i++) {
     CREATOR_ING_INPUT_CONTAINER[i].addEventListener("click", (event) => {
         if (CREATOR_ING_RESULTS.childElementCount != 0) {
             CREATOR_ING_INPUT_CONTAINER[i].classList.add("extend");
@@ -73,9 +108,11 @@ for (let i = 0; i < CREATOR_ING_INPUT_CONTAINER.length; i++){
     });
 
     /*
-    TODO: FILL ING RESULTS
+    FILL ING RESULTS
     */
-    
+    fillIngredientList(CREATOR_ING_INPUT_CONTAINER[i].querySelector(".creator-ingredient-input-results"), CREATOR_ING_INPUT_CONTAINER[i].querySelector(".creator-ingredient-input"));
+
+
     if (i != 0) {
         if (CREATOR_ING_INPUT_CONTAINER[i].querySelector(".creator-ingredient-input").textContent == "") {
             CREATOR_ING_INPUT_CONTAINER[i].querySelector(".creator-ingredient-input").addEventListener("keydown", (event) => {
@@ -93,7 +130,7 @@ for (let i = 0; i < CREATOR_ING_INPUT_CONTAINER.length; i++){
 CREATOR_ING_ADD.addEventListener("click", (event) => {
     let newCreatorIngInputContainer = createIngredientInputContainer();
     CREATOR_ING_CONTAINER.insertBefore(newCreatorIngInputContainer, CREATOR_ING_CONTAINER.lastElementChild)
-    
+
     newCreatorIngInputContainer.addEventListener("click", (event) => {
         if (CREATOR_ING_RESULTS.childElementCount != 0) {
             newCreatorIngInputContainer.classList.add("extend");
@@ -118,15 +155,17 @@ CREATOR_ING_ADD.addEventListener("click", (event) => {
     })
 
     /*
-    TODO: FILL ING RESULTS
+    FILL ING RESULTS
     */
+    fillIngredientList(newCreatorIngInputContainer.querySelector(".creator-ingredient-input-results"), newCreatorIngInputContainer.querySelector(".creator-ingredient-input"));
+
 })
 
 /*
     INSTRUCTIONS
 */
 
-for (let i = 0; i < CREATOR_INS_INPUT_CONTAINER.length; i++){
+for (let i = 0; i < CREATOR_INS_INPUT_CONTAINER.length; i++) {
     CREATOR_INS_INPUT_CONTAINER[i].addEventListener("click", (event) => {
         CREATOR_INS_INPUT_CONTAINER[i].classList.add("focus");
     });
@@ -137,7 +176,7 @@ for (let i = 0; i < CREATOR_INS_INPUT_CONTAINER.length; i++){
         }
     });
 
-    if(i != 0) {
+    if (i != 0) {
         CREATOR_INS_INPUT_CONTAINER[i].querySelector(".creator-instructions-input").addEventListener("keydown", (event) => {
             if (CREATOR_INS_INPUT_CONTAINER[i].querySelector(".creator-instructions-input").value == "" && event.keyCode == 8) {
                 CREATOR_INS_INPUT_CONTAINER[i].remove()
