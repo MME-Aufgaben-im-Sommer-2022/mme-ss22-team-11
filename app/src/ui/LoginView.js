@@ -57,6 +57,12 @@ class LoginView extends Observable {
             let userData = getUserData(this.el);
             this.notifyAll(new Event("USER_SUBMIT", userData))
         })
+
+        document.querySelector("body").addEventListener("click", (event) => {
+            if (!this.el.querySelector(".login-container").contains(event.target)) {
+                this.removeLoginView();
+            }
+        })
     }
 
     showLoginView() {
