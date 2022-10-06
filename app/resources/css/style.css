@@ -34,7 +34,7 @@ header {
     padding: 50px 10%;
     background: var(--secondary);
     height: 150px;
-    position: relative;
+    position: fixed;
     z-index: 2;
     box-shadow: 0px 0px 50px 13px rgba(132,120,169,0.25);
 }
@@ -100,6 +100,7 @@ nav {
 #profile-link {
     flex-grow: 3;
     float: right;
+    margin-right: 50px;
 }
 
 /*
@@ -115,12 +116,13 @@ nav {
 }
 
 #filter {
-    position: relative;
+    position: fixed;
     background-color: var(--primary-darker);
     width: 22.5vw;
     height: calc(100vh - 150px);
     z-index: 1;
     box-shadow: 0px 0px 50px 13px rgba(132,120,169,0.25);
+    top: 150px;
 
     overflow-x: hidden;
     overflow-y: scroll;
@@ -133,6 +135,9 @@ nav {
     justify-content: flex-start;
     gap: 3vh;
     padding: 50px 25px;
+
+
+
 }
 
 .filter-header {
@@ -179,6 +184,10 @@ nav {
 .ingredients-section h1 {
     margin: auto;
     background: none;
+    text-align: center;
+    font-size: 1.75rem;
+    word-wrap: normal;
+    width: 80%;
 }
 
 .ingredient-input-container {
@@ -186,7 +195,7 @@ nav {
     align-self: center;
     width: 80%;
     height: 45px;
-    border: 5px solid var(--black);
+    border: 4px solid var(--black);
     
     padding: 7.5px 15px;
     border-radius: 10px;
@@ -249,8 +258,12 @@ nav {
     cursor: pointer;
 }
 
-.ingredients-section .ingredient-input-container.focused {
+.ingredients-section .ingredient-input-container.extend {
     height: 25vh;
+    border-color: var(--accent);
+}
+
+.ingredients-section .ingredient-input-container.focus {
     border-color: var(--accent);
 }
 
@@ -268,7 +281,8 @@ nav {
     justify-content: flex-start;
     align-items: center;
     gap: 10px;
-    overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 
 .ingredient-search-results .ingredient {
@@ -296,6 +310,8 @@ nav {
 .ingredient {
     background: var(--accent);
     color: var(--primary);
+    overflow-wrap: break-word;
+    word-wrap: break-word;
     width: fit-content;
     padding: 7.5px 15px;
     border-radius: 10px;
@@ -310,7 +326,7 @@ nav {
 }
 
 /*
-    cocktails Section
+    Cocktail List Section
 */
 
 .cocktails {
@@ -321,6 +337,9 @@ nav {
     width: 77.5vw;
     height: calc(100% - 150px);
     background: var(--primary);
+
+
+
 }
 
 .search-bar-container {
@@ -329,7 +348,7 @@ nav {
     position: relative;
 
     top: 30px;
-    left: 30px;
+    left: calc(2.5% + 25px);
     
     background: none;
 
@@ -341,7 +360,7 @@ nav {
 .search-bar {
     width: calc(100% - 60px - 25px);
     background: none;
-    border: 5px solid var(--black);
+    border: 4px solid var(--black);
     border-radius: 50px;
 
     padding: 5px 10px;
@@ -370,7 +389,7 @@ nav {
 }
 
 .search-bar-input::placeholder {
-    color: var(--secondary);
+    color: var(--accent-lighter);
 }
 
 .search-bar img {
@@ -383,7 +402,7 @@ nav {
 .search-random {
     width: 60px;
     height: 60px;
-    border: 5px solid var(--black);
+    border: 4px solid var(--black);
     border-radius: 50px;
     display: flex;
     justify-content: center;
@@ -399,7 +418,8 @@ nav {
 
 .cocktail-container {
     width: 100%;
-    height: calc(100% - 110px);
+    /*height: calc(100% - 110px);*/
+    height: fit-content;
     position: relative;
     top: 50px;
     left: 0;
@@ -458,7 +478,7 @@ nav {
     
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: flex-start;
 }
 
@@ -475,4 +495,481 @@ nav {
 
 .cocktail-info span {
     background: none;
+}
+
+.new-recipe-fab {
+    position: fixed;
+    width: 75px;
+    height: 75px;
+    padding: 5px;
+    bottom: 50px;
+    right: 50px;
+    background: var(--primary);
+    border: 4px solid var(--accent);
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0px 0px 25px 5px rgba(132,120,169,0.4);
+
+    transition: all 150ms ease-in-out;
+}
+
+.new-recipe-fab:hover {
+    background: var(--accent);
+}
+
+.new-recipe-fab img {
+    background: none;
+    width: 50px;
+    height: 50px;
+}
+
+
+/*
+    Cocktail section
+*/
+
+.cocktail-section {
+    width: 65vw;
+    position: relative;
+    top: 150px;
+    margin: 0 auto;
+    padding-top: 50px;
+    
+    background: none;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 30px;
+}
+
+.cocktail-section .cocktail-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    height: fit-content;
+    gap: 25px;
+
+    background: none;
+}
+
+.cocktail-section .cocktail-image {
+    background: #151515;
+    width: 200px;
+    height: 200px;
+    border-radius: 50px;
+}
+
+.cocktail-section .cocktail-info {
+    width: 50%;
+    height: 100%;
+    background: none;
+    font-family: 'Josefin';
+    color: var(--black);
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.cocktail-section .cocktail-info .tags {
+    font-size: 1.25rem;
+    background: none;
+}
+
+.cocktail-section .cocktail-info .name {
+    font-size: 3.5rem;
+    font-weight: 700;
+    background: none;
+}
+
+.cocktail-section .cocktail-info img {
+    width: 30px;
+    background: none;
+}
+
+.cocktail-section .cocktail-back {
+    background: none;
+    height: 50px;
+    cursor: pointer;
+}
+
+.cocktail-section .cocktail-fav {
+    background: none;
+    height: 50px;
+    cursor: pointer;
+}
+
+.cocktail-section .ing-ins-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-start;
+    padding: 25px 0;
+    width: 100%;
+    height: auto;
+    font-family: 'Josefin';
+
+    
+    background: none;
+}
+
+.cocktail-section .ingredients-container {
+    width: 40%;
+    background: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-self: flex-start;
+}
+
+.cocktail-section h1 {
+    font-size: 2.5rem;
+    background: none;
+}
+
+.cocktail-section .ingredients {
+    margin-left: 50px;
+    background: none;
+}
+
+.cocktail-section .ingredients li {
+    background: none;
+    padding: 5px 0;
+}
+
+.cocktail-section .instructions-container {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    background: none;
+    align-self: flex-start;
+}
+
+.cocktail-section .instructions {
+    margin-left: 50px;
+    padding-top: 15px;
+    list-style: decimal;
+    background: none;
+}
+
+.cocktail-section .instructions li {
+    background: none;
+    padding: 10px 0;
+}
+
+.review-section {
+    width: 100%;
+    max-width: 1000px;
+    height: 1000px;
+    background: var(--secondary);
+    padding: 50px 75px;
+
+    border-radius: 25px 25px 0 0;
+    box-shadow: 0px 0px 50px 13px rgba(132,120,169,0.15);
+
+    z-index: 1;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 50px;
+}
+
+.review-section h1 {
+    background: none;
+    align-self: flex-start;
+    font-family: 'Josefin';
+}
+
+.review-input-container {
+    width: 100%;
+    height: 150px;
+    padding: 15px;
+
+    background: var(--primary);
+    border: 4px var(--black) solid;
+    border-radius: 25px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 7.5px;
+}
+
+.rating-input {
+    user-select: none;
+}
+
+.rating-input [type=radio] {
+    display: none;
+    opacity: 0;
+}
+
+.rating-input [type=radio] + img {
+    cursor: pointer;
+    width: 30px;
+
+}
+
+.review-text-container {
+    width: 100%;
+    height: 75px;
+    background: none;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.review-input {
+    width: calc(100% - 35px - 15px);
+    height: 100%;
+
+    color: var(--accent);
+    border: none;
+    background: none;
+
+    caret-color: var(--black);
+
+    font-family: 'Josefin';
+    font-size: 1.5rem;
+    resize: none;
+}
+
+.review-input:focus {
+    outline: none;
+}
+
+.review-input::placeholder {
+    color: var(--accent-lighter);
+}
+
+.send-icon {
+    width: 35px;
+    background: none;
+    align-self: flex-end;
+    cursor: pointer;
+}
+
+.review-container {
+    background: none;
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 25px;
+}
+
+.review {
+    width: 100%;
+    height: 150px;
+    /*
+    height: fit-content;
+    */
+
+    background: none;
+    font-family: 'Josefin';
+    color: var(--black);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 25px;
+}
+
+.review-header {
+    width: 100%;
+    height: 2.5rem;
+    
+    background: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+    gap: 25px;
+}
+
+.review-header h1 {
+    font-weight: 400;
+    font-size: 2.5rem;
+    background: none;
+}
+
+.review-rating {
+    width: fit-content;
+    height: fit-content;
+    background: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 2.5px;
+}
+
+.review-rating img {
+    width: 25px;
+    background: none;
+}
+
+.review-text {
+    font-size: 1.25rem;
+    background: none;
+}
+
+
+/*
+    Login Section
+*/
+
+.login-section {
+    width: 100%;
+    height: calc(100vh - 150px);
+    position: fixed;
+    top: 150px;
+    z-index: 2;
+
+    background: none;
+    backdrop-filter: blur(3px) saturate(100%) brightness(95%);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+}
+
+.login-container {
+    width: 50%;
+    min-width: 800px;
+    height: 95%;
+    background: var(--primary);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 25px;
+    border-radius: 25px;
+    cursor: default;
+
+    box-shadow: 0px 0px 40px 13px rgba(132,120,169,0.25);
+}
+
+.login-icon {
+    width: 75px;
+    background: none;
+    height: auto;
+}
+
+.login-field {
+    width: 75%;
+    height: 13%;
+    background: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+
+    font-family: 'Josefin';
+    color: var(--black);
+}
+
+.login-field p {
+    margin-left: 9%;
+    background: none;
+    font-size: 1.5rem;
+}
+
+.login-field input {
+    width: 90%;
+    height: 70%;
+    min-height: 50px;
+    align-self: center;
+    padding-left: 15px;
+    background: none;
+    border: 4px var(--black) solid;
+    border-radius: 100px;
+    font-family: 'Inter';
+    font-size: 1.5rem;
+    font-weight: 200;
+    color: var(--accent);
+
+    transition: all 150ms ease-in-out;
+}
+
+.login-field input:focus {
+    outline: none;
+    border: 4px var(--accent) solid;
+}
+
+.login-field input::placeholder {
+    color: var(--accent-lighter);
+}
+
+.signup-button {
+    width: 125px;
+    height: 50px;
+    font-family: 'Josefin';
+    font-size: 1.25rem;
+    color: var(--primary);
+    border-radius: 25px;
+    background: var(--accent);
+    border: none;
+    cursor: pointer;
+
+    transition: all 150ms ease-in-out;
+}
+
+.signup-button:hover {
+    color: var(--accent);
+    background: none;
+    border: 4px solid var(--accent);
+}
+
+.login-question-container {
+    width: 75%;
+    height: auto;
+    background: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.login-question {
+    color: var(--black);
+    font-family: 'Josefin';
+    font-size: 1.25rem;
+    background: none;
+}
+
+.login-link {
+    background: none;
+    color: var(--black);
+    font-family: 'Josefin';
+    font-size: 1.25rem;
+    text-decoration: underline;
+    cursor: pointer;
+
+    transition: all 150ms ease-in-out;
+}
+
+.login-link:hover {
+    color: var(--accent);
 }

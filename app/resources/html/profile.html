@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VerwertBar</title>
+    <link rel="stylesheet" href="../css/profile.css">
+    <link rel="stylesheet" href="../css/fonts.css">
+</head>
+
+<body>
+    <header>
+        <img class="logo" src="../css/img/VectorVerwertBarLogo.svg" draggable="false" alt="logo">
+        <nav>
+            <ul class="nav-links">
+                <li id="recipes-link"><a class="nav-link" href="../../index.html">Rezepte</a></li>
+                <li id="bars-link"><a class="nav-link" href="#">Bars</a></li>
+                <li id="profile-link"><a class="nav-link active" href="./profile.html">Profil</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="settings-nav">
+        <h1>Profil</h1>
+        <a class="nav-link active" id="favorites">Favoriten</a>
+        <a class="nav-link" id="banned-ingredients">Gesperrte Zutaten</a>
+        <a class="nav-link" id="created-cocktails">Erstellte Cocktails</a>
+        <a class="nav-link" id="reviews">Bewertungen</a>
+    </section>
+    <section class="settings-frame">
+        
+        <!--Append settings-module here-->
+        
+    </section>
+
+   <script type="module" src="../../src/profile.js"></script>
+</body>
+
+<template id="cocktail-list-section-template">
+    <div class="cocktail-list-section">
+        <h1>Favoriten</h1>
+        <div class="cocktail-container">
+
+            <!--Append cocktails here-->
+
+            <a class="cocktail">
+                <div class="cocktail-image"></div>
+                <div class="cocktail-text">
+                    <p class="cocktail-name">[Name]</p>
+                    <!--Display avg rating?-->
+                    <p class="cocktail-info"><span class="cocktail-tags">[Tags]</span><br><span class="cocktail-ingredients">0 Zutaten</span></p>
+                </div>
+            </a>
+            <a class="cocktail">
+                <div class="cocktail-image"></div>
+                <div class="cocktail-text">
+                    <p class="cocktail-name">[Name]</p>
+                    <!--Display avg rating?-->
+                    <p class="cocktail-info"><span class="cocktail-tags">[Tags]</span><br><span class="cocktail-ingredients">0 Zutaten</span></p>
+                </div>
+            </a>
+            <a class="cocktail">
+                <div class="cocktail-image"></div>
+                <div class="cocktail-text">
+                    <p class="cocktail-name">[Name]</p>
+                    <!--Display avg rating?-->
+                    <p class="cocktail-info"><span class="cocktail-tags">[Tags]</span><br><span class="cocktail-ingredients">0 Zutaten</span></p>
+                </div>
+            </a>
+            
+        </div>
+    </div>
+</template>
+
+<template id="cocktail-list-element-template">
+    <a class="cocktail">
+            <div class="cocktail-image"></div>
+            <div class="cocktail-text">
+                <p class="cocktail-name">[Name]</p>
+                <!--Display avg rating?-->
+                <p class="cocktail-info"><span class="cocktail-tags">[Tags]</span><br><span class="cocktail-ingredients">0 Zutaten</span></p>
+            </div>
+    </a>
+</template>
+
+<template id="banned-ingredients-section-template">
+    <div class="banned-ingredients-section">
+        <h1>Gesperrte Zutaten</h1>
+        <div class="contents-container">
+            <div class="banned-ingredients-container">
+                <!--Append banned ingredients here-->
+                
+                <div class="ingredient">
+                    Zutat
+                </div>
+                <div class="ingredient">
+                    Zutat
+                </div>
+                <div class="ingredient">
+                    Zutat
+                </div>
+
+            </div>
+            <div class="search-ingredients-container">
+                <div class="search-ingredients-header">
+                    <input type="text" placeholder="Search...">
+                    <img src="../css/img/VectorSearchBig.svg" draggable="false">
+                </div>
+                <div class="search-results-container">
+                    <!--Append search results here-->
+
+                    <div class="ingredient">
+                        Zutat
+                    </div>
+                    <div class="ingredient">
+                        Zutat
+                    </div>
+                    <div class="ingredient">
+                        Zutat
+                    </div>
+                    <div class="ingredient">
+                        Zutat
+                    </div>
+                    <div class="ingredient">
+                        Zutat
+                    </div>
+                    <div class="ingredient">
+                        Zutat
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template id="ingredient-element-template">
+    <div class="ingredient">
+        Zutat
+    </div>
+</template>
+
+<template id="reviews-section-template">
+    <div class="reviews-section">
+        <h1>Bewertungen</h1>
+        <div class="reviews-container">
+            
+            <!--Append reviews here-->
+
+            <div class="review">
+                <div class="review-content">
+                    <div class="review-header">
+                        <a>Cocktail-Name</a>
+                        <div class="rating">
+                            <img src="../css/img/VectorStarFilledBlack.svg" draggable="false">
+                            <img src="../css/img/VectorStarFilledBlack.svg" draggable="false">
+                            <img src="../css/img/VectorStarFilledBlack.svg" draggable="false">
+                            <img src="../css/img/VectorStarFilledBlack.svg" draggable="false">
+                            <img src="../css/img/VectorStarHollowBlack.svg" draggable="false">
+                        </div>
+                    </div>
+                        <p class="review-text">Lorem Ipsum</p>
+                </div>
+                <img class="review-delete" src="../css/img/VectorTrashCan.svg">
+            </div>
+            
+            <div class="review">
+                <div class="review-content">
+                    <div class="review-header">
+                        <a>Cocktail-Name</a>
+                        <div class="rating">
+                            <img src="../css/img/VectorStarFilledBlack.svg" draggable="false">
+                            <img src="../css/img/VectorStarFilledBlack.svg" draggable="false">
+                            <img src="../css/img/VectorStarFilledBlack.svg" draggable="false">
+                            <img src="../css/img/VectorStarFilledBlack.svg" draggable="false">
+                            <img src="../css/img/VectorStarHollowBlack.svg" draggable="false">
+                        </div>
+                    </div>
+                        <p class="review-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam nihil hic neque aliquid placeat quos sequi facere beatae maxime, in et voluptas dolorum iusto! Consequatur ipsa explicabo consequuntur odit amet!</p>
+                </div>
+                <img class="review-delete" src="../css/img/VectorTrashCan.svg">
+            </div>
+            <div class="review">
+                <div class="review-content">
+                    <div class="review-header">
+                        <a>Cocktail-Name</a>
+                        <div class="rating">
+                            <img src="../css/img/VectorStarFilledBlack.svg" draggable="false">
+                            <img src="../css/img/VectorStarFilledBlack.svg" draggable="false">
+                            <img src="../css/img/VectorStarFilledBlack.svg" draggable="false">
+                            <img src="../css/img/VectorStarFilledBlack.svg" draggable="false">
+                            <img src="../css/img/VectorStarHollowBlack.svg" draggable="false">
+                        </div>
+                    </div>
+                        <p class="review-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam nihil hic neque aliquid placeat quos sequi facere beatae maxime, in et voluptas dolorum iusto! Consequatur ipsa explicabo consequuntur odit amet!</p>
+                </div>
+                <img class="review-delete" src="../css/img/VectorTrashCan.svg">
+            </div>
+            <div class="review">
+                <div class="review-content">
+                    <div class="review-header">
+                        <a>Cocktail-Name</a>
+                        <div class="rating">
+                            <img src="../css/img/VectorStarFilledBlack.svg" draggable="false">
+                            <img src="../css/img/VectorStarFilledBlack.svg" draggable="false">
+                            <img src="../css/img/VectorStarFilledBlack.svg" draggable="false">
+                            <img src="../css/img/VectorStarFilledBlack.svg" draggable="false">
+                            <img src="../css/img/VectorStarHollowBlack.svg" draggable="false">
+                        </div>
+                    </div>
+                        <p class="review-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam nihil hic neque aliquid placeat quos sequi facere beatae maxime, in et voluptas dolorum iusto! Consequatur ipsa explicabo consequuntur odit amet!</p>
+                </div>
+                <img class="review-delete" src="../css/img/VectorTrashCan.svg">
+            </div>
+            <div class="review">
+                <div class="review-content">
+                    <div class="review-header">
+                        <a>Cocktail-Name</a>
+                        <div class="rating">
+                            <img src="../css/img/VectorStarFilledBlack.svg" draggable="false">
+                            <img src="../css/img/VectorStarFilledBlack.svg" draggable="false">
+                            <img src="../css/img/VectorStarFilledBlack.svg" draggable="false">
+                            <img src="../css/img/VectorStarFilledBlack.svg" draggable="false">
+                            <img src="../css/img/VectorStarHollowBlack.svg" draggable="false">
+                        </div>
+                    </div>
+                        <p class="review-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam nihil hic neque aliquid placeat quos sequi facere beatae maxime, in et voluptas dolorum iusto! Consequatur ipsa explicabo consequuntur odit amet!</p>
+                </div>
+                <img class="review-delete" src="../css/img/VectorTrashCan.svg">
+            </div>
+            <div class="review">
+                <div class="review-content">
+                    <div class="review-header">
+                        <a>Cocktail-Name</a>
+                        <div class="rating">
+                            <img src="../css/img/VectorStarFilledBlack.svg" draggable="false">
+                            <img src="../css/img/VectorStarFilledBlack.svg" draggable="false">
+                            <img src="../css/img/VectorStarFilledBlack.svg" draggable="false">
+                            <img src="../css/img/VectorStarFilledBlack.svg" draggable="false">
+                            <img src="../css/img/VectorStarHollowBlack.svg" draggable="false">
+                        </div>
+                    </div>
+                        <p class="review-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam nihil hic neque aliquid placeat quos sequi facere beatae maxime, in et voluptas dolorum iusto! Consequatur ipsa explicabo consequuntur odit amet!</p>
+                </div>
+                <img class="review-delete" src="../css/img/VectorTrashCan.svg">
+            </div>
+
+        </div>
+    </div>
+</template>
+
+<template id="review-template">
+    <div class="review">
+        <div class="review-content">
+            <div class="review-header">
+                <a>Cocktail-Name</a>
+                <div class="rating">
+                    <img src="../css/img/VectorStarFilledBlack.svg" draggable="false">
+                    <img src="../css/img/VectorStarFilledBlack.svg" draggable="false">
+                    <img src="../css/img/VectorStarFilledBlack.svg" draggable="false">
+                    <img src="../css/img/VectorStarFilledBlack.svg" draggable="false">
+                    <img src="../css/img/VectorStarHollowBlack.svg" draggable="false">
+                </div>
+            </div>
+                <p class="review-text">Bewertung</p>
+        </div>
+        <img class="review-delete" src="../css/img/VectorTrashCan.svg">
+    </div>
+</template>
+
+</html>
