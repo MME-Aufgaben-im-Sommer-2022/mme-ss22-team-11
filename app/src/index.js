@@ -83,7 +83,7 @@ ingredientListView.addEventListener("INGREDIENT_UNSELECTED", (event) => filterCo
 let filterCocktails = () => {
     let selected = ingredientListView.getAllSelected();
 
-    cocktailListManager.getCocktailsWithIngredients(selected, false);
+    cocktailListManager.getCocktailsFromIngredients(selected, false);
     addIngredientFilter();
 }
 

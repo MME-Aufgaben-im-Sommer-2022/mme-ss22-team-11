@@ -314,6 +314,12 @@ class CocktailListManager extends Observable {
 
     // Zum Reste verwerten: nur cocktails mit ausschließlich den gewünschten Zutaten werden angezeigt
     getCocktailsFromIngredients(ingredients, withDeco) {
+
+        if (ingredients.length == 0) {
+            this.updateDisplayList(this.allCocktails);
+            return;
+        }
+
         let returnList = [];
         this.markedIDs = [];
         this.allCocktails.forEach(cocktail => {
