@@ -1,8 +1,11 @@
 import { Observable, Event } from "../utils/Observable.js";
 
-class Ingredient {
+class Ingredient extends Observable {
 
     constructor(name, displayName, alcoholic) {
+        
+        super();
+
         this.name = name;
         this.displayName = displayName;
         this.alcoholic = alcoholic;
@@ -69,6 +72,13 @@ class IngredientList extends Observable {
         this.list.push(ingredient);
     }
 
+    removeIngredient(ingredient) {
+        if (!this.list.includes(ingredient)) {
+            return;
+        }
+        this.list.splice(this.list.indexOf(ingredient), 1);
+    }
+
     addIngredientDisplay(ingredient) {
         this.displayNames.push(ingredient);
     }
@@ -80,6 +90,9 @@ class IngredientList extends Observable {
         let returnList = [];
 
         this.list.forEach(ingredient => {
+
+            console.log(ingredient);
+
             if (ingredient.displayName === query) {
                 returnList.push(ingredient);
             }
@@ -100,13 +113,25 @@ class IngredientList extends Observable {
         return alcoholic;
     }
 
+    isDisplayNameAlcoholic(query) {
+
+        let alcoholic = false;
+
+        this.list.forEach(ingredient => {
+            if (ingredient.displayName === query) {
+                alcoholic = ingredient.alcoholic;
+            }
+        });
+        return alcoholic;
+    }
+
     getDisplayNameFromName(query) {
 
         let returnString = query;
 
         this.list.forEach(ingredient => {
 
-            if (ingredient.name === query) {
+            if (ingredient.name == query) {
                 returnString = ingredient.displayName;
             }
         });

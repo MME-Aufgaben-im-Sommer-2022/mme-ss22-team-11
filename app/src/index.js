@@ -6,31 +6,57 @@ import { IngredientListView } from "./ui/ingredients/IngredientListView.js";
 import { CocktailView } from "./ui/cocktail/CocktailView.js";
 import { User } from "./profile/user.js";
 import { Login } from "./profile/login.js";
+import { LoginView } from "./ui/LoginView.js";
 
-let htmlManipulator = new HtmlManipulator();
-let cocktailListManager = new CocktailListManager();
-let ingredientFilterManager = new IngredientFilterManager();
-let listView = new ListView();
-let ingredientListView = new IngredientListView();
+let htmlManipulator = new HtmlManipulator(),
+    cocktailListManager = new CocktailListManager(),
+    ingredientFilterManager = new IngredientFilterManager(),
+    listView = new ListView(),
+    loginView = new LoginView(),
+    ingredientListView = new IngredientListView(),
+    showCocktails = () => {
+        listView.refreshCocktails(cocktailListManager.displayList);
+    },
+    login = new Login(),
+    user;
 
-let showCocktails = () => {
-    listView.refreshCocktails(cocktailListManager.displayList);
-}
+/*
+    Functions for using the LoginView
+*/
+
+/*
+loginView.initializeLoginView();
+loginView.showLoginView();
+loginView.addEventListener("USER_SUBMIT", (event) => {
+    console.log(event.data);
+    // TODO: work with user input here
+    // if event.data[0] is undefined -> user wants to login
+})
+*/
 
 //TODO: LOGIN (standarduser, der nix kann, sign/log-in)
 // Login soll benutzt werden, um nutzer zu erstellen, abzurufen oder einen anonymen User zu erstellen
-let login = new Login();
-let user;
-login.addEventListener("SIGN_UP", (event) => {
-    user = event.data; 
+
+// 
+login.addEventListener("LOGIN", (event) => {
+    user = event.data;
+    user.addEventListener("USER_DATA_CHANGED", (event) => login.updateUser(event.data));
+    user.addEventListener("RATING_READY", (event) => { 
+        cocktailListManager.rateCocktail(event.data);
+    });
+    //user.deleteIngredientFromBlackList("Cachaca");
+    //user.addIngredientToBlackList("Cachaca");
     console.log(user);
 });
+
+// testing:
 // login.singUp("Gix", "georg_dechant@web.de", "IchBinEinPasswort");
+login.login("georg_dechant@web.de", "IchBinEinPasswort");
 
 cocktailListManager.addEventListener("DATA_READY", (event) => showCocktails());
 cocktailListManager.addEventListener("DATA_UPDATED", (event) => showCocktails());
+cocktailListManager.addEventListener("READY_FOR_COCKTAILS", (event) => cocktailListManager.onReadyForCocktails());
 // user.addEventListener("RATING_READY", (event) => cocktailListManager.rateCocktail(event.data));
-
 
 // Rewrite URL
 //window.history.pushState('Rezepte', 'Rezepte', '/Rezepte');
@@ -39,28 +65,27 @@ cocktailListManager.addEventListener("DATA_UPDATED", (event) => showCocktails())
 ingredientFilterManager.addEventListener("INGREDIENT_DATA_READY", (event) => showIngredients());
 ingredientFilterManager.addEventListener("INGREDIENT_DATA_UPDATED", (event) => showIngredients());
 
-ingredientListView.addEventListener("INGREDIENT_SELECTED", (event) => filterCocktails())
-ingredientListView.addEventListener("INGREDIENT_UNSELECTED", (event) => filterCocktails())
+ingredientListView.addEventListener("INGREDIENT_SELECTED", (event) => filterCocktails());
+ingredientListView.addEventListener("INGREDIENT_UNSELECTED", (event) => filterCocktails());
 
 let filterCocktails = () => {
     let selected = ingredientListView.getAllSelected();
-    cocktailListManager.getCocktailsWithIngredients(selected, false);
-}
-
-let showIngredients = () => {
-    ingredientListView.refreshSearchResults(ingredientFilterManager.displayList);
-}
-
+    cocktailListManager.getCocktailsFromIngredients(selected, false);
+    addIngredientFilter();
+},
+    showIngredients = () => {
+        ingredientListView.refreshSearchResults(ingredientFilterManager.displayList);
+    };
 
 listView.addEventListener("COCKTAIL CLICKED", (event) => {
     let cocktailView = new CocktailView(event.data);
     cocktailView.fillHtml();
     cocktailView.showCocktailPage();
-})
+});
 
 // input listeners
-let timeout = null;
-let responseDelay = 500;
+let timeout = null,
+    responseDelay = 500;
 // Listen for user input in Search Bar
 // Also wait for user to finish input (.5s) to reduce amount of callbacks
 let searchInput = document.querySelector('.search-bar-input');
@@ -68,9 +93,10 @@ searchInput.addEventListener('keyup', function () {
     clearTimeout(timeout);
     timeout = setTimeout(() => {
         cocktailListManager.searchCocktailByName(searchInput.value);
+        addIngredientFilter();
     }, responseDelay);
 
-})
+});
 
 // Listen for user input in Ingredient Filter Search Bar
 // Also wait for user to finish input (.5s) to reduce amount of callbacks
@@ -78,7 +104,16 @@ let searchInputIngredient = document.querySelector('.ingredient-input');
 searchInputIngredient.addEventListener('keyup', function () {
     clearTimeout(timeout);
     timeout = setTimeout(() => {
-        ingredientFilterManager.searchIngredientByName(searchInputIngredient.value)
+        ingredientFilterManager.searchIngredientByName(searchInputIngredient.value);
     }, responseDelay);
 
-})
+});
+
+function addIngredientFilter() {
+    if (user == undefined) {
+        return;
+    }
+    if (user.username != undefined) {
+        cocktailListManager.filterCocktailsByBannedIngredient(user.blackListedIngredients);
+    }
+}

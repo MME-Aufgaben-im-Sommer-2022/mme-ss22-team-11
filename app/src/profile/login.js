@@ -4,36 +4,42 @@ import { User } from "./user.js";
 
 // soll in index.js benutzt werden um den user festzustellen
 
+let result;
+
 class Login extends Observable {
 
     constructor() {
         super();
-        this.appwrite = new AppwriteConnector();
+        result, this.appwrite = new AppwriteConnector();
     }
 
-    singUp(username, email, password) {
-        this.appwrite.createAccount(username, email, password);
-        let id = email.replace("@", "_");
-        let user = new User(email, username, id);
-
-        let json = user.toJSON();
-        console.log("JSON: ", json);
-        this.appwrite.safeUserInDB(id, json);
-        this.notifyAll(new Event("SIGN_UP", user));
+    async singUp(username, email, password) {
+        await this.appwrite.createAccount(username, email, password);
+        await this.appwrite.createSession(email, password);
+        let user = new User(email, username),
+            toSave = user.toSavedObj();
+        await this.appwrite.setPreferences(toSave);
+        this.notifyAll(new Event("LOGIN", user));
 
     }
 
-    login(id) {
-        let json = this.appwrite.getUserFromDB(id);
+    async login(email, password) {
+        this.appwrite.createSession(email, password);
+        let json = await this.appwrite.getPreferences(),
+            user = new User(email, json.username);
 
-        let user = new User(json.email, json.username, id);
         user.createdCocktails = json.createdCocktails;
         user.favorites = json.favorites;
         user.blackListedIngredients = json.blackListedIngredients;
-        user.allIngredients = json.allIngredients;
         user.givenRatings = json.givenRatings;
 
         this.notifyAll(new Event("LOGIN", user));
+
+    }
+
+    // wenn sich was am user ändert, wird diese Methode aufgerufen
+    async updateUser(data) {
+        await this.appwrite.setPreferences(data);
     }
 
     // für anonyme Nutzer
