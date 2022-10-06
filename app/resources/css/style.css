@@ -834,7 +834,7 @@ nav {
 .login-container {
     width: 50%;
     min-width: 800px;
-    height: 90%;
+    height: 95%;
     background: var(--primary);
     display: flex;
     flex-direction: column;
@@ -847,13 +847,14 @@ nav {
 }
 
 .login-icon {
-    width: 100px;
+    width: 75px;
+    background: none;
     height: auto;
 }
 
 .login-field {
     width: 75%;
-    height: 15%;
+    height: 13%;
     background: none;
     display: flex;
     flex-direction: column;
@@ -916,6 +917,16 @@ nav {
     border: 4px solid var(--accent);
 }
 
+.login-question-container {
+    width: 75%;
+    height: auto;
+    background: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
 .login-question {
     color: var(--black);
     font-family: 'Josefin';
@@ -923,15 +934,17 @@ nav {
     background: none;
 }
 
-.login-span {
+.login-link {
     background: none;
     color: var(--black);
+    font-family: 'Josefin';
+    font-size: 1.25rem;
     text-decoration: underline;
     cursor: pointer;
 
     transition: all 150ms ease-in-out;
 }
 
-.login-span:hover {
+.login-link:hover {
     color: var(--accent);
 }

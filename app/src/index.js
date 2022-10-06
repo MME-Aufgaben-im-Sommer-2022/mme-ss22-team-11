@@ -3,6 +3,7 @@ import { IngredientFilterManager } from "./cocktailData/ingredientFilterManager.
 import { ListView } from "./ui/ListView.js";
 import { IngredientListView } from "./ui/ingredients/IngredientListView.js";
 import { CocktailView } from "./ui/cocktail/CocktailView.js";
+import { LoginView } from "./ui/LoginView.js";
 import { Login } from "./profile/login.js";
 
 // eslint-disable-line no-use-before-define
@@ -11,6 +12,7 @@ let cocktailListManager = new CocktailListManager(),
   ingredientFilterManager = new IngredientFilterManager(),
   listView = new ListView(),
   ingredientListView = new IngredientListView(),
+  loginView = new LoginView(),
   showCocktails = () => {
     listView.refreshCocktails(cocktailListManager.displayList);
   },
@@ -28,6 +30,23 @@ let cocktailListManager = new CocktailListManager(),
   responseDelay = 500,
   searchInput = document.querySelector(".search-bar-input"),
   searchInputIngredient = document.querySelector(".ingredient-input");
+
+
+/*
+    Functions for using the LoginView
+*/
+
+/*
+loginView.initializeLoginView();
+loginView.showLoginView();
+loginView.addEventListener("USER_SUBMIT", (event) => {
+    console.log(event.data[0]);
+    // TODO: work with user input here
+    // if event.data[0] is undefined -> user wants to login
+})
+*/
+
+
 
 //TODO: LOGIN (standarduser, der nix kann, sign/log-in)
 // Login soll benutzt werden, um nutzer zu erstellen, abzurufen oder einen anonymen User zu erstellen
