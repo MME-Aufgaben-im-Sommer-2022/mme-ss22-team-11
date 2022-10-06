@@ -6,12 +6,14 @@ import { IngredientListView } from "./ui/ingredients/IngredientListView.js";
 import { CocktailView } from "./ui/cocktail/CocktailView.js";
 import { User } from "./profile/user.js";
 import { Login } from "./profile/login.js";
+import { CocktailCreator } from "./cocktailData/cocktailCreator.js";
 
 let htmlManipulator = new HtmlManipulator(),
     cocktailListManager = new CocktailListManager(),
     ingredientFilterManager = new IngredientFilterManager(),
     listView = new ListView(),
     ingredientListView = new IngredientListView(),
+    cocktailCreator = new CocktailCreator(),
     showCocktails = () => {
     listView.refreshCocktails(cocktailListManager.displayList);
 },  

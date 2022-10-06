@@ -1,24 +1,15 @@
+import { CocktailCreator } from "../cocktailData/cocktailCreator.js";
+
 const NAV_LINKS = document.getElementsByClassName("nav-link"),
     INGREDIENT_CONTAINER = document.getElementsByClassName("ingredients-container")[0],
     FILTER_SECTION = document.getElementById("filter"),
     FILTER_ING_INPUT_CONTAINER = document.getElementsByClassName("ingredient-input-container")[0],
     FILTER_ING_INPUT = document.getElementsByClassName("ingredient-input")[0],
     FILTER_ING_RESULTS = document.getElementsByClassName("ingredient-search-results")[0],
-    NEW_RECIPE_FAB = document.getElementsByClassName("new-recipe-fab")[0],
-    COCKTAIL_CREATOR_TEMPLATE = document.getElementById("recipe-creator-section-template").innerHTML.trim();
+    NEW_RECIPE_FAB = document.getElementsByClassName("new-recipe-fab")[0];
 
+let cocktailCreator = new CocktailCreator();
 
-function createCocktailCreator() {
-    let el = document.createElement("div");
-    el.innerHTML = COCKTAIL_CREATOR_TEMPLATE;
-    el = el.querySelector(".recipe-creator-section");
-    el.querySelector(".creator-cancel").addEventListener("click", (event) => {
-        el.remove();
-        document.querySelector("#filter").style.display = "flex";
-        document.querySelector(".cocktails").style.display = "block";
-    })
-    return el;
-}
 
 class HtmlManipulator {
 
@@ -76,12 +67,9 @@ class HtmlManipulator {
 
             NEW_RECIPE_FAB.addEventListener("click", (event) => {
                 //TODO: Put this in cocktailCreator.js
-                document.querySelector("#filter").style.display = "none";
-                document.querySelector(".cocktails").style.display = "none";
-                document.querySelector("body").append(createCocktailCreator());
+                cocktailCreator.initializeCreator();
             });
         }
-
     }
 }
 
