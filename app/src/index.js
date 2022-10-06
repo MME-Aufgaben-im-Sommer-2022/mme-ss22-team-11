@@ -1,6 +1,7 @@
 import { HtmlManipulator } from "./ui/RecipeHtmlManipulator.js";
 import { CocktailListManager } from "./cocktailData/cocktailListManager.js";
 import { IngredientFilterManager } from "./cocktailData/ingredientFilterManager.js";
+import { ReviewManager } from "./cocktailData/reviewManager.js"
 import { ListView } from "./ui/ListView.js";
 import { IngredientListView } from "./ui/ingredients/IngredientListView.js";
 import { CocktailView } from "./ui/cocktail/CocktailView.js";
@@ -8,11 +9,13 @@ import { User } from "./profile/user.js";
 import { Login } from "./profile/login.js";
 import { LoginView } from "./ui/LoginView.js";
 
+
 let htmlManipulator = new HtmlManipulator(),
     cocktailListManager = new CocktailListManager(),
     ingredientFilterManager = new IngredientFilterManager(),
     listView = new ListView(),
     loginView = new LoginView(),
+    reviewManager = new ReviewManager(),
     ingredientListView = new IngredientListView(),
     showCocktails = () => {
         listView.refreshCocktails(cocktailListManager.displayList);
@@ -70,18 +73,28 @@ ingredientListView.addEventListener("INGREDIENT_UNSELECTED", (event) => filterCo
 
 let filterCocktails = () => {
     let selected = ingredientListView.getAllSelected();
-    cocktailListManager.getCocktailsFromIngredients(selected, false);
+
+    cocktailListManager.getCocktailsWithIngredients(selected, false);
     addIngredientFilter();
-},
-    showIngredients = () => {
-        ingredientListView.refreshSearchResults(ingredientFilterManager.displayList);
-    };
+}
+
+let showIngredients = () => {
+    ingredientListView.refreshSearchResults(ingredientFilterManager.displayList);
+}
+
+let processReview = (event) => {
+    if (reviewManager.isRatingValid(event.data['rating'])) {
+        // save review+rating to db etc.
+    }
+}
 
 listView.addEventListener("COCKTAIL CLICKED", (event) => {
     let cocktailView = new CocktailView(event.data);
     cocktailView.fillHtml();
     cocktailView.showCocktailPage();
-});
+    cocktailView.addEventListener("REVIEW SUBMITTED", (event) => processReview(event));
+})
+
 
 // input listeners
 let timeout = null,

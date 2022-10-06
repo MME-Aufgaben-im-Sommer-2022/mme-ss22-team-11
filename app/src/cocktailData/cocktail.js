@@ -1,3 +1,4 @@
+
 class Cocktail {
 
   constructor(id, name, recipe, image, ratings, tags, description, steps,
