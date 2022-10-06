@@ -1,16 +1,20 @@
-import { CocktailCreator } from "../cocktailData/cocktailCreator.js";
-
 const NAV_LINKS = document.getElementsByClassName("nav-link"),
+    /* TAGS */
+    TAGS_CONTAINER = document.getElementsByClassName("tags-container")[0],
+    TAGS_ADD = document.getElementsByClassName("tags-add")[0],
+    /* INGREDIENTS */
     INGREDIENT_CONTAINER = document.getElementsByClassName("ingredients-container")[0],
-    FILTER_SECTION = document.getElementById("filter"),
     FILTER_ING_INPUT_CONTAINER = document.getElementsByClassName("ingredient-input-container")[0],
     FILTER_ING_INPUT = document.getElementsByClassName("ingredient-input")[0],
     FILTER_ING_RESULTS = document.getElementsByClassName("ingredient-search-results")[0],
-    NEW_RECIPE_FAB = document.getElementsByClassName("new-recipe-fab")[0];
-
-let cocktailCreator = new CocktailCreator();
-
-
+    
+    /* STEPS */
+    STEPS_CONTAINER = document.getElementsByClassName("steps-container")[0],
+    STEPS_ADD = document.getElementsByClassName("steps-add")[0]
+    
+    ;
+    
+    
 class HtmlManipulator {
 
     constructor() {
@@ -25,6 +29,17 @@ class HtmlManipulator {
             });
         }
 
+        /* TAGS */
+        TAGS_ADD.addEventListener("click", () => {
+            let tag = document.createElement("input");
+            tag.setAttribute("type", "text")
+            tag.setAttribute("class", "steps-input")
+            tag.setAttribute("placeholder", "Füge Tag hinzu...");
+
+            TAGS_CONTAINER.append(tag)
+        })
+
+        /* INGREDIENTS */
         FILTER_ING_INPUT_CONTAINER.addEventListener("click", (event) => {
             if (FILTER_ING_RESULTS.childElementCount != 0) {
                 FILTER_ING_INPUT_CONTAINER.classList.add("extend");
@@ -56,20 +71,17 @@ class HtmlManipulator {
             });
         }
 
-        if (NEW_RECIPE_FAB != undefined) {
-            NEW_RECIPE_FAB.addEventListener("mouseover", (event) => {
-                NEW_RECIPE_FAB.children[0].src = "./resources/css/img/VectorPlusPrimary.svg";
-            });
+        /* STEPS */
 
-            NEW_RECIPE_FAB.addEventListener("mouseout", (event) => {
-                NEW_RECIPE_FAB.children[0].src = "./resources/css/img/VectorPlusAccent.svg";
-            });
+        STEPS_ADD.addEventListener("click", () => {
+            let step = document.createElement("input");
+            step.setAttribute("type", "text")
+            step.setAttribute("class", "steps-input")
+            step.setAttribute("placeholder", "Füge Schritt hinzu...");
 
-            NEW_RECIPE_FAB.addEventListener("click", (event) => {
-                //TODO: Put this in cocktailCreator.js
-                cocktailCreator.initializeCreator();
-            });
-        }
+            STEPS_CONTAINER.append(step)
+        })
+
     }
 }
 
