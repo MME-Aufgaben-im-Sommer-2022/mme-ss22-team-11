@@ -27,21 +27,30 @@ let htmlManipulator = new HtmlManipulator(),
     Functions for using the LoginView
 */
 
-/*
+
 loginView.initializeLoginView();
 loginView.showLoginView();
 loginView.addEventListener("USER_SUBMIT", (event) => {
     console.log(event.data);
+
+    if (event.data[0] == undefined) {
+        login.login(event.data[1], event.data[2]);
+    }
+    else {
+        login.singUp(event.data[0], event.data[1], event.data[2]);
+    }
+
     // TODO: work with user input here
     // if event.data[0] is undefined -> user wants to login
 })
-*/
+
 
 //TODO: LOGIN (standarduser, der nix kann, sign/log-in)
 // Login soll benutzt werden, um nutzer zu erstellen, abzurufen oder einen anonymen User zu erstellen
 
 // 
 login.addEventListener("LOGIN", (event) => {
+    loginView.removeLoginView();
     user = event.data;
     user.addEventListener("USER_DATA_CHANGED", (event) => login.updateUser(event.data));
     user.addEventListener("RATING_READY", (event) => { 
@@ -54,7 +63,7 @@ login.addEventListener("LOGIN", (event) => {
 
 // testing:
 // login.singUp("Gix", "georg_dechant@web.de", "IchBinEinPasswort");
-login.login("georg_dechant@web.de", "IchBinEinPasswort");
+// login.login("georg_dechant@web.de", "IchBinEinPasswort");
 
 cocktailListManager.addEventListener("DATA_READY", (event) => showCocktails());
 cocktailListManager.addEventListener("DATA_UPDATED", (event) => showCocktails());
