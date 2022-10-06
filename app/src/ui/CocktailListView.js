@@ -5,15 +5,15 @@ const COCKTAIL_LIST_VIEW_TEMPLATE_STRING = document.getElementById("cocktail-lis
 function createCocktailElementForView() {
     let el = document.createElement("div");
     el.innerHTML = COCKTAIL_LIST_VIEW_TEMPLATE_STRING;
-    return el.querySelector(".cocktail")
+    return el.querySelector(".cocktail");
 }
 
 function getIngredientsForList(ingredients) {
     if (ingredients.length >= 3) {
         return `${ingredients.splice(0, 2).join(", ")}, ...`;
-    } else {
-        return ingredients.join(", ");
-    }
+    } 
+    return ingredients.join(", ");
+    
 }
 
 class CocktailListView extends Observable {
@@ -24,10 +24,10 @@ class CocktailListView extends Observable {
         this.cocktail = cocktail;
         this.el = createCocktailElementForView();
 
-        this.el.addEventListener("click", (event) => this.notifyAll(new Event("COCKTAIL CLICKED", this.cocktail)))
+        this.el.addEventListener("click", (event) => this.notifyAll(new Event("COCKTAIL CLICKED", this.cocktail)));
     }
 
-    fillHtml() {
+    fillHtml() {
         this.el.querySelector(".cocktail-image").style.background = `url(${this.cocktail.image}) center`;
         this.el.querySelector(".cocktail-image").style.backgroundSize = "cover";
 
@@ -35,7 +35,6 @@ class CocktailListView extends Observable {
         this.el.querySelector(".cocktail-tags").textContent = `${this.cocktail.tags.join(", ")}`;
 
         let displayNames = this.cocktail.getAllDisplayNames();
-
 
         this.el.querySelector(".cocktail-ingredients").textContent = getIngredientsForList(displayNames);
     }

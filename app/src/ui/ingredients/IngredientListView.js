@@ -1,11 +1,10 @@
 import IngredientView from "./IngredientView.js";
 import {Observable, Event} from "../../utils/Observable.js";
 
-const searchResultList = [];
-const selectedList = [];
-
-const SEARCH_RESULTS_CONTAINER = document.getElementsByClassName("ingredient-search-results")[0];
-const SELECTED_CONTAINER = document.getElementsByClassName("ingredients-container")[0];
+const searchResultList = [],
+    selectedList = [],
+    SEARCH_RESULTS_CONTAINER = document.getElementsByClassName("ingredient-search-results")[0],
+    SELECTED_CONTAINER = document.getElementsByClassName("ingredients-container")[0];
 
 class IngredientListView extends Observable {
 
@@ -21,13 +20,13 @@ class IngredientListView extends Observable {
 
         ingredientView.addEventListener("INGREDIENT CLICKED", (event) => {
             this.addToSelected(event.data[1]);
-            this.notifyAll(new Event("INGREDIENT_SELECTED"))
-        })
+            this.notifyAll(new Event("INGREDIENT_SELECTED"));
+        });
     }
 
     removeAllSearchResults() {
         searchResultList.forEach((view) => view.remove());
-        searchResultList.splice(0, searchResultList.length)
+        searchResultList.splice(0, searchResultList.length);
     }
 
     addAllSearchResults(ingredients) {
@@ -39,7 +38,6 @@ class IngredientListView extends Observable {
         this.addAllSearchResults(ingredients);
     }
 
-
     addToSelected(ingredient) {
         let ingredientView = new IngredientView(ingredient);
         ingredientView.appendTo(SELECTED_CONTAINER);
@@ -49,8 +47,10 @@ class IngredientListView extends Observable {
         ingredientView.addEventListener("INGREDIENT CLICKED", (event) => {
             event.data[0].remove();
             selectedList.splice(selectedList.indexOf(ingredientView), 1);
+
             this.notifyAll(new Event("INGREDIENT_UNSELECTED"))
         })
+
     }
 
     getAllSelected() {
