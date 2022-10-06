@@ -13,7 +13,7 @@ class User extends Observable {
         this.username = username;
         this.createdCocktails = [];
         this.favorites = [];
-        this.blackListedIngredients = new IngredientList();
+        this.blackListedIngredients = [];
         this.allIngredients = new IngredientList();
         this.givenRatings = [];
 
@@ -60,25 +60,26 @@ class User extends Observable {
         let newRatings = [];
         this.givenRatings.forEach(rating => {
             if (rating.cocktailID != cocktailID) {
-                newRatings.push(rating)
+                newRatings.push(rating);
             }
-        })
+        });
         this.givenRatings = newRatings;
         // User changed => update in db
         this.notifyAll(new Event("USER_DATA_CHANGED", this.toSavedObj()));
 
+        let data = {}
+        data.cocktailID = cocktailID;
+        data.username = this.username;
+        this.notifyAll(new Event("DELETE_RATING", data));
     }
 
     // BLACKLIST
     // wird aufgerufen, wenn eine Zutat gesperrt werden soll
     addIngredientToBlackList(displayName) {
 
-        // get all ingredients with the not wanted displayname
-        let ingredients = this.allIngredients.getAllIngredientsForDisplayName(displayName);
-        // add all those ingredients to the blackList
-        ingredients.forEach(ingredient => {
-            this.blackListedIngredients.addIngredient(ingredient);
-        });
+        this.blackListedIngredients.push(displayName)
+
+        console.log(this.blackListedIngredients);
 
         // User changed => update in db
         this.notifyAll(new Event("USER_DATA_CHANGED", this.toSavedObj()));
@@ -86,12 +87,14 @@ class User extends Observable {
 
     deleteIngredientFromBlackList(displayName) {
 
-        // get all ingredients with the not wanted displayname
-        let ingredients = this.allIngredients.getAllIngredientsForDisplayName(displayName);
-        // add all those ingredients to the blackList
-        ingredients.forEach(ingredient => {
-            this.blackListedIngredients.removeIngredient(ingredient);
+        let lst = [];
+        this.blackListedIngredients.forEach(ingredient => {
+            if (ingredient != displayName) {
+                lst.push(ingredient);
+            }
         });
+
+        this.blackListedIngredients = lst;
 
         // User changed => update in db
         this.notifyAll(new Event("USER_DATA_CHANGED", this.toSavedObj()));
@@ -124,6 +127,19 @@ class User extends Observable {
         this.createdCocktails.push(cocktailID);
         // User changed => update in db
         this.notifyAll(new Event("USER_DATA_CHANGED", this.toSavedObj()));
+    }
+
+    // soll aufgerufen werden, wenn ein Cocktail erstellt werden soll
+    createCocktail(name, recipe, image, tags, description, steps) {
+        let data = {}
+        data.name = name;
+        data.recipe = recipe;
+        data.image = image;
+        data.tags = tags;
+        data.description = description;
+        data.steps = steps;
+        data.username = this.username;
+        this.notifyAll(new Event("COCKTAIL_CREATION_REQUESTED"), data);
     }
 
     // wenn ein cocktail von diesem User gelöscht wurde

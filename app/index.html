@@ -24,14 +24,14 @@
     <section id="filter">
         <!--TODO: Rename for better understanding of workings (and sustainability aspect)-->
         <div class="filter-header">
-            <h1>Filter</h1>
+            <h1>Verwertung</h1>
         </div>
         <div class="divider"></div>
         <div class="ingredients-section">
-            <h1>Zutaten</h1>
+            <h1>Was hast du Zuhause?</h1>
             <div class="ingredient-input-container">
                 <div class="ingredient-input-header">
-                    <input class="ingredient-input" type="text" placeholder="Search...">
+                    <input class="ingredient-input" type="text" placeholder="Zutaten">
                     <img class="ingredient-search" src="./resources/css/img/VectorSearch.svg" draggable="false">
                 </div>
                 <div class="ingredient-search-results">
@@ -68,6 +68,7 @@
         </div>
     </section>
 
+    <!---script src="https://cdn.jsdelivr.net/npm/appwrite@10.1.0"></script-->
     <script src="https://cdn.jsdelivr.net/npm/appwrite@9.0.1/dist/iife/sdk.min.js"></script>
     <script type="module" src="./src/index.js"></script>
 </body>
@@ -113,7 +114,6 @@
 
                 </ul>
             </div>
-            <div class="divider"></div>
             <div class="instructions-container">
                 <h1>Zubereitung</h1>
                 <ol class="instructions">
@@ -128,7 +128,6 @@
         <div class="review-section">
             <h1>Bewertungen</h1>
             <div class="review-input-container">
-                <!--<input class="rating-input" type="range">-->
                 <div class="rating-input">
                     <label for="star-1">
                         <input type="radio" id="star-1">
@@ -151,8 +150,10 @@
                         <img src="./resources/css/img/VectorStarHollowAccent.svg" draggable="false">
                     </label>
                 </div>
-                <textarea class="review-input" rows="3" placeholder="Bewertung verfassen"></textarea>
-                <img class="send-icon" src="./resources/css/img/VectorSendIcon.svg">
+                <div class="review-text-container">
+                    <textarea class="review-input" rows="3" placeholder="Bewertung verfassen"></textarea>
+                    <img class="send-icon" src="./resources/css/img/VectorSendIcon.svg">
+                </div>
             </div>
             <div class="review-container">
 
@@ -213,11 +214,16 @@
 </template>
 
 <template id="login-modal-template">
-    <!--TODO: Lock scroll when login modal is active-->
     <section class="login-section">
 
         <div class="login-container">
             <img class="login-icon" src="./resources/css/img/VectorLoginIcon.svg">
+            <div class="login-field" id="login-field-username">
+                <p>
+                    Benutzername
+                </p>
+                <input class="login-username-input" type="text" placeholder="User123">
+            </div>
             <div class="login-field">
                 <p>
                     E-Mail
@@ -228,14 +234,14 @@
                 <p>
                     Passwort
                 </p>
-                <input class="login-password-input" type="password" placeholder="Mind. 6 Zeichen">
+                <input class="login-password-input" type="password" placeholder="123456">
             </div>
             <button class="signup-button">
                 Sign Up
             </button>
-            <p class="login-question">
-                Already have an account? <span class="login-span">Login</span>
-            </p>
+            <div class="login-question-container">
+                <p class="login-question">Hast du schon einen Account?</p><a class="login-link">Login</a>
+                </div>    
         </div>
 
     </section>
