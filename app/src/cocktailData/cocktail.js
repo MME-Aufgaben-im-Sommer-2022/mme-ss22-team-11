@@ -86,20 +86,40 @@ class Cocktail {
     return alcoholic;
   }
 
-  // nur displaynames werden berücksichtigt
-  checkIfCocktailHasOnlyTheseIngredients(ingredients, withDeco) {
+    // Reste verwerten:
+    checkIfCocktailHasOnlyTheseIngredients(ingredients, withDeco, subs) {
 
     //TODO: Eiswürfel ignorieren? (vielleicht mit checkbox)
     let bool = true;
 
-    this.recipe.mainIngredients.forEach(component => {
+        let ings = [];
+        ingredients.forEach(ingredient => {
+            ings.push(ingredient.ingredient);
+        });
 
-      if (ingredients.indexOf(component.ingredient.displayName) == -1 &&
-        component.ingredient.displayName != "Eiswürfel" && component
-        .ingredient.displayName != "Crushed Ice") {
-        bool = false;
-      }
-    });
+        this.recipe.mainIngredients.forEach(component => {
+
+            if (ings.indexOf(component.ingredient.displayName) == -1 && component.ingredient.displayName != "Eiswürfel" && component.ingredient.displayName != "Crushed Ice") {
+
+                let ingredientSubs = subs[component.ingredient.displayName];
+                let foundSub = false;
+
+
+                ingredientSubs.forEach(sub => {
+                    if (ings.indexOf(sub) != -1) {
+                        foundSub = true;
+                    }
+                });
+
+                // undefined, wenn die Zutat durch eine Vorhandene Zutat ersetzt werden kann
+                if ((foundSub && bool) || (foundSub && bool == undefined)) {
+                    bool = undefined;
+                } else {
+                    bool = false;
+                }
+            }
+
+        });
 
     if (withDeco) {
       this.recipe.decoIngredients.forEach(component => {
@@ -113,8 +133,9 @@ class Cocktail {
 
   }
 
-  // Hat der Cocktail mindestens die angegebenen Zutaten?
-  checkIfCocktailHasIngredients(ingredients, withDeco) {
+
+    // Hat der Cocktail mindestens die angegebenen Zutaten?
+    checkIfCocktailHasIngredients(ingredients, withDeco, subs) {
 
     let bool = true,
       lst = [];
@@ -129,11 +150,35 @@ class Cocktail {
       });
     }
 
-    ingredients.forEach(ingredient => {
-      if (lst.indexOf(ingredient.ingredient) == -1) {
-        bool = false;
-      }
-    });
+
+        let ings = [];
+        ingredients.forEach(ingredient => {
+            ings.push(ingredient.ingredient);
+        });
+
+        ings.forEach(ingredient => {
+            if (lst.indexOf(ingredient) == -1) {
+
+                let ingredientSubs = subs[ingredient];
+
+                let foundSub = false;
+
+                ingredientSubs.forEach(sub => {
+
+                    if (lst.indexOf(sub) != -1) {
+                        foundSub = true;
+                    }
+                });
+
+                // undefined, wenn die Zutat durch eine Vorhandene Zutat ersetzt werden kann
+                if ((foundSub && bool) || (foundSub && bool == undefined)) {
+                    bool = undefined;
+                } else {
+                    bool = false;
+                }
+            }
+        });
+
 
     return bool;
 

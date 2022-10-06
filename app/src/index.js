@@ -45,12 +45,14 @@ login.addEventListener("LOGIN", (event) => {
     user.addEventListener("RATING_READY", (event) => { 
         cocktailListManager.rateCocktail(event.data);
     });
-
+    //user.deleteIngredientFromBlackList("Cachaca");
+    //user.addIngredientToBlackList("Cachaca");
     console.log(user);
 });
 
-// TODO: rating abgeben über knopf oder so
-// user.makeRating(cocktailID, stars, text);
+// testing:
+// login.singUp("Gix", "georg_dechant@web.de", "IchBinEinPasswort");
+login.login("georg_dechant@web.de", "IchBinEinPasswort");
 
 cocktailListManager.addEventListener("DATA_READY", (event) => showCocktails());
 cocktailListManager.addEventListener("DATA_READY", (event) => user.makeRating(92, 4, "Dorime, Ameno Dorime"));
@@ -70,7 +72,8 @@ ingredientListView.addEventListener("INGREDIENT_UNSELECTED", (event) => filterCo
 
 let filterCocktails = () => {
     let selected = ingredientListView.getAllSelected();
-    cocktailListManager.getCocktailsWithIngredients(selected, false);
+    cocktailListManager.getCocktailsFromIngredients(selected, false);
+    addIngredientFilter();
 },
     showIngredients = () => {
         ingredientListView.refreshSearchResults(ingredientFilterManager.displayList);
@@ -92,6 +95,7 @@ searchInput.addEventListener('keyup', function () {
     clearTimeout(timeout);
     timeout = setTimeout(() => {
         cocktailListManager.searchCocktailByName(searchInput.value);
+        addIngredientFilter();
     }, responseDelay);
 
 });
@@ -106,3 +110,12 @@ searchInputIngredient.addEventListener('keyup', function () {
     }, responseDelay);
 
 });
+
+function addIngredientFilter() {
+    if (user == undefined) {
+        return;
+    }
+    if (user.username != undefined) {
+        cocktailListManager.filterCocktailsByBannedIngredient(user.blackListedIngredients);
+    }
+}
