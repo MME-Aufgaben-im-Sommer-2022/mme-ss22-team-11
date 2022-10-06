@@ -6,17 +6,33 @@ import { IngredientListView } from "./ui/ingredients/IngredientListView.js";
 import { CocktailView } from "./ui/cocktail/CocktailView.js";
 import { User } from "./profile/user.js";
 import { Login } from "./profile/login.js";
+import { LoginView } from "./ui/LoginView.js";
 
 let htmlManipulator = new HtmlManipulator(),
     cocktailListManager = new CocktailListManager(),
     ingredientFilterManager = new IngredientFilterManager(),
     listView = new ListView(),
+    loginView = new LoginView(),
     ingredientListView = new IngredientListView(),
     showCocktails = () => {
         listView.refreshCocktails(cocktailListManager.displayList);
     },
     login = new Login(),
     user;
+
+/*
+    Functions for using the LoginView
+*/
+
+/*
+loginView.initializeLoginView();
+loginView.showLoginView();
+loginView.addEventListener("USER_SUBMIT", (event) => {
+    console.log(event.data);
+    // TODO: work with user input here
+    // if event.data[0] is undefined -> user wants to login
+})
+*/
 
 //TODO: LOGIN (standarduser, der nix kann, sign/log-in)
 // Login soll benutzt werden, um nutzer zu erstellen, abzurufen oder einen anonymen User zu erstellen
