@@ -331,9 +331,6 @@ class CocktailCreator extends Observable {
     processInput() {
         let data = this.collectInput();
 
-        console.log(data);
-        return;
-
         if (this.isValid(data)) {
 
             let recipe = new Recipe();
