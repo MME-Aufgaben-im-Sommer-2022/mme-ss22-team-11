@@ -4,7 +4,7 @@ import { Ingredient, IngredientList } from "./ingredient.js";
 import { Observable, Event } from "../utils/Observable.js";
 import AppwriteConnector from "../appwrite/AppwriteConnector.js";
 
-let result;
+// let result;
 const BATCH_SIZE = 25;
 
 class CocktailListManager extends Observable {
@@ -77,6 +77,7 @@ class CocktailListManager extends Observable {
     //console.log("docs: ", docs);
 
     docs.forEach(data => {
+      // eslint-disable-next-line no-magic-numbers
       let id = data.$id.substring(10),
         recipe = JSON.parse(data.recipe),
         ratings = JSON.parse(data.ratings),
@@ -141,7 +142,8 @@ class CocktailListManager extends Observable {
     let json = this.appwrite.getDocumentFromDB(
       this.appwrite.RECIPE_DB_ID,
       this.appwrite.RECIPE_COM_COLLECTION_ID,
-      this.appwrite.COMMUNITY_RECIPES_DOC_ID);
+      this.appwrite.COMMUNITY_RECIPES_DOC_ID,
+      );
 
     // TODO: json zu liste und zu allcocktails hinzufügen (listener mit data ready)
   }

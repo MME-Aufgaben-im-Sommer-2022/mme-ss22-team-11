@@ -9,7 +9,7 @@ class CocktailCreator extends Observable {
     }
 
     // collect data from all input fields when submit button is clicked
-    processUserInput(data) {
+    processUserInput(/*data*/) {
         if (this.isValid()) {
 
             let recipe = {};
@@ -19,7 +19,7 @@ class CocktailCreator extends Observable {
             this.cocktailListManager.addCustomCocktail("name", recipe, "jannis.jpg", [], "", "", "");
             
         } else {
-            console.log("cocktail creation failed: invalid input");
+            //console.log("cocktail creation failed: invalid input");
         }
 
         //console.log(items)

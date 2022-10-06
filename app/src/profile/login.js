@@ -4,7 +4,7 @@ import { User } from "./user.js";
 
 // soll in index.js benutzt werden um den user festzustellen
 
-let result;
+// let result;
 
 class Login extends Observable {
 

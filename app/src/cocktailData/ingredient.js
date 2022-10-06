@@ -21,7 +21,7 @@ class Ingredient extends Observable {
 
 class CustomIngredientMaker {
 
-  constructor() {}
+  // constructor() {}
 
   makeCustomIngredient(name, alcoholic) {
     let ingredient = new Ingredient(name, name, alcoholic);
