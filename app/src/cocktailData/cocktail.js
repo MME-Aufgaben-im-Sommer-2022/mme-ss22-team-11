@@ -101,6 +101,8 @@ class Cocktail {
     //TODO: Eiswürfel ignorieren? (vielleicht mit checkbox)
     let bool = true;
 
+    let substitutedIngredients = [];
+
     let ings = [];
     ingredients.forEach(ingredient => {
       ings.push(ingredient.ingredient);
@@ -110,15 +112,18 @@ class Cocktail {
 
       if (ings.indexOf(component.ingredient.displayName) == -1 && component.ingredient.displayName != "Eiswürfel" && component.ingredient.displayName != "Crushed Ice") {
 
+
         let ingredientSubs = subs[component.ingredient.displayName];
         let foundSub = false;
 
-
-        ingredientSubs.forEach(sub => {
-          if (ings.indexOf(sub) != -1) {
-            foundSub = true;
-          }
-        });
+        if (ingredientSubs != undefined) {
+          ingredientSubs.forEach(sub => {
+            if (ings.indexOf(sub) != -1) {
+              foundSub = true;
+              substitutedIngredients.push(component.ingredient.displayName);
+            }
+          });
+        }
 
         // undefined, wenn die Zutat durch eine Vorhandene Zutat ersetzt werden kann
         if ((foundSub && bool) || (foundSub && bool == undefined)) {
@@ -138,7 +143,10 @@ class Cocktail {
       });
     }
 
-    return bool;
+    let data = {};
+    data.bool = bool;
+    data.substitutedIngredients = substitutedIngredients;
+    return data;
 
   }
 
@@ -148,6 +156,8 @@ class Cocktail {
 
     let bool = true,
       lst = [];
+
+    let substitutedIngredients = [];
 
     this.recipe.mainIngredients.forEach(component => {
       lst.push(component.ingredient.displayName);
@@ -176,6 +186,7 @@ class Cocktail {
 
           if (lst.indexOf(sub) != -1) {
             foundSub = true;
+            substitutedIngredients.push(ingredient);
           }
         });
 
@@ -189,7 +200,10 @@ class Cocktail {
     });
 
 
-    return bool;
+    let data = {};
+    data.bool = bool;
+    data.substitutedIngredients = substitutedIngredients;
+    return data;
 
   }
 

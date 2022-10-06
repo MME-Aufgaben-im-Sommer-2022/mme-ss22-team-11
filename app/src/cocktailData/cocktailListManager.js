@@ -23,6 +23,7 @@ class CocktailListManager extends Observable {
         this.ingredientList.addEventListener("INGREDIENTS_READY", (event) => this.fillAllIngredients(event.data));
         this.ingredientList.getAllIngredientsFromJSON();
         this.substitutes = {};
+        this.substitutedIngredients = [];
         this.fillReplacements();
 
         // Diese Liste soll immer angezeigt werden
@@ -345,14 +346,21 @@ class CocktailListManager extends Observable {
 
         let returnList = [];
         this.markedIDs = [];
+        this.substitutedIngredients = [];
+
         this.allCocktails.forEach(cocktail => {
-            let bool = cocktail.checkIfCocktailHasOnlyTheseIngredients(ingredients, withDeco, this.substitutes)
-            if (bool) {
+            let data = cocktail.checkIfCocktailHasOnlyTheseIngredients(ingredients, withDeco, this.substitutes)
+            if (data.bool) {
                 returnList.push(cocktail);
-            } else if (bool == undefined) {
+            } else if (data.bool == undefined) {
                 returnList.push(cocktail);
                 this.markedIDs.push(cocktail.id);
+
+                data.substitutedIngredients.forEach(sub => {
+                    this.substitutedIngredients.push(sub);
+                });
             }
+
         });
         this.updateDisplayList(returnList);
     }
@@ -360,14 +368,19 @@ class CocktailListManager extends Observable {
     // Alle Cocktails die mindestens alle angegebenen Zutaten benötigen
     getCocktailsWithIngredients(ingredients, withDeco) {
         this.markedIDs = [];
+        this.substitutedIngredients = [];
         let returnList = [];
         this.allCocktails.forEach(cocktail => {
-            let bool = cocktail.checkIfCocktailHasIngredients(ingredients, withDeco, this.substitutes);
-            if (bool) {
+            let data = cocktail.checkIfCocktailHasIngredients(ingredients, withDeco, this.substitutes);
+            if (data.bool) {
                 returnList.push(cocktail);
             } else if (bool == undefined) {
                 returnList.push(cocktail);
                 this.markedIDs.push(cocktail.id);
+
+                data.substitutedIngredients.forEach(sub => {
+                    this.substitutedIngredients.push(sub);
+                });
             }
         });
         this.updateDisplayList(returnList);
@@ -399,7 +412,7 @@ class CocktailListManager extends Observable {
                         // wenn die bannedIngredient durch eine nicht gebannte Zutat ersetzt werden kann
                         if (bannedIngredients.indexOf(sub) == -1) {
                             canBeSubstituted = true;
-                            console.log(sub);
+                            this.substitutedIngredients.push(bannedIngredient);
                         }
 
                     });

@@ -47,9 +47,14 @@ function createRating(el, cocktail) {
   }
 }
 
-function createIngredients(el, ingredients) {
+function createIngredients(el, ingredients, toBeSubbed) {
   ingredients.forEach(element => {
     let li = document.createElement("li");
+
+    if (toBeSubbed.indexOf(element.ingredient.displayName) != -1) {
+      // TODO: diese Zutat sollte ersetzt werden
+    }
+
     li.textContent =
       `${element.ingredient.displayName} ${element.portion}${element.unit}`;
     el.querySelector(".ingredients").append(li);
@@ -128,6 +133,8 @@ class CocktailView extends Observable {
     super();
     this.cocktail = cocktail;
 
+    console.log(cocktail);
+
     this.el = createCocktailPageElement();
     window.scrollTo(0, 0);
   }
@@ -144,9 +151,11 @@ class CocktailView extends Observable {
     }
     */
 
+    console.log(this.cocktail.toBeSubbed);
+
     createTags(this.el, this.cocktail);
     createRating(this.el, this.cocktail);
-    createIngredients(this.el, this.cocktail.recipe.mainIngredients);
+    createIngredients(this.el, this.cocktail.recipe.mainIngredients, this.cocktail.toBeSubbed);
     createInstructions(this.el, this.cocktail.steps);
 
     let backButton = this.el.querySelector(".cocktail-back");
@@ -160,9 +169,6 @@ class CocktailView extends Observable {
 
     initializeBackEventListeners(backButton, this);
     initializeFavEventListeners(favButton, this);
-
-    createIngredients(this.el, this.cocktail.recipe.mainIngredients);
-    createInstructions(this.el, this.cocktail.steps);
   }
 
   showCocktailPage() {
