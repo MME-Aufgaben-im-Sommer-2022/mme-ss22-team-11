@@ -311,8 +311,9 @@ class CocktailCreator extends Observable {
         let ingredientList = [];
         let ingredients = document.getElementsByClassName("creator-ingredient-input");
         let ingredientsQuantity = document.getElementsByClassName("creator-ingredient-quantity-input");
+        let ingredientsUnit = document.getElementsByClassName("creator-ingredient-unit-input");
         for (let i = 0; i < ingredients.length; i++) {
-            ingredientList.push({ "name": ingredients[i].value, "amount": ingredientsQuantity[i].value, "unit": undefined });
+            ingredientList.push({ "name": ingredients[i].value, "amount": ingredientsQuantity[i].value, "unit": ingredientsUnit[i].value });
         }
 
         let stepList = []
@@ -329,6 +330,9 @@ class CocktailCreator extends Observable {
     // collect data from all input fields when submit button is clicked
     processInput() {
         let data = this.collectInput();
+
+        console.log(data);
+        return;
 
         if (this.isValid(data)) {
 

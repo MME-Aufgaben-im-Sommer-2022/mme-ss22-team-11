@@ -24,13 +24,20 @@ class ListView extends Observable {
         cocktailListViews.splice(0, cocktailListViews.length);
     }
 
-    addAllCocktails(cocktails) {
-        cocktails.forEach(cocktail => this.add(cocktail));
+    addAllCocktails(cocktails, markedIDs) {
+        cocktails.forEach(cocktail => {
+            if (markedIDs.indexOf(cocktail.id) == -1) {
+                cocktail.isMarked = false;
+            } else {
+                cocktail.isMarked = true;
+            }
+            this.add(cocktail);
+        });
     }
 
-    refreshCocktails(cocktails) {
+    refreshCocktails(cocktails, markedIDs) {
         this.removeAllCocktails();
-        this.addAllCocktails(cocktails);
+        this.addAllCocktails(cocktails, markedIDs);
     }
 }
 
