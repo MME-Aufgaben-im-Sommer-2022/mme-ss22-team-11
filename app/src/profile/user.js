@@ -130,15 +130,9 @@ class User extends Observable {
     }
 
     // soll aufgerufen werden, wenn ein Cocktail erstellt werden soll
-    createCocktail(name, recipe, image, tags, description, steps) {
-        let data = {}
-        data.name = name;
-        data.recipe = recipe;
-        data.image = image;
-        data.tags = tags;
-        data.description = description;
-        data.steps = steps;
+    createCocktail(data) {
         data.username = this.username;
+        console.log(data);
         this.notifyAll(new Event("COCKTAIL_CREATION_REQUESTED"), data);
     }
 
