@@ -28,7 +28,7 @@ class CocktailCreator extends Observable {
 
         this.IMAGE_INPUT = document.querySelector(".image-input")
         this.IMAGE_INPUT_LABEL = document.querySelector(".image-input-label")
-        this.CREATOR_TAG_INPUT_CONTAINER = document.querySelectorAll(".creator-tag-input-container")
+        this.CREATOR_TAG_INPUT_CONTAINER = document.querySelector(".creator-tag-input-container")
         this.CREATOR_ING_CONTAINER = document.querySelector(".creator-ingredients-container")
         this.CREATOR_ING_INPUT_CONTAINER = document.querySelectorAll(".creator-ingredient-input-container")
         this.CREATOR_ING_RESULTS = document.querySelector(".creator-ingredient-input-results")
@@ -111,16 +111,23 @@ class CocktailCreator extends Observable {
     */
 
     initializeTagInputContainer() {
-        for (let i = 0; i < this.CREATOR_TAG_INPUT_CONTAINER.length; i++) {
-            for (let k = 0; k < this.CREATOR_TAG_INPUT_CONTAINER[i].querySelectorAll(".creator-tag").length; k++) {
-                this.CREATOR_TAG_INPUT_CONTAINER[i].querySelectorAll(".creator-tag")[k].addEventListener("click", () => {
-                    if (this.CREATOR_TAG_INPUT_CONTAINER[i].querySelectorAll(".creator-tag")[k].classList.contains("selected")) {
-                        this.CREATOR_TAG_INPUT_CONTAINER[i].querySelectorAll(".creator-tag")[k].classList.remove("selected");
-                    } else {
-                        this.CREATOR_TAG_INPUT_CONTAINER[i].querySelectorAll(".creator-tag")[k].classList.add("selected");
+        let tags = this.CREATOR_TAG_INPUT_CONTAINER.querySelectorAll(".creator-tag");
+        for (let k = 0; k < tags.length; k++) {
+            tags[k].addEventListener("click", () => {
+                // check how many tags are already selected
+                let maxTagCount = 3;
+                for (let k = 0; k < tags.length; k++) {
+                    if (tags[k].classList.contains("selected")) {
+                        maxTagCount -= 1;
                     }
-                })
-            }
+                }
+                // assign up to 3 (maxTagCount) tags
+                if (tags[k].classList.contains("selected")) {
+                    tags[k].classList.remove("selected");
+                } else if (maxTagCount > 0) {
+                    tags[k].classList.add("selected");
+                }
+            })
         }
     }
 
