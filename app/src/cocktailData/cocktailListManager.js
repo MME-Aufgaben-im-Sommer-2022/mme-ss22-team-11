@@ -82,7 +82,6 @@ class CocktailListManager extends Observable {
         let docs = [];
 
         console.log(count.total);
-        let counter = 1;
 
         for (let i = BATCH_SIZE; i <= count.total + BATCH_SIZE; i += BATCH_SIZE) {
             let batch = await this.appwrite.listDocuments(i);
@@ -90,8 +89,6 @@ class CocktailListManager extends Observable {
             batchDocs.forEach(d => {
                 docs.push(d);
             });
-            console.log("counter: ", counter)
-            counter += 1;
         }
 
         docs.forEach(data => {
@@ -302,6 +299,12 @@ class CocktailListManager extends Observable {
     updateDisplayList(returnList) {
         this.displayList = returnList;
         this.notifyAll(new Event("DATA_UPDATED"));
+    }
+
+    async deleteCocktail(id) {
+        await this.appwrite.deleteDocument(id);
+        this.allCocktails = [];
+        this.getCocktailsFromDB();
     }
 
     searchCocktailByName(query) {
