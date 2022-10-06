@@ -1,86 +1,96 @@
 class Cocktail {
 
-    constructor(id, name, recipe, image, ratings, tags, description, steps, author) {
-        this.id = id;
-        this.name = name;
-        this.recipe = recipe;
-        this.image = image;
-        this.ratings = ratings;
-        this.tags = tags;
+  constructor(id, name, recipe, image, ratings, tags, description, steps,
+    author) {
+    this.id = id;
+    this.name = name;
+    this.recipe = recipe;
+    this.image = image;
+    this.ratings = ratings;
+    this.tags = tags;
 
-        if (description == undefined) {
-            this.description = "";
-        } else {
-            this.description = description;
-        }
-
-        this.steps = steps;
-        this.author = author;
-        this.isAlcoholic = this.getIsAlcoholic();
-
+    if (description == undefined) {
+      this.description = "";
+    } else {
+      this.description = description;
     }
 
-    toDBObject() {
-        let data = {};
+    this.steps = steps;
+    this.author = author;
+    this.isAlcoholic = this.getIsAlcoholic();
 
-        data.name = this.name;
+  }
 
-        data.recipe = JSON.stringify(this.recipe);
-        data.ratings = JSON.stringify(this.ratings);
-        data.description = this.description;
-        data.tags = this.tags;
-        data.author = this.author;
-        data.image = this.image;
-        data.id = this.id;
+  toDBObject() {
+    let data = {};
 
-        data.steps = [];
-        for (let val of Object.values(this.steps)) {
-            data.steps.push(val);
-        }
+    data.name = this.name;
 
-        return data;
+    data.recipe = JSON.stringify(this.recipe);
+    data.ratings = JSON.stringify(this.ratings);
+    data.description = this.description;
+    data.tags = this.tags;
+    data.author = this.author;
+    data.image = this.image;
+    data.id = this.id;
+
+    data.steps = [];
+    for (let val of Object.values(this.steps)) {
+      data.steps.push(val);
     }
 
-    addRating(rating) {
-        this.ratings.push(rating);
-        // TODO: update Cocktail in db
+    return data;
+  }
+
+  addRating(rating) {
+    this.ratings.push(rating);
+  }
+
+  deleteRating(username) {
+    let newRatings = [];
+    this.ratings.forEach(rating => {
+      if (rating.username != username) {
+        newRatings.push(rating);
+      }
+      this.ratings = newRatings;
+    });
+  }
+
+  getRating() {
+    if (this.ratings.length == 0) {
+      return undefined;
     }
 
-    getRating() {
-        if (this.ratings.length == 0) {
-            return undefined;
-        }
+    let sum = 0;
+    this.ratings.forEach(rating => sum += rating.stars);
+    return sum / this.ratings.length;
 
-        let sum = 0;
-        this.ratings.forEach(rating => sum += rating.stars);
-        return sum / this.ratings.length;
+  }
 
-    }
+  getIsAlcoholic() {
 
-    getIsAlcoholic() {
+    let alcoholic = false;
 
-        let alcoholic = false;
+    this.recipe.mainIngredients.forEach(component => {
+      if (component.ingredient.alcoholic) {
+        alcoholic = true;
+      }
+    });
 
-        this.recipe.mainIngredients.forEach(component => {
-            if (component.ingredient.alcoholic) {
-                alcoholic = true;
-            }
-        });
+    this.recipe.decoIngredients.forEach(component => {
+      if (component.ingredient.alcoholic) {
+        alcoholic = true;
+      }
+    });
 
-        this.recipe.decoIngredients.forEach(component => {
-            if (component.ingredient.alcoholic) {
-                alcoholic = true;
-            }
-        });
-
-        return alcoholic;
-    }
+    return alcoholic;
+  }
 
     // Reste verwerten:
     checkIfCocktailHasOnlyTheseIngredients(ingredients, withDeco, subs) {
 
-        //TODO: Eiswürfel ignorieren? (vielleicht mit checkbox)
-        let bool = true;
+    //TODO: Eiswürfel ignorieren? (vielleicht mit checkbox)
+    let bool = true;
 
         let ings = [];
         ingredients.forEach(ingredient => {
@@ -111,33 +121,35 @@ class Cocktail {
 
         });
 
-        if (withDeco) {
-            this.recipe.decoIngredients.forEach(component => {
-                if (ingredients.indexOf(component.ingredient.displayName) == -1) {
-                    bool = false;
-                }
-            });
+    if (withDeco) {
+      this.recipe.decoIngredients.forEach(component => {
+        if (ingredients.indexOf(component.ingredient.displayName) == -1) {
+          bool = false;
         }
-
-        return bool;
-
+      });
     }
+
+    return bool;
+
+  }
+
 
     // Hat der Cocktail mindestens die angegebenen Zutaten?
     checkIfCocktailHasIngredients(ingredients, withDeco, subs) {
 
-        let bool = true,
-            lst = [];
+    let bool = true,
+      lst = [];
 
-        this.recipe.mainIngredients.forEach(component => {
-            lst.push(component.ingredient.displayName);
-        });
+    this.recipe.mainIngredients.forEach(component => {
+      lst.push(component.ingredient.displayName);
+    });
 
-        if (withDeco) {
-            this.recipe.decoIngredients.forEach(component => {
-                lst.push(component.ingredient.displayName);
-            });
-        }
+    if (withDeco) {
+      this.recipe.decoIngredients.forEach(component => {
+        lst.push(component.ingredient.displayName);
+      });
+    }
+
 
         let ings = [];
         ingredients.forEach(ingredient => {
@@ -167,27 +179,28 @@ class Cocktail {
             }
         });
 
-        return bool;
 
-    }
+    return bool;
 
-    addComment(comment) {
-        this.comments.push(comment);
-    }
+  }
 
-    getAllDisplayNames() {
-        let displayNames = [];
+  addComment(comment) {
+    this.comments.push(comment);
+  }
 
-        this.recipe.mainIngredients.forEach(component => {
-            // wenn gleicher displayname öfter im rezept ist
-            if (displayNames.indexOf(component.ingredient.displayName) == -1) {
-                displayNames.push(component.ingredient.displayName);
-            }
-        });
+  getAllDisplayNames() {
+    let displayNames = [];
 
-        return displayNames;
+    this.recipe.mainIngredients.forEach(component => {
+      // wenn gleicher displayname öfter im rezept ist
+      if (displayNames.indexOf(component.ingredient.displayName) == -1) {
+        displayNames.push(component.ingredient.displayName);
+      }
+    });
 
-    }
+    return displayNames;
+
+  }
 
 }
 

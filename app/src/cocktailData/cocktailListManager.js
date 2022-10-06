@@ -191,9 +191,15 @@ class CocktailListManager extends Observable {
                 if (allowed) {
                     cocktail.addRating(data.rating);
                     // update cocktail in db
+                    this.updateCocktail(cocktail);
                 }
             }
         });
+    }
+    // database update
+    async updateCocktail(cocktail) {
+        let id = "cocktailNr" + cocktail.id;
+        await this.appwrite.updateDocument(id, cocktail.toDBObject());
     }
 
     getIngredientAndCocktailData() {
