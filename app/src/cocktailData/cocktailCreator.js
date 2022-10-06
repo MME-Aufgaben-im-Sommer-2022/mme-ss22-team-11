@@ -25,6 +25,7 @@ class CocktailCreator extends Observable {
 
         this.IMAGE_INPUT;
         this.IMAGE_INPUT_LABEL;
+        this.CREATOR_TAG_INPUT_CONTAINER;
         this.CREATOR_ING_CONTAINER;
         this.CREATOR_ING_INPUT_CONTAINER;
         this.CREATOR_ING_RESULTS;
@@ -47,6 +48,7 @@ class CocktailCreator extends Observable {
 
         this.IMAGE_INPUT = document.querySelector(".image-input")
         this.IMAGE_INPUT_LABEL = document.querySelector(".image-input-label")
+        this.CREATOR_TAG_INPUT_CONTAINER = document.querySelectorAll(".creator-tag-input-container")
         this.CREATOR_ING_CONTAINER = document.querySelector(".creator-ingredients-container")
         this.CREATOR_ING_INPUT_CONTAINER = document.querySelectorAll(".creator-ingredient-input-container")
         this.CREATOR_ING_RESULTS = document.querySelector(".creator-ingredient-input-results")
@@ -66,6 +68,7 @@ class CocktailCreator extends Observable {
             this.processInput();
         });
 
+        this.initializeTagInputContainer();
         this.initializeIngredientInputContainer();
         this.initializeInstructionInputContainer();
     }
@@ -113,6 +116,25 @@ class CocktailCreator extends Observable {
         let el = document.createElement("div");
         el.innerHTML = this.CREATOR_INS_INPUT_CONTAINER_TEMPLATE;
         return el.querySelector(".creator-instructions-input-container");
+    }
+
+
+    /*
+        TAGS
+    */
+
+    initializeTagInputContainer() {
+        for (let i = 0; i < this.CREATOR_TAG_INPUT_CONTAINER.length; i++) {
+            for (let k = 0; k < this.CREATOR_TAG_INPUT_CONTAINER[i].querySelectorAll(".creator-tag").length; k++) {
+                this.CREATOR_TAG_INPUT_CONTAINER[i].querySelectorAll(".creator-tag")[k].addEventListener("click", () => {
+                    if (this.CREATOR_TAG_INPUT_CONTAINER[i].querySelectorAll(".creator-tag")[k].classList.contains("selected")) {
+                        this.CREATOR_TAG_INPUT_CONTAINER[i].querySelectorAll(".creator-tag")[k].classList.remove("selected");
+                    } else {
+                        this.CREATOR_TAG_INPUT_CONTAINER[i].querySelectorAll(".creator-tag")[k].classList.add("selected");
+                    }
+                })
+            }
+        }
     }
 
     /*
