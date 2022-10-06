@@ -8,8 +8,7 @@ export default class UpdateDocumentTask extends AppwriteTask {
     try {
       await database.updateDocument(Config.database.collections.recipe.id, input.id, input.data); 
     } catch (error) {
-      console.error(error);
-      throw new Error("Error while trying to update a document.");
+      throw new Error("Error while trying to update a document." + error);
     }
   }
 

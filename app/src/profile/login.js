@@ -10,7 +10,7 @@ class Login extends Observable {
 
     constructor() {
         super();
-        result, this.appwrite = new AppwriteConnector();
+        this.appwrite = new AppwriteConnector();
     }
 
     async singUp(username, email, password) {

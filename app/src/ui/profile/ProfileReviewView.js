@@ -17,7 +17,7 @@ class ProfileReviewView extends Observable {
     this.cocktailID = data.cocktailID;
     this.review = data.rating;
     this.el = createProfileReviewElement();
-    this.el.addEventListener("click", (event) =>
+    this.el.addEventListener("click", () =>
       this.notifyAll(new Event(
         "RATING CLICKED", this.openReviewedCocktail(this.cocktailID))));
   }

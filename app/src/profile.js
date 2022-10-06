@@ -76,12 +76,8 @@ function showFavorites() {
 
 // Load Reviews in Profile UI
 
-function fillReviews() {
-  let reviews = getReviews();
-}
-
 function showReviews() {
-  let reviews = this.fillReviews();
+  let reviews = getReviews();
   reviews.forEach(review => {
     let reviewView = new ProfileReviewView(review);
     reviewView.appendTo("parent");

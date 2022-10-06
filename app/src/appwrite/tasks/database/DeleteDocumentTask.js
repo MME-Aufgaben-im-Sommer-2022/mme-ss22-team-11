@@ -8,8 +8,7 @@ export default class DeleteDocumentTask extends AppwriteTask {
     try {
       await database.deleteDocument(Config.database.collections.recipe.id, input.id);
     } catch (error) {
-      console.error(error);
-      throw new Error("Error while trying to create a document.");
+      throw new Error("Error while trying to create a document." + error);
     }
   }
 

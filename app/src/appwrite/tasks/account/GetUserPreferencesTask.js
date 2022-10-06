@@ -7,8 +7,7 @@ export default class GetUserPrefrencesTask extends AppwriteTask {
   try {
    return await account.getPrefs();
   } catch (error) {
-   console.log(error);
-   throw new Error("Error while trying to get user preferences");
+   throw new Error("Error while trying to get user preferences." + error);
   }
  }
 

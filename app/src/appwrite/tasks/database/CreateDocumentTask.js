@@ -8,8 +8,7 @@ export default class CreateDocumentTask extends AppwriteTask {
     try {
       await database.createDocument(Config.database.collections.recipe.id, input.id, input.data);
     } catch (error) {
-      console.error(error);
-      throw new Error("Error while trying to create a document.");
+      throw new Error("Error while trying to create a document." + error);
     }
   }
 

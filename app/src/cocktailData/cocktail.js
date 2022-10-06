@@ -9,7 +9,7 @@ class Cocktail {
     this.ratings = ratings;
     this.tags = tags;
 
-    if (description == undefined) {
+    if (description === undefined) {
       this.description = "";
     } else {
       this.description = description;
@@ -49,7 +49,7 @@ class Cocktail {
   deleteRating(username) {
     let newRatings = [];
     this.ratings.forEach(rating => {
-      if (rating.username != username) {
+      if (rating.username !== username) {
         newRatings.push(rating);
       }
       this.ratings = newRatings;
@@ -57,7 +57,7 @@ class Cocktail {
   }
 
   getRating() {
-    if (this.ratings.length == 0) {
+    if (this.ratings.length === 0) {
       return undefined;
     }
 
@@ -94,16 +94,16 @@ class Cocktail {
 
     this.recipe.mainIngredients.forEach(component => {
 
-      if (ingredients.indexOf(component.ingredient.displayName) == -1 &&
-        component.ingredient.displayName != "Eiswürfel" && component
-        .ingredient.displayName != "Crushed Ice") {
+      if (ingredients.indexOf(component.ingredient.displayName) === -1 &&
+        component.ingredient.displayName !== "Eiswürfel" && component
+        .ingredient.displayName !== "Crushed Ice") {
         bool = false;
       }
     });
 
     if (withDeco) {
       this.recipe.decoIngredients.forEach(component => {
-        if (ingredients.indexOf(component.ingredient.displayName) == -1) {
+        if (ingredients.indexOf(component.ingredient.displayName) === -1) {
           bool = false;
         }
       });
@@ -130,7 +130,7 @@ class Cocktail {
     }
 
     ingredients.forEach(ingredient => {
-      if (lst.indexOf(ingredient.ingredient) == -1) {
+      if (lst.indexOf(ingredient.ingredient) === -1) {
         bool = false;
       }
     });
@@ -148,7 +148,7 @@ class Cocktail {
 
     this.recipe.mainIngredients.forEach(component => {
       // wenn gleicher displayname öfter im rezept ist
-      if (displayNames.indexOf(component.ingredient.displayName) == -1) {
+      if (displayNames.indexOf(component.ingredient.displayName) === -1) {
         displayNames.push(component.ingredient.displayName);
       }
     });

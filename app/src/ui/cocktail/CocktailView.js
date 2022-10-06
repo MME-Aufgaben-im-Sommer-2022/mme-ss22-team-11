@@ -19,7 +19,7 @@ function createIngredients(el, ingredients) {
 }
 
 function createInstructions(el, instructions) {
-  for (var step in instructions) {
+  for (var step in instructions) { //eslint-disable-line
     let li = document.createElement("li");
     li.textContent = step;
     el.querySelector(".instructions").append(li);
@@ -27,36 +27,36 @@ function createInstructions(el, instructions) {
 }
 
 function initializeBackEventListeners(backButton, cocktailView) {
-  backButton.addEventListener("mouseover", (event) => {
+  backButton.addEventListener("mouseover", () => {
     backButton.src = "./resources/css/img/VectorBackHover.svg";
   });
-  backButton.addEventListener("mouseout", (event) => {
+  backButton.addEventListener("mouseout", () => {
     backButton.src = "./resources/css/img/VectorBack.svg";
   });
-  backButton.addEventListener("click", (event) => {
+  backButton.addEventListener("click", () => {
     cocktailView.remove();
   });
 }
 
-function initializeFavEventListeners(favButton, cocktailView) {
-  favButton.addEventListener("mouseover", (event) => {
+function initializeFavEventListeners(favButton) {
+  favButton.addEventListener("mouseover", () => {
     favButton.src = "./resources/css/img/VectorFavHover.svg";
   });
-  favButton.addEventListener("mouseout", (event) => {
+  favButton.addEventListener("mouseout", () => {
     if (favButton.classList.contains("active")) {
       favButton.src = "./resources/css/img/VectorFavFilled.svg";
     } else {
       favButton.src = "./resources/css/img/VectorFavHollow.svg";
     }
   });
-  favButton.addEventListener("click", (event) => {
+  favButton.addEventListener("click", () => {
     if (favButton.classList.contains("active")) {
       favButton.classList.remove("active");
-      console.log("Cocktail unmarked as fav");
+      // console.log("Cocktail unmarked as fav");
       favButton.src = "./resources/css/img/VectorFavHollow.svg";
     } else {
       favButton.classList.add("active");
-      console.log("Cocktail marked as fav");
+      // console.log("Cocktail marked as fav");
       favButton.src = "./resources/css/img/VectorFavFilled.svg";
     }
   });

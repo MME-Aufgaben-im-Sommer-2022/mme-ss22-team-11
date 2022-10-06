@@ -1,7 +1,6 @@
 import { Cocktail } from "./cocktail.js";
-import { Component, Recipe } from "./recipe.js";
-import { Ingredient, IngredientList,
-  CustomIngredientMaker } from "./ingredient.js";
+import { Recipe } from "./recipe.js";
+import { Ingredient, IngredientList } from "./ingredient.js";
 import { Observable, Event } from "../utils/Observable.js";
 import AppwriteConnector from "../appwrite/AppwriteConnector.js";
 
@@ -13,7 +12,7 @@ class CocktailListManager extends Observable {
   constructor() {
     super();
 
-    result, this.appwrite = new AppwriteConnector();
+    this.appwrite = new AppwriteConnector();
 
     //TODO: aus Datenbank/API laden
     this.allCocktails = [];
@@ -40,10 +39,10 @@ class CocktailListManager extends Observable {
 
   async emptyDB() {
     let docs = await this.appwrite.countDocuments();
-    console.log(docs);
+    //console.log(docs);
     while (docs.total > 0) {
       docs.documents.forEach(data => {
-        console.log(data.$id);
+        //console.log(data.$id);
         this.appwrite.deleteDocument(data.$id);
       });
       docs = await this.appwrite.countDocuments();
@@ -54,17 +53,18 @@ class CocktailListManager extends Observable {
   async getCocktailsFromDB() {
     // this.emptyDB();
     // return;
-    let count = await this.appwrite.countDocuments();
+    let count = await this.appwrite.countDocuments(),
+      docs = [],
+      img,
+      cocktail;
 
     // if there are no Cocktails in the DB, the cocktails from the json will be loaded
-    if (count.total == 0) {
+    if (count.total === 0) {
       this.getIngredientAndCocktailData();
       return;
     }
 
     this.getIngredientData();
-
-    let docs = [];
 
     for (let i = BATCH_SIZE; i <= count.total; i += BATCH_SIZE) {
       let batch = await this.appwrite.listDocuments(i),
@@ -74,7 +74,7 @@ class CocktailListManager extends Observable {
       });
     }
 
-    console.log("docs: ", docs);
+    //console.log("docs: ", docs);
 
     docs.forEach(data => {
       let id = data.$id.substring(10),
@@ -87,7 +87,7 @@ class CocktailListManager extends Observable {
         stepNr += 1;
       });
 
-      let img = data.image;
+      img = data.image;
 
       // TODO: Storage beim befüllen statt hier auslesen und datei aus Storage holen
       // TODO: beim erstellen von einem Cocktail soll "STORAGE" als img vom cocktail gespeichert werden
@@ -96,7 +96,7 @@ class CocktailListManager extends Observable {
       //} else {
       //    img = data.image;
       //}
-      let cocktail = new Cocktail(id, data.name, recipe, img, ratings,
+      cocktail = new Cocktail(id, data.name, recipe, img, ratings,
         data.tags, data.description, steps, data.author);
 
       this.allCocktails.push(cocktail);
@@ -130,7 +130,7 @@ class CocktailListManager extends Observable {
   }
 
   async addCocktailToDB(id, data) {
-    if (await this.appwrite.getDocument(id) != undefined) {
+    if (await this.appwrite.getDocument(id) !== undefined) {
       return;
     }
     await this.appwrite.createDocument(id, data);
@@ -153,7 +153,7 @@ class CocktailListManager extends Observable {
 
     idList.forEach(id => {
       this.allCocktails.forEach(cocktail => {
-        if (id == cocktail.id) {
+        if (id === cocktail.id) {
           returnList.push(cocktail);
         }
       });
@@ -166,15 +166,15 @@ class CocktailListManager extends Observable {
   //TODO: ausführen, wenn eine neue Bewertung abgegeben wird
   rateCocktail(data) {
     this.allCocktails.forEach(cocktail => {
-      if (cocktail.id == data.cocktailID) {
+      if (cocktail.id === data.cocktailID) {
         let allowed = true;
         // if there is already a rating for this cocktail by the same user;
         cocktail.ratings.forEach(rating => {
-          if (rating.username == data.rating.username) {
+          if (rating.username === data.rating.username) {
             //TODO: überschreiben oder auslagern ob Bewertung möglich ist
-            console.log(
-              "ERNEUTE BEWERTUNG DES GLEICHEN COCKTAILS NICHT MÖGLICH",
-              );
+            //console.log(
+            //"ERNEUTE BEWERTUNG DES GLEICHEN COCKTAILS NICHT MÖGLICH",
+            //);
             allowed = false;
           }
         });
@@ -190,7 +190,7 @@ class CocktailListManager extends Observable {
     let id = data.id,
       username = data.username;
     this.cocktails.forEach(cocktail => {
-      if (cocktail.id == id) {
+      if (cocktail.id === id) {
         cocktail.deleteRating(username);
         this.updateCocktail(cocktail);
       }
@@ -209,12 +209,12 @@ class CocktailListManager extends Observable {
   }
 
   getIngredientData() {
-    fetch('./src/cocktailData/JSON/ingredients.json')
+    fetch("./src/cocktailData/JSON/ingredients.json")
       .then((response) => response.json())
       .then((json) => {
-        for (let i in json) {
+        for (let i in json) { //eslint-disable-line
           let data = json[i],
-            alcoholic = data.alcoholic == 1;
+            alcoholic = data.alcoholic === 1;
           this.ingredientList.addIngredient(new Ingredient(i, data
             .display_name, alcoholic));
         }
@@ -226,7 +226,7 @@ class CocktailListManager extends Observable {
     let id = 200,
       cocktail = new Cocktail(id, name, recipe, image, [], tags, description,
         steps, author);
-    console.log(cocktail);
+    //console.log(cocktail);
     this.allCocktails.push(cocktail);
     // TODO: db aktualisieren
   }
@@ -242,10 +242,10 @@ class CocktailListManager extends Observable {
 
   // TODO: auslagern, soll nur ausgeführt werden wenn Datenbank leer ist
   getCocktailsFromJson() {
-    fetch('./src/cocktailData/JSON/recipes.json')
+    fetch("./src/cocktailData/JSON/recipes.json")
       .then((response) => response.json())
       .then((json) => {
-        for (let i in json) {
+        for (let i in json) { //eslint-disable-line
           let data = json[i],
             recipe = this.getRecipeFromData(data);
           this.addCocktailFromJSON(i, data.name, recipe, data.img, data
@@ -271,6 +271,7 @@ class CocktailListManager extends Observable {
     this.allCocktails.forEach(cocktail => {
       // make cocktail name & query lowercase for comparing
       let name = cocktail.name.toLowerCase();
+      // eslint-disable-next-line no-param-reassign
       query = query.toLowerCase();
       if (name.startsWith(query)) {
         returnList.push(cocktail);
@@ -284,10 +285,10 @@ class CocktailListManager extends Observable {
     let bannedIds = this.checkIngredientBanList(bannedIngredients),
       returnList = [];
     this.displayList.forEach(cocktail => {
-      if (bannedIds.indexOf(cocktail.id) == -1) {
+      if (bannedIds.indexOf(cocktail.id) === -1) {
         returnList.push(cocktail);
       }
-    })
+    });
     this.updateDisplayList(returnList);
 
   }
@@ -300,7 +301,7 @@ class CocktailListManager extends Observable {
           withDeco)) {
         returnList.push(cocktail);
       }
-    })
+    });
     this.updateDisplayList(returnList);
   }
 
@@ -311,7 +312,7 @@ class CocktailListManager extends Observable {
       if (cocktail.checkIfCocktailHasIngredients(ingredients, withDeco)) {
         returnList.push(cocktail);
       }
-    })
+    });
     this.updateDisplayList(returnList);
   }
 
@@ -326,7 +327,7 @@ class CocktailListManager extends Observable {
         ingredients.push(component.ingredient);
       });
       bannedIngredients.forEach(bannedIngredient => {
-        if (ingredients.indexOf(bannedIngredient) != -1) {
+        if (ingredients.indexOf(bannedIngredient) !== -1) {
           bannedIds.push(cocktail.id);
         }
       });

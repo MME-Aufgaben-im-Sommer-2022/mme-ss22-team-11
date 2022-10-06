@@ -8,7 +8,7 @@ export default class DeleteFileTask extends AppwriteTask {
         try {
             await storage.deleteFile(Config.storage, fileId);
         } catch (error) {
-            throw new Error("Error while trying to delete a file.");
+            throw new Error("Error while trying to delete a file." + error);
         }
     }
     

@@ -17,7 +17,7 @@ class User extends Observable {
     this.givenRatings = [];
 
     this.allIngredients.addEventListener("INGREDIENTS_READY", (event) => this
-      .fillAllIngredients(event.data))
+      .fillAllIngredients(event.data));
     this.allIngredients.getAllIngredientsFromJSON();
 
   }
@@ -58,7 +58,7 @@ class User extends Observable {
     let newRatings = [],
       data = {};
     this.givenRatings.forEach(rating => {
-      if (rating.cocktailID != cocktailID) {
+      if (rating.cocktailID !== cocktailID) {
         newRatings.push(rating);
       }
     });

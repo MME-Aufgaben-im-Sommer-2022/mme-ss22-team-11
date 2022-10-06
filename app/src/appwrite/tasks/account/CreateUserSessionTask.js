@@ -8,8 +8,7 @@ export default class CreateUserSessionTask extends AppwriteTask {
    let session = await account.createEmailSession(input.email, input.password); 
    return session;
   } catch (error) {
-   console.log(error);
-   throw new Error("Error while trying to create new user session.");
+   throw new Error("Error while trying to create new user session." + error);
   }
  }
 }
