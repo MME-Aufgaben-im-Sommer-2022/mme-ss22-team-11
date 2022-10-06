@@ -1104,7 +1104,8 @@ nav {
     justify-content: flex-start;
     align-items: center;
     gap: 10px;
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .creator-tag {
