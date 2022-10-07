@@ -1,5 +1,5 @@
 import Observable from "../utils/Observable.js";
-import { IngredientList } from "./ingredient.js";
+import { Ingredient, IngredientList, CustomIngredientMaker } from "./ingredient.js";
 
 class IngredientFilterManager extends Observable {
 
@@ -7,19 +7,19 @@ class IngredientFilterManager extends Observable {
         super();
 
         this.ingredientList = new IngredientList();
-        this.allIngredients = [];
+        this.allIngredients = []
         this.displayList = [];
         
         this.getIngredientData();
         
     }
 
+
     getIngredientData() {
         fetch("./src/cocktailData/JSON/displayNames.json")
             .then((response) => response.json())
             .then((json) => {
 
-                // eslint-disable-next-line guard-for-in
                 for (let i in json) {
                     this.allIngredients.push(i);
                     this.displayList.push(i);
@@ -27,8 +27,9 @@ class IngredientFilterManager extends Observable {
 
                 this.notifyAll(new Event("INGREDIENT_DATA_READY"));
 
-            });
+            })
     }
+
 
     updateDisplayList(returnList) {
         this.displayList = returnList;
@@ -41,7 +42,6 @@ class IngredientFilterManager extends Observable {
         this.allIngredients.forEach(ingredient => {
             // make ingredient name & query lowercase for comparing
             let name = ingredient.toLowerCase();
-            // eslint-disable-next-line no-param-reassign
             query = query.toLowerCase();
             if (name.startsWith(query)) {
                 returnList.push(ingredient);
