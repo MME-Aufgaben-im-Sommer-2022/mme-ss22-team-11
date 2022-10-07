@@ -8,14 +8,14 @@ class Cocktail {
     this.recipe = recipe;
     this.image = image;
 
-    if (ratings == undefined) {
+    if (ratings === undefined) {
       this.ratings = [];
     } else {
       this.ratings = ratings;
     }
     this.tags = tags;
 
-    if (description == undefined) {
+    if (description === undefined) {
       this.description = "";
     } else {
       this.description = description;
@@ -29,7 +29,7 @@ class Cocktail {
 
   toDBObject() {
 
-    console.log(this.ratings, this.description);
+    //console.log(this.ratings, this.description);
 
     let data = {};
 
@@ -58,7 +58,7 @@ class Cocktail {
   deleteRating(username) {
     let newRatings = [];
     this.ratings.forEach(rating => {
-      if (rating.username != username) {
+      if (rating.username !== username) {
         newRatings.push(rating);
       }
       this.ratings = newRatings;
@@ -66,7 +66,7 @@ class Cocktail {
   }
 
   getRating() {
-    if (this.ratings.length == 0) {
+    if (this.ratings.length === 0) {
       return undefined;
     }
 
@@ -99,26 +99,24 @@ class Cocktail {
   checkIfCocktailHasOnlyTheseIngredients(ingredients, withDeco, subs) {
 
     // Eiswürfel ignorieren? (vielleicht mit checkbox)
-    let bool = true;
-
-    let substitutedIngredients = [];
-
-    let ings = [];
+    let bool = true,
+      substitutedIngredients = [],
+      ings = [],
+      data;
     ingredients.forEach(ingredient => {
       ings.push(ingredient.ingredient);
     });
 
     this.recipe.mainIngredients.forEach(component => {
 
-      if (ings.indexOf(component.ingredient.displayName) == -1 && component.ingredient.displayName != "Eiswürfel" && component.ingredient.displayName != "Crushed Ice") {
+      if (ings.indexOf(component.ingredient.displayName) === -1 && component.ingredient.displayName !== "Eiswürfel" && component.ingredient.displayName != "Crushed Ice") {
 
+        let ingredientSubs = subs[component.ingredient.displayName],
+          foundSub = false;
 
-        let ingredientSubs = subs[component.ingredient.displayName];
-        let foundSub = false;
-
-        if (ingredientSubs != undefined) {
+        if (ingredientSubs !== undefined) {
           ingredientSubs.forEach(sub => {
-            if (ings.indexOf(sub) != -1) {
+            if (ings.indexOf(sub) !== -1) {
               foundSub = true;
               substitutedIngredients.push(component.ingredient.displayName);
             }
@@ -126,7 +124,7 @@ class Cocktail {
         }
 
         // undefined, wenn die Zutat durch eine Vorhandene Zutat ersetzt werden kann
-        if ((foundSub && bool) || (foundSub && bool == undefined)) {
+        if ((foundSub && bool) || (foundSub && bool === undefined)) {
           bool = undefined;
         } else {
           bool = false;
@@ -137,27 +135,27 @@ class Cocktail {
 
     if (withDeco) {
       this.recipe.decoIngredients.forEach(component => {
-        if (ingredients.indexOf(component.ingredient.displayName) == -1) {
+        if (ingredients.indexOf(component.ingredient.displayName) === -1) {
           bool = false;
         }
       });
     }
 
-    let data = {};
+    data = {};
     data.bool = bool;
     data.substitutedIngredients = substitutedIngredients;
     return data;
 
   }
 
-
   // Hat der Cocktail mindestens die angegebenen Zutaten?
   checkIfCocktailHasIngredients(ingredients, withDeco, subs) {
 
     let bool = true,
-      lst = [];
-
-    let substitutedIngredients = [];
+      lst = [],
+      substitutedIngredients = [],
+      ings = [],
+      data = {};
 
     this.recipe.mainIngredients.forEach(component => {
       lst.push(component.ingredient.displayName);
@@ -169,29 +167,26 @@ class Cocktail {
       });
     }
 
-
-    let ings = [];
     ingredients.forEach(ingredient => {
       ings.push(ingredient.ingredient);
     });
 
     ings.forEach(ingredient => {
-      if (lst.indexOf(ingredient) == -1) {
+      if (lst.indexOf(ingredient) === -1) {
 
-        let ingredientSubs = subs[ingredient];
-
-        let foundSub = false;
+        let ingredientSubs = subs[ingredient],
+          foundSub = false;
 
         ingredientSubs.forEach(sub => {
 
-          if (lst.indexOf(sub) != -1) {
+          if (lst.indexOf(sub) !== -1) {
             foundSub = true;
             substitutedIngredients.push(ingredient);
           }
         });
 
         // undefined, wenn die Zutat durch eine Vorhandene Zutat ersetzt werden kann
-        if ((foundSub && bool) || (foundSub && bool == undefined)) {
+        if ((foundSub && bool) || (foundSub && bool === undefined)) {
           bool = undefined;
         } else {
           bool = false;
@@ -199,8 +194,6 @@ class Cocktail {
       }
     });
 
-
-    let data = {};
     data.bool = bool;
     data.substitutedIngredients = substitutedIngredients;
     return data;
@@ -216,7 +209,7 @@ class Cocktail {
 
     this.recipe.mainIngredients.forEach(component => {
       // wenn gleicher displayname öfter im rezept ist
-      if (displayNames.indexOf(component.ingredient.displayName) == -1) {
+      if (displayNames.indexOf(component.ingredient.displayName) === -1) {
         displayNames.push(component.ingredient.displayName);
       }
     });
