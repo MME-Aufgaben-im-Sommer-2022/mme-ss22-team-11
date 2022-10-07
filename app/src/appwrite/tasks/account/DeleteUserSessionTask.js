@@ -8,8 +8,7 @@ export default class DeleteUserSessionTask extends AppwriteTask {
    await account.deleteSession(input.session.$id); 
    return;
   } catch (error) {
-   console.log(error);
-   throw new Error("Error while trying to terminate a user session");
+   throw new Error("Custom Error: Error while trying to terminate a user session" + error);
   }
  }
 

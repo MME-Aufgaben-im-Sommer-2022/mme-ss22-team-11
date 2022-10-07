@@ -8,7 +8,7 @@ export default class CreateFileTask extends AppwriteTask {
         try {
             await storage.createFile(Config.storage, input.id, input.file);
         } catch (error) {
-            throw new Error("Error while trying to create a file.");
+            throw new Error("Custom Error: Error while trying to create a file." + error);
         }
     }
     

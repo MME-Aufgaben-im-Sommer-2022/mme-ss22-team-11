@@ -9,7 +9,9 @@ function createCocktailElementForView() {
 }
 
 function getIngredientsForList(ingredients) {
+    // eslint-disable-next-line no-magic-numbers
     if (ingredients.length >= 3) {
+        // eslint-disable-next-line no-magic-numbers
         return `${ingredients.splice(0, 2).join(", ")}, ...`;
     } 
     return ingredients.join(", ");
@@ -24,14 +26,14 @@ class CocktailListView extends Observable {
         this.cocktail = cocktail;
         this.el = createCocktailElementForView();
 
-        this.el.addEventListener("click", (event) => this.notifyAll(new Event("COCKTAIL CLICKED", this.cocktail)));
+        this.el.addEventListener("click", () => this.notifyAll(new Event("COCKTAIL CLICKED", this.cocktail)));
     }
 
     fillHtml() {
 
         if (this.cocktail.isMarked) {
             // TODO: markieren, weil mindestens eine Zutat ersetzt werden muss
-            this.el.style.backgroundColor = 'orange';
+            this.el.style.backgroundColor = "orange";
         }
 
         this.el.querySelector(".cocktail-image").style.background = `url(${this.cocktail.image}) center`;

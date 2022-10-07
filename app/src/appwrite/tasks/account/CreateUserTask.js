@@ -9,8 +9,7 @@ export default class CreateUserTask extends AppwriteTask {
    await account.create("unique()", input.email, input.password, input.name); 
    return account;
   } catch (error) {
-   console.log(error);
-   throw new Error("Error while trying to create new account");
+   throw new Error("Custom Error: Error while trying to create new account" + error);
   }
  }
 
