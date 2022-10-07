@@ -3,7 +3,8 @@ import { Observable, Event } from "../../utils/Observable.js";
 const COCKTAIL_PAGE_TEMPLATE = document.getElementById(
   "cocktail-section-element-template").innerHTML.trim(),
   REVIEW_CONTAINER_TEMPLATE = document.getElementById(
-    "review-template").innerHTML.trim();
+    "review-template").innerHTML.trim(),
+    MAX_STARS = 5;
 
 function createCocktailPageElement() {
   let el = document.createElement("div");
@@ -12,32 +13,36 @@ function createCocktailPageElement() {
 }
 
 function createTags(el, cocktail) {
-  let tags = []
+  let tags = [],
+    text = "",
+    span = el.getElementsByClassName("tags")[0];
   tags = cocktail.tags;
 
-  if (tags.length === 0) return;
-
-  let text = "";
-  for (let i = 0; i < tags.length; i++) {
-    text += tags[i];
-    if (i < tags.length - 1) text += ", "
+  if (tags.length === 0) {
+    return;
   }
 
-  let span = el.getElementsByClassName("tags")[0];
+  for (let i = 0; i < tags.length; i++) {
+    text += tags[i];
+    if (i < tags.length - 1) {
+      text += ", ";
+    }
+  }
+
   span.innerHTML = text;
 }
 
 function createRating(el, cocktail) {
   let rating = cocktail.getRating();
 
-  if (rating == undefined) {
+  if (rating === undefined) {
     let noRating = document.createElement("div");
     noRating.innerHTML = "Keine Bewertungen";
     el.querySelector(".avg-rating").append(noRating);
     return;
   }
 
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < MAX_STARS; i++) {
     let star = document.createElement("img");
     star.setAttribute("draggable", "false");
     if (i < rating) {
@@ -53,25 +58,25 @@ function createIngredients(el, ingredients, toBeSubbed, subDict) {
   ingredients.forEach(element => {
     let li = document.createElement("li");
 
-    if (toBeSubbed.indexOf(element.ingredient.displayName) != -1) {
+    if (toBeSubbed.indexOf(element.ingredient.displayName) !== -1) {
       // TODO: diese Zutat sollte ersetzt werden
-      let subs = subDict[element.ingredient.displayName];
-
-      let substituteString = "Ersatzzutat: "
+      let subs = subDict[element.ingredient.displayName],
+        substituteString = "Ersatzzutat: ";
       
       if (subs.length > 1) {
-        substituteString = "Ersatzzutaten: "
+        substituteString = "Ersatzzutaten: ";
       }
       
       subs.forEach((sub) => {
         substituteString += `${sub}, `;
-      })
-      substituteString =  substituteString.substring(0, substituteString.length - 2);
+      });
+      // eslint-disable-next-line no-magic-numbers
+      substituteString = substituteString.substring(0, substituteString.length - 2);
 
       li.textContent =
       `${element.ingredient.displayName} ${element.portion} ${element.unit}
       ${substituteString}`;
-      li.style.color = "var(--light-orange-darker)"
+      li.style.color = "var(--light-orange-darker)";
     } else {
       li.textContent =
         `${element.ingredient.displayName} ${element.portion} ${element.unit}`;
@@ -92,7 +97,7 @@ function createInstructions(el, instructions) {
 function createReviewContainer() {
   let el = document.createElement("div");
   el.innerHTML = REVIEW_CONTAINER_TEMPLATE;
-  console.log(el)
+  // console.log(el);
   return el.querySelector(".review");
 }
 
@@ -106,7 +111,7 @@ function createReviews(el, reviews) {
     // review text
     container.querySelector(".review-text").innerHTML = review.text;
     // review stars
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < MAX_STARS; i++) {
       let star = document.createElement("img");
       star.setAttribute("draggable", "false");
       if (i < review.stars) {
@@ -118,34 +123,33 @@ function createReviews(el, reviews) {
     }
 
     el.querySelector(".review-container").append(container);
-  })
+  });
 }
 
-
 function initializeBackEventListeners(backButton, cocktailView) {
-  backButton.addEventListener("mouseover", (event) => {
+  backButton.addEventListener("mouseover", () => {
     backButton.src = "./resources/css/img/VectorBackHover.svg";
   });
-  backButton.addEventListener("mouseout", (event) => {
+  backButton.addEventListener("mouseout", () => {
     backButton.src = "./resources/css/img/VectorBack.svg";
   });
-  backButton.addEventListener("click", (event) => {
+  backButton.addEventListener("click", () => {
     cocktailView.remove();
   });
 }
 
-function initializeFavEventListeners(favButton, cocktailView) {
-  favButton.addEventListener("mouseover", (event) => {
+function initializeFavEventListeners(favButton) {
+  favButton.addEventListener("mouseover", () => {
     favButton.src = "./resources/css/img/VectorFavHover.svg";
   });
-  favButton.addEventListener("mouseout", (event) => {
+  favButton.addEventListener("mouseout", () => {
     if (favButton.classList.contains("active")) {
       favButton.src = "./resources/css/img/VectorFavFilled.svg";
     } else {
       favButton.src = "./resources/css/img/VectorFavHollow.svg";
     }
   });
-  favButton.addEventListener("click", (event) => {
+  favButton.addEventListener("click", () => {
     if (favButton.classList.contains("active")) {
       favButton.classList.remove("active");
       favButton.src = "./resources/css/img/VectorFavHollow.svg";
@@ -153,13 +157,13 @@ function initializeFavEventListeners(favButton, cocktailView) {
       favButton.classList.add("active");
       favButton.src = "./resources/css/img/VectorFavFilled.svg";
     }
-  })
+  });
 }
 
 function initializeRatingEventListeners(ratingInput, reviewInput, sendButton, cocktailView) {
-  let stars = ratingInput.querySelectorAll("img");
+  let stars = ratingInput.querySelectorAll("img"),
+    rating = 0;
   stars = Array.from(stars);
-  let rating = 0;
 
   stars.forEach(element => {
     element.addEventListener("click", () => {
@@ -167,19 +171,19 @@ function initializeRatingEventListeners(ratingInput, reviewInput, sendButton, co
       for (let i = 0; i < stars.indexOf(element) + 1; i++) {
         stars[i].src = "./resources/css/img/VectorStarFilledAccent.svg";
       }
-      for (let i = stars.indexOf(element) + 1; i < 5; i++) {
+      for (let i = stars.indexOf(element) + 1; i < MAX_STARS; i++) {
         stars[i].src = "./resources/css/img/VectorStarHollowAccent.svg";
       }
-    })
+    });
   });
   sendButton.addEventListener("click", () => {
-    let review = reviewInput.value;
-    let data = {}
+    let review = reviewInput.value,
+      data = {};
     data.id = cocktailView.cocktail.id;
     data.rating = rating;
     data.review = review;
     cocktailView.notifyAll(new Event("REVIEW SUBMITTED", data));
-  })
+  });
 
 }
 
@@ -210,12 +214,11 @@ class CocktailView extends Observable {
     createInstructions(this.el, this.cocktail.steps);
     createReviews(this.el, this.cocktail.ratings);
 
-    let backButton = this.el.querySelector(".cocktail-back");
-    let favButton = this.el.querySelector(".cocktail-fav");
-    let ratingInput = this.el.querySelector(".rating-input");
-    let reviewInput = this.el.querySelector(".review-input");
-    let sendButton = this.el.querySelector(".send-icon");
-
+    let backButton = this.el.querySelector(".cocktail-back"),
+      favButton = this.el.querySelector(".cocktail-fav"),
+      ratingInput = this.el.querySelector(".rating-input"),
+      reviewInput = this.el.querySelector(".review-input"),
+      sendButton = this.el.querySelector(".send-icon");
 
     initializeRatingEventListeners(ratingInput, reviewInput, sendButton, this);
 
