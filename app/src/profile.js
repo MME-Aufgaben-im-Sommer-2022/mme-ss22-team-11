@@ -14,6 +14,7 @@ let htmlManipulator = new HtmlManipulator(),
   cocktailListManager = new CocktailListManager();
 
 login.addEventListener("LOGIN", (event) => {
+  console.log("profile.js: user - " + event);
   user = event.data;
   user.addEventListener("USER_DATA_CHANGED", (event) =>
     login.updateUser(event.data));
@@ -25,8 +26,9 @@ login.addEventListener("LOGIN", (event) => {
 cocktailListManager.addEventListener("DATA_READY", showFavorites());
 
 /*
-TODO: login fenster
+TODO: login fenster:
     darin login / signup methoden
+
     Buttonlistener für deletefavs, blacklist, bewertungen anzeigen
 */
 
@@ -90,6 +92,6 @@ function showReviews() {
   let reviews = fillReviews();
   reviews.forEach(review => {
     let reviewView = new ProfileReviewView(review);
-    reviewView.appendTo("parent");
+    reviewView.appendTo();
   });
 }

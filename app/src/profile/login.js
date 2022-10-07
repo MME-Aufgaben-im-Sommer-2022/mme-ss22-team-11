@@ -4,6 +4,8 @@ import { User } from "./user.js";
 
 // soll in index.js benutzt werden um den user festzustellen
 
+const MIN_PASSWORD_LENGTH = 8;
+
 class Login extends Observable {
 
     constructor() {
@@ -13,7 +15,7 @@ class Login extends Observable {
 
     async singUp(username, email, password) {
         // eslint-disable-next-line no-magic-numbers
-        if (password.length < 8) {
+        if (password.length < MIN_PASSWORD_LENGTH) {
             // Error message in UI?
             return;
         }
