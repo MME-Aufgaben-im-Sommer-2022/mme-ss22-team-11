@@ -67,7 +67,7 @@ document.querySelector("#recipes-link").addEventListener("click", (event) => {
   user.allIngredients = {};
   console.log(user);
   localStorage.setItem("USER", JSON.stringify(user));
-  window.open("../../index.html", "_self");
+  window.open("./index.html", "_self");
 });
 
 /*
