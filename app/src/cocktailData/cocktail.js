@@ -1,4 +1,3 @@
-
 class Cocktail {
 
   constructor(id, name, recipe, image, ratings, tags, description, steps,
@@ -109,7 +108,7 @@ class Cocktail {
 
     this.recipe.mainIngredients.forEach(component => {
 
-      if (ings.indexOf(component.ingredient.displayName) === -1 && component.ingredient.displayName !== "Eiswürfel" && component.ingredient.displayName != "Crushed Ice") {
+      if (ings.indexOf(component.ingredient.displayName) === -1 && component.ingredient.displayName !== "Eiswürfel" && component.ingredient.displayName !== "Crushed Ice") {
 
         let ingredientSubs = subs[component.ingredient.displayName],
           foundSub = false;
