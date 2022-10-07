@@ -401,7 +401,7 @@ nav {
     cursor: pointer;
 }
 
-.search-random {
+.search-fav {
     width: 60px;
     height: 60px;
     border: 4px solid var(--black);
@@ -412,7 +412,7 @@ nav {
     cursor: pointer;
 }
 
-.search-random img {
+.search-fav img {
     height: 35px;
     width: 35px;
     background: none;

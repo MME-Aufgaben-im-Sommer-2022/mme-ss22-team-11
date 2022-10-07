@@ -11,15 +11,11 @@ import { ReviewSectionView } from "./ui/profile/ReviewSectionView.js"
 const FAVORITE_CONTAINER = document.querySelector(".cocktail-container");
 
 let htmlManipulator = new HtmlManipulator(),
-  user = new User(),
   favorites = [],
   login = new Login(),
-  cocktailListManager = new CocktailListManager(),
-  bannedIngredientsView = new BannedIngredientsView(),
-  ingredientFilterManager = new IngredientFilterManager(),
-  reviewSectionView = new ReviewSectionView();
+  user = login.getDefaultUser();
 
-let userData = localStorage.getItem("USER");
+let userData = JSON.parse(localStorage.getItem("USER"));
 user.username = userData.username;
 user.email = userData.email;
 user.createdCocktails = userData.createdCocktails;
@@ -27,8 +23,17 @@ user.favorites = userData.favorites;
 user.blackListedIngredients = userData.blackListedIngredients;
 user.givenRatings = userData.givenRatings;
 
+
+let cocktailListManager = new CocktailListManager(),
+  bannedIngredientsView = new BannedIngredientsView(user.blackListedIngredients),
+  ingredientFilterManager = new IngredientFilterManager(),
+  reviewSectionView = new ReviewSectionView();
+
+cocktailListManager.getCocktailsFromDB();
+
 localStorage.clear();
 user.addEventListener("USER_DATA_CHANGED", (event) => login.updateUser(event.data));
+user.addEventListener("DELETE_RATING", (event) => cocktailListManager.deleteRating(event.data));
 
 //cocktailListManager.addEventListener("DATA_READY", showFavorites());
 
@@ -37,35 +42,47 @@ let showIngredients = () => {
   bannedIngredientsView.refreshSearchResults(ingredientFilterManager.displayList);
 }
 ingredientFilterManager.addEventListener("INGREDIENT_DATA_READY", () => showIngredients());
-ingredientFilterManager.addEventListener("INGREDIENT_DATA_UPDATED", () => showIngredients());;
+ingredientFilterManager.addEventListener("INGREDIENT_DATA_UPDATED", () => showIngredients());
+
+bannedIngredientsView.addEventListener("INGREDIENT_SELECTED", (event) => {
+  console.log("add to blacklisted", event.data)
+  user.addIngredientToBlackList(event.data);
+});
+bannedIngredientsView.addEventListener("INGREDIENT_UNSELECTED", (event) => {
+  console.log("remove to blacklisted", event.data)
+  user.deleteIngredientFromBlackList(event.data);
+});
 
 let timeout = null,
-    responseDelay = 500;
+  responseDelay = 500;
 
 let searchInput = bannedIngredientsView.el.querySelector('.search-ingredient');
 searchInput.addEventListener('keyup', function () {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => {
-      ingredientFilterManager.searchIngredientByName(searchInput.value);
-    }, responseDelay);
+  clearTimeout(timeout);
+  timeout = setTimeout(() => {
+    ingredientFilterManager.searchIngredientByName(searchInput.value);
+  }, responseDelay);
 });
 
+bannedIngredientsView.showBannedIngredients();
+
 htmlManipulator.addEventListener("CHANGE_PROFILE_CONTENT", (event) => {
-  if (event.data == "favorites") {
-    console.log("favorites");
-  } else if (event.data == "banned-ingredients") {
+  if (event.data == "banned-ingredients") {
     bannedIngredientsView.showBannedIngredients();
   } else if (event.data == "created-cocktails") {
     console.log("created-cocktails");
   } else {
     reviewSectionView.showReviewSection();
+    reviewSectionView.refreshReviews(getReviews());
+    reviewSectionView.addEventListener("RATING_DELETION", (event) => {
+      user.deleteRating(event.data.cocktail.id);
+    });
   }
 });
 
 document.querySelector("#recipes-link").addEventListener("click", (event) => {
   user.listener = {};
   user.allIngredients = {};
-  console.log(user);
   localStorage.setItem("USER", JSON.stringify(user));
   window.open("./index.html", "_self");
 });
@@ -104,27 +121,27 @@ function showFavorites() {
   fillFavorites(favorites);
 }
 
-// Add Blacklist Ingredient & Delete Blacklist Ingredient
-
-
-function addBlacklistIngredient(displayName) {
-  user.addBlacklistIngredient(displayName);
-}
-
-
-function removeBlacklistIngredient(displayName) {
-  user.removeBlacklistIngredient(displayName);
-}
-
 // Get Reviews & Delete 1  Review
 
 function getReviews() {
-  return user.getRatings();
+  let lst = [];
+
+  user.givenRatings.forEach(data => {
+    let obj = {};
+    console.log(cocktailListManager);
+    let cocktail = cocktailListManager.getCocktailForID(data.cocktailID);
+    obj.cocktail = cocktail;
+    obj.rating = data.rating;
+    lst.push(obj);
+  });
+
+  return lst;
+
 }
 
 
 function deleteReview(cocktailID) {
-  user.deleteRating();
+  user.deleteRating(cocktailID);
 }
 
 

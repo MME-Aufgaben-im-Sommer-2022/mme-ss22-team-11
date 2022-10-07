@@ -6,6 +6,7 @@ class Cocktail {
     this.name = name;
     this.recipe = recipe;
     this.image = image;
+    this.toBeSubbed = [];
 
     if (ratings === undefined) {
       this.ratings = [];

@@ -7,8 +7,8 @@ const PROFILE_BANNED_INGS_TEMPLATE = document.getElementById("banned-ingredients
 const BANNED_INGS_CONTAINER = document.querySelector(".banned-ingredients-container"),
     SEARCH_RESULTS_CONTAINER = document.querySelector(".search-results-container"),
     SETTINGS_FRAME = document.querySelector(".settings-frame"),
-    searchResultList = [],
-    bannedIngsList = [];
+    searchResultViewList = [],
+    bannedIngsViewList = [];
 
 function createProfileBannedIngsElement() {
   let el = document.createElement("div");
@@ -18,10 +18,18 @@ function createProfileBannedIngsElement() {
 
 class BannedIngredientsView extends Observable {
 
-    constructor() {
+    constructor(bannedIngredients) {
         super();
         this.el = createProfileBannedIngsElement();
+        this.bannedIngsContainer = this.el.querySelector(".banned-ingredients-container");
         this.searchResultsContainer = this.el.querySelector(".search-results-container");
+        this.bannedIngredients = [];
+
+        bannedIngredients.forEach(ingredient => {
+            this.addToBannedIngs(ingredient);
+        });
+
+        //this.settingsFrame = this.el.querySelector(".settings-frame");
     }
 
     showBannedIngredients() {
@@ -32,10 +40,13 @@ class BannedIngredientsView extends Observable {
     addToSearchResults(ingredient) {
         let ingredientView = new IngredientView(ingredient);
         ingredientView.appendTo(this.searchResultsContainer);
-        searchResultList.push(ingredientView);
+        searchResultViewList.push(ingredientView);
 
         ingredientView.addEventListener("INGREDIENT CLICKED", (event) => {
-            this.notifyAll(new Event("INGREDIENT_SELECTED"))
+            if (this.bannedIngredients.indexOf(ingredient) == -1) {
+                this.addToBannedIngs(ingredient)
+                this.notifyAll(new Event("INGREDIENT_SELECTED", ingredient));
+            }
         })
     }
 
@@ -45,27 +56,30 @@ class BannedIngredientsView extends Observable {
 
     
     removeAllSearchResults() {
-        searchResultList.forEach((view) => view.remove());
-        searchResultList.splice(0, searchResultList.length);
+        searchResultViewList.forEach((view) => view.remove());
+        searchResultViewList.splice(0, searchResultViewList.length);
     }
     
     refreshSearchResults(ingredients) {
+        let sortedIngredients = ingredients.sort((a, b) => a.localeCompare(b));
         this.removeAllSearchResults();
-        this.addAllSearchResults(ingredients);
+        this.addAllSearchResults(sortedIngredients);
     }
     
     addToBannedIngs(ingredient) {
-        let ingredientView = new IngredientView();
-        ingredientView.appendTo(BANNED_INGS_CONTAINER);
-        bannedIngsList.push(ingredientView);
+        this.bannedIngredients.push(ingredient);
+        let ingredientView = new IngredientView(ingredient);
+        ingredientView.appendTo(this.bannedIngsContainer);
+        bannedIngsViewList.push(ingredientView);
 
-        ingredientView.addEventListener("INGREDIENT CLICKED", (event) => {
-            this.notifyAll(new Event("INGREDIENT_UNSELECTED"))
+        ingredientView.addEventListener("INGREDIENT CLICKED", () => {
+            ingredientView.remove();
+            this.notifyAll(new Event("INGREDIENT_UNSELECTED", ingredient));
         })
     }
 
     getAllBannedIngs() {
-        return bannedIngsList;
+        return bannedIngsViewList;
     }
 
 }

@@ -62,11 +62,10 @@ class User extends Observable {
   }
 
   deleteRating(cocktailID) {
-
     let newRatings = [],
       data = {};
     this.givenRatings.forEach(rating => {
-      if (rating.cocktailID !== cocktailID) {
+      if (rating.cocktailID != cocktailID) {
         newRatings.push(rating);
       }
     });
@@ -82,6 +81,10 @@ class User extends Observable {
   // BLACKLIST
   // wird aufgerufen, wenn eine Zutat gesperrt werden soll
   addIngredientToBlackList(displayName) {
+
+    if (this.blackListedIngredients.indexOf(displayName) != -1) {
+      return;
+    }
 
     this.blackListedIngredients.push(displayName);
 
@@ -130,10 +133,9 @@ class User extends Observable {
   // CREATED COCKTAILS
   // wenn der Nutzer einen Cocktail erstellt soll die ID hier gespeichert werden
   onCocktailCreated(cocktailID) {
-    // TODO: code wieder ausführen lassen
-    // this.createdCocktails.push(cocktailID);
+    this.createdCocktails.push(cocktailID);
     // User changed => update in db
-    // this.notifyAll(new Event("USER_DATA_CHANGED", this.toSavedObj()));
+    this.notifyAll(new Event("USER_DATA_CHANGED", this.toSavedObj()));
   }
 
   // soll aufgerufen werden, wenn ein Cocktail erstellt werden soll

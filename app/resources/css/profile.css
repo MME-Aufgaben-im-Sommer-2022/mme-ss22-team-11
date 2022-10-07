@@ -316,7 +316,8 @@ nav {
     height: 100%;
     background: none;
     
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
 
     display: flex;
     flex-direction: row;
@@ -396,7 +397,8 @@ nav {
     padding: 10px;
     background: none;
 
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
     
     display: flex;
     flex-direction: row;
@@ -506,14 +508,10 @@ nav {
     gap: 25px;
 }
 
-.review-header a {
+.review-header h1 {
     background: none;
-    color: var(--accent);
-    cursor: pointer;
-}
-
-.review-header a:hover {
-    text-decoration: underline;
+    color: var(--black);
+    font-size: 2.25rem;
 }
 
 .review-header .rating {

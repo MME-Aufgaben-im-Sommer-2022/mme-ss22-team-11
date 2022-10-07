@@ -25,19 +25,10 @@ let htmlManipulator = new HtmlManipulator(),
     user;
 
 
+
 if (localStorage.getItem("USER") !== null) {
 
-    let userData = JSON.parse(localStorage.getItem("USER"));
-    user = new User();
-
-    user.username = userData.username;
-    user.email = userData.email;
-    user.createdCocktails = userData.createdCocktails;
-    user.favorites = userData.favorites;
-    user.blackListedIngredients = userData.blackListedIngredients;
-    user.givenRatings = userData.givenRatings;
-
-    localStorage.clear();
+    makeUserFromLocalStorage();
 
     // TODO: auslagern
     user.addEventListener("USER_DATA_CHANGED", (event) => login.updateUser(event.data));
@@ -52,8 +43,26 @@ if (localStorage.getItem("USER") !== null) {
     cocktailListManager.addEventListener("COCKTAIL_CREATION_DONE", (event) => {
         user.onCocktailCreated(event.data)
     });
-    cocktailListManager.filterCocktailsByBannedIngredient(user.blackListedIngredients);
+
+    htmlManipulator.addEventListener("FAV_SEARCH", (event) => toggleFavorites(event.data));
+
 }
+
+function makeUserFromLocalStorage() {
+    let userData = JSON.parse(localStorage.getItem("USER"));
+
+    user = new User();
+
+    user.username = userData.username;
+    user.email = userData.email;
+    user.createdCocktails = userData.createdCocktails;
+    user.favorites = userData.favorites;
+    user.blackListedIngredients = userData.blackListedIngredients;
+    user.givenRatings = userData.givenRatings;
+
+    localStorage.clear();
+}
+
 
 htmlManipulator.addEventListener("COCKTAILCREATOR", (event) => {
 
@@ -139,9 +148,19 @@ login.addEventListener("LOGIN", (event) => {
         user.onCocktailCreated(event.data)
     });
     cocktailListManager.filterCocktailsByBannedIngredient(user.blackListedIngredients);
+    htmlManipulator.addEventListener("FAV_SEARCH", (event) => toggleFavorites(event.data));
     //user.deleteIngredientFromBlackList("Cachaca");
     //user.addIngredientToBlackList("Cachaca");
 });
+
+function toggleFavorites(data) {
+    if (data == "ACTIVATED") {
+        cocktailListManager.updateDisplayList(cocktailListManager.getFavorites(user.favorites));
+    } else {
+        cocktailListManager.updateDisplayList(cocktailListManager.allCocktails);
+        addIngredientFilter();
+    }
+}
 
 
 
@@ -198,22 +217,26 @@ let processReview = (event) => {
         cocktailListManager.getCocktailsFromDB();
         cocktailListManager.allCocktails.forEach(cocktail => {
             if (cocktail.id == event.data['id']) {
-                let cView = new CocktailView(cocktail);
+                let cView = new CocktailView(cocktail, user);
                 cView.fillHtml();
                 cView.showCocktailPage();
                 cView.addEventListener("REVIEW SUBMITTED", (event) => processReview(event));
                 cocktailListManager.addEventListener("COCKTAIL_RATED", (event) => { cView.remove() });
+                cView.addEventListener("COCKTAIL_FAV", (event) => user.addCocktailToFavorites(event.data));
+                cView.addEventListener("COCKTAIL_UNFAV", (event) => user.deleteCocktailFromFavorites(event.data));
             }
         });
     }
 }
 
 listView.addEventListener("COCKTAIL CLICKED", (event) => {
-    let cocktailView = new CocktailView(event.data);
+    let cocktailView = new CocktailView(event.data, user);
     cocktailView.fillHtml();
     cocktailView.showCocktailPage();
     cocktailView.addEventListener("REVIEW SUBMITTED", (event) => processReview(event));
     cocktailListManager.addEventListener("COCKTAIL_RATED", (event) => { cocktailView.remove() });
+    cocktailView.addEventListener("COCKTAIL_FAV", (event) => user.addCocktailToFavorites(event.data));
+    cocktailView.addEventListener("COCKTAIL_UNFAV", (event) => user.deleteCocktailFromFavorites(event.data));
 })
 
 
@@ -251,3 +274,5 @@ function addIngredientFilter() {
         cocktailListManager.filterCocktailsByBannedIngredient(user.blackListedIngredients);
     }
 }
+
+addIngredientFilter();

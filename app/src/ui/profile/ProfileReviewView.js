@@ -4,8 +4,7 @@ import { CocktailView } from "../cocktail/CocktailView.js";
 const PROFILE_REVIEW_TEMPLATE = document.getElementById("review-template")
   .innerHTML.trim();
 
-const PROFILE_REVIEWS_CONTAINER = document.querySelector(".reviews-container"),
-  MAX_STARS = 5;
+const MAX_STARS = 5;
 
 function createProfileReviewElement() {
   let el = document.createElement("div");
@@ -17,27 +16,33 @@ function createProfileReviewElement() {
 // data = cocktail.toDBObject();
 class ProfileReviewView extends Observable {
 
-  constructor(data) {
+  constructor(data, container) {
     super();
     this.data = data;
+    console.log(this.data);
     this.el = createProfileReviewElement();
+    this.deleteButton = this.el.querySelector(".review-delete");
+    this.container = container;
 
-    this.el.querySelector(".review-header a").addEventListener("click", (event) =>
-      this.notifyAll(new Event(
-        "RATING CLICKED", this.openReviewedCocktail())));
-  }
+    this.deleteButton.addEventListener("mouseover", (event) => {
+      this.deleteButton.src = "./resources/css/img/VectorTrashCanHover.svg";
+    });
 
-  openReviewedCocktail() {
-    let cocktailView = new CocktailView(this.data.cocktail);
-    cocktailView.fillHtml();
-    cocktailView.showCocktailPage();
+    this.deleteButton.addEventListener("mouseout", (event) => {
+      this.deleteButton.src = "./resources/css/img/VectorTrashCan.svg";
+    });
+
+    this.deleteButton.addEventListener("click", (event) => {
+      this.notifyAll(new Event("RATING_DELETION", this.data));
+      this.remove();
+    });
   }
 
   fillHtml() {
-    this.el.querySelector(".review-header a").textContent = this.data.cocktailName;
-    this.el.querySelector(".review-text").textContent = this.data.review;
+    this.el.querySelector(".review-header h1").textContent = this.data.cocktail.name;
+    this.el.querySelector(".review-text").textContent = this.data.rating.text;
 
-    let rating = this.cocktail.getRating();
+    let rating = this.data.rating.stars;
 
     for (let i = 0; i < MAX_STARS; i++) {
       let star = document.createElement("img");
@@ -47,13 +52,12 @@ class ProfileReviewView extends Observable {
       } else {
         star.src = "./resources/css/img/VectorStarHollowBlack.svg";
       }
-      this.el.querySelector(".rating").innerHTML = "";
       this.el.querySelector(".rating").append(star);
     };
   }
 
   appendView() {
-    PROFILE_REVIEWS_CONTAINER.append(this.el);
+    this.container.append(this.el);
   }
 
   remove() {

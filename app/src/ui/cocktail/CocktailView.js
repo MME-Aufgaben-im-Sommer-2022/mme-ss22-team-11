@@ -138,28 +138,6 @@ function initializeBackEventListeners(backButton, cocktailView) {
   });
 }
 
-function initializeFavEventListeners(favButton) {
-  favButton.addEventListener("mouseover", () => {
-    favButton.src = "./resources/css/img/VectorFavHover.svg";
-  });
-  favButton.addEventListener("mouseout", () => {
-    if (favButton.classList.contains("active")) {
-      favButton.src = "./resources/css/img/VectorFavFilled.svg";
-    } else {
-      favButton.src = "./resources/css/img/VectorFavHollow.svg";
-    }
-  });
-  favButton.addEventListener("click", () => {
-    if (favButton.classList.contains("active")) {
-      favButton.classList.remove("active");
-      favButton.src = "./resources/css/img/VectorFavHollow.svg";
-    } else {
-      favButton.classList.add("active");
-      favButton.src = "./resources/css/img/VectorFavFilled.svg";
-    }
-  });
-}
-
 function initializeRatingEventListeners(ratingInput, reviewInput, sendButton, cocktailView) {
   let stars = ratingInput.querySelectorAll("img"),
     rating = 0;
@@ -187,12 +165,23 @@ function initializeRatingEventListeners(ratingInput, reviewInput, sendButton, co
 
 }
 
+function setFavButton(el, user, cocktail, favButton) {
+  if (user.favorites.indexOf(cocktail.id) != -1) {
+    favButton.src = "./resources/css/img/VectorFavFilled.svg";
+    favButton.classList.add("active");
+  } else {
+    favButton.src = "./resources/css/img/VectorFavHollow.svg";
+    favButton.classList.remove("active");
+  }
+}
+
 class CocktailView extends Observable {
 
-  constructor(cocktail) {
+  constructor(cocktail, user) {
     super();
     this.cocktail = cocktail;
     this.el = createCocktailPageElement();
+    this.user = user;
     window.scrollTo(0, 0);
   }
 
@@ -201,12 +190,6 @@ class CocktailView extends Observable {
     this.el.querySelector(".cocktail-image").style.backgroundSize = "cover";
     this.el.querySelector(".name").textContent = this.cocktail.name;
 
-    // TODO: Ersatzzutaten anzeigen (man kann auch abfragen, ob ein Ersatz bei diesem Cocktail nötig ist)
-    /*
-    if (this.cocktail.isMarked) {
-      
-    }
-    */
 
     createTags(this.el, this.cocktail);
     createRating(this.el, this.cocktail);
@@ -223,7 +206,35 @@ class CocktailView extends Observable {
     initializeRatingEventListeners(ratingInput, reviewInput, sendButton, this);
 
     initializeBackEventListeners(backButton, this);
-    initializeFavEventListeners(favButton, this);
+    
+    if (this.user != undefined) {
+      setFavButton(this.el, this.user, this.cocktail, favButton);
+
+      favButton.addEventListener("mouseover", () => {
+        favButton.src = "./resources/css/img/VectorFavHover.svg";
+      });
+
+      favButton.addEventListener("mouseout", () => {
+        if (favButton.classList.contains("active")) {
+          favButton.src = "./resources/css/img/VectorFavFilled.svg";
+        } else {
+          favButton.src = "./resources/css/img/VectorFavHollow.svg";
+        }
+      });
+
+      favButton.addEventListener("click", () => {
+        if (favButton.classList.contains("active")) {
+          this.notifyAll(new Event("COCKTAIL_UNFAV", this.cocktail.id));
+          favButton.classList.remove("active");
+          favButton.src = "./resources/css/img/VectorFavHollow.svg";
+        } else {
+          this.notifyAll(new Event("COCKTAIL_FAV", this.cocktail.id));
+          favButton.classList.add("active");
+          favButton.src = "./resources/css/img/VectorFavFilled.svg";
+        }
+      });
+    } 
+
   }
 
   showCocktailPage() {
@@ -236,6 +247,24 @@ class CocktailView extends Observable {
     this.el.remove();
     document.querySelector("#filter").style.display = "flex";
     document.querySelector(".cocktails").style.display = "block";
+  }
+
+  clearInputs() {
+    let ratingInput = this.el.querySelector(".rating-input"),
+      reviewInput = this.el.querySelector(".review-input");
+
+    reviewInput.textContent = "";
+
+    let stars = ratingInput.querySelectorAll("img");
+      stars = Array.from(stars);
+
+    stars.forEach(element => {
+      element.addEventListener("click", () => {
+        for (let i = 0; i < MAX_STARS; i++) {
+          stars[i].src = "./resources/css/img/VectorStarHollowAccent.svg";
+        }
+      });
+    });
   }
 
 }

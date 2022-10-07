@@ -165,6 +165,20 @@ class CocktailListManager extends Observable {
         // TODO: json zu liste und zu allcocktails hinzufügen (listener mit data ready)
     }
 
+    getCocktailForID(id) {
+        let ct;
+
+        console.log(this.allCocktails);
+
+        this.allCocktails.forEach(cocktail => {
+            if (id == cocktail.id) {
+                ct = cocktail;
+                console.log(cocktail);
+            }
+        });
+        return ct;
+    }
+
     // Soll Favoriten anzeigen
     getFavorites(idList) {
 
@@ -198,8 +212,8 @@ class CocktailListManager extends Observable {
 
     deleteRating(data) {
         this.allCocktails.forEach(cocktail => {
-            if (cocktail.id == data.cocktail) {
-                cocktail.removeRating(data.email);
+            if (cocktail.id == data.cocktailID) {
+                cocktail.deleteRating(data.email);
                 this.updateCocktail(cocktail);
                 this.notifyAll(new Event("RATING_DELETED"));
             }
@@ -346,7 +360,6 @@ class CocktailListManager extends Observable {
             }
         });
         data.subIds.forEach(id => this.markedIDs.push(id));
-        // console.log(this.markedIDs);
         this.updateDisplayList(returnList);
 
     }

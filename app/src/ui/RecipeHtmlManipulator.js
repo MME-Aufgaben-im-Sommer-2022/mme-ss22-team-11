@@ -7,7 +7,8 @@ const NAV_LINKS = document.getElementsByClassName("nav-link"),
     FILTER_ING_INPUT_CONTAINER = document.getElementsByClassName("ingredient-input-container")[0],
     // FILTER_ING_INPUT = document.getElementsByClassName("ingredient-input")[0],
     FILTER_ING_RESULTS = document.getElementsByClassName("ingredient-search-results")[0],
-    NEW_RECIPE_FAB = document.getElementsByClassName("new-recipe-fab")[0];
+    NEW_RECIPE_FAB = document.getElementsByClassName("new-recipe-fab")[0],
+    FAV_SEARCH = document.getElementsByClassName("search-fav")[0];
 
 class HtmlManipulator extends Observable {
 
@@ -70,6 +71,26 @@ class HtmlManipulator extends Observable {
                 this.notifyAll(new Event("COCKTAILCREATOR"));
             });
         }
+
+        FAV_SEARCH.addEventListener("mouseover", (event) => {
+            FAV_SEARCH.children[0].src = "./resources/css/img/VectorFavHover.svg";
+        })
+        
+        FAV_SEARCH.addEventListener("mouseout", (event) => {
+            FAV_SEARCH.children[0].src = "./resources/css/img/VectorFavHollow.svg";
+        })
+        
+        FAV_SEARCH.addEventListener("click", (event) => {
+            if (FAV_SEARCH.classList.contains("active")) {
+                FAV_SEARCH.children[0].src = "./resources/css/img/VectorFavHollow.svg";
+                FAV_SEARCH.classList.remove("active");
+                this.notifyAll(new Event("FAV_SEARCH", "DEACTIVATED"));
+            } else {
+                FAV_SEARCH.children[0].src = "./resources/css/img/VectorFavFilled.svg";
+                FAV_SEARCH.classList.add("active")
+                this.notifyAll(new Event("FAV_SEARCH", "ACTIVATED"));
+            }
+        })
     }
 }
 
