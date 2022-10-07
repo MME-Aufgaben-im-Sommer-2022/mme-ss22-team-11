@@ -5,7 +5,7 @@ const NAV_LINKS = document.getElementsByClassName("nav-link"),
     /* INGREDIENTS */
     INGREDIENT_CONTAINER = document.getElementsByClassName("ingredients-container")[0],
     FILTER_ING_INPUT_CONTAINER = document.getElementsByClassName("ingredient-input-container")[0],
-    FILTER_ING_INPUT = document.getElementsByClassName("ingredient-input")[0],
+    // FILTER_ING_INPUT = document.getElementsByClassName("ingredient-input")[0],
     FILTER_ING_RESULTS = document.getElementsByClassName("ingredient-search-results")[0],
     
     /* STEPS */
@@ -14,12 +14,11 @@ const NAV_LINKS = document.getElementsByClassName("nav-link"),
     
     ;
     
-    
 class HtmlManipulator {
 
     constructor() {
         for (let item of NAV_LINKS) {
-            item.addEventListener("click", (event) => {
+            item.addEventListener("click", () => {
                 for (let item of NAV_LINKS) {
                     if (item.classList.contains("active")) {
                         item.classList.remove("active");
@@ -32,16 +31,16 @@ class HtmlManipulator {
         /* TAGS */
         TAGS_ADD.addEventListener("click", () => {
             let tag = document.createElement("input");
-            tag.setAttribute("type", "text")
-            tag.setAttribute("class", "steps-input")
+            tag.setAttribute("type", "text");
+            tag.setAttribute("class", "steps-input");
             tag.setAttribute("placeholder", "Füge Tag hinzu...");
 
-            TAGS_CONTAINER.append(tag)
-        })
+            TAGS_CONTAINER.append(tag);
+        });
 
         /* INGREDIENTS */
-        FILTER_ING_INPUT_CONTAINER.addEventListener("click", (event) => {
-            if (FILTER_ING_RESULTS.childElementCount != 0) {
+        FILTER_ING_INPUT_CONTAINER.addEventListener("click", () => {
+            if (FILTER_ING_RESULTS.childElementCount !== 0) {
                 FILTER_ING_INPUT_CONTAINER.classList.add("extend");
             } else {
                 FILTER_ING_INPUT_CONTAINER.classList.add("focus");
@@ -49,7 +48,7 @@ class HtmlManipulator {
         });
 
         document.addEventListener("click", (event) => {
-            if (!FILTER_ING_INPUT_CONTAINER.contains(event.target) && event.target.className != "ingredient") {
+            if (!FILTER_ING_INPUT_CONTAINER.contains(event.target) && event.target.className !== "ingredient") {
                 if (FILTER_ING_INPUT_CONTAINER.classList.contains("focus")) {
                     FILTER_ING_INPUT_CONTAINER.classList.remove("focus");
                 } else if (FILTER_ING_INPUT_CONTAINER.classList.contains("extend")) {
@@ -59,13 +58,13 @@ class HtmlManipulator {
         });
 
         for (let item of INGREDIENT_CONTAINER.children) {
-            item.addEventListener("click", (event) => {
+            item.addEventListener("click", () => {
                 item.remove();
             });
         }
 
         for (let item of FILTER_ING_RESULTS.children) {
-            item.addEventListener("click", (event) => {
+            item.addEventListener("click", () => {
                 item.remove();
                 INGREDIENT_CONTAINER.append(item);
             });
@@ -75,12 +74,12 @@ class HtmlManipulator {
 
         STEPS_ADD.addEventListener("click", () => {
             let step = document.createElement("input");
-            step.setAttribute("type", "text")
-            step.setAttribute("class", "steps-input")
+            step.setAttribute("type", "text");
+            step.setAttribute("class", "steps-input");
             step.setAttribute("placeholder", "Füge Schritt hinzu...");
 
-            STEPS_CONTAINER.append(step)
-        })
+            STEPS_CONTAINER.append(step);
+        });
 
     }
 }
