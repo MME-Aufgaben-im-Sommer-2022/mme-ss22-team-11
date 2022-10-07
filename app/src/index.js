@@ -95,10 +95,9 @@ login.addEventListener("LOGIN", (event) => {
     cocktailListManager.addEventListener("COCKTAIL_CREATION_DONE", (event) => {
         user.onCocktailCreated(event.data)
     });
+    cocktailListManager.filterCocktailsByBannedIngredient(user.blackListedIngredients);
     //user.deleteIngredientFromBlackList("Cachaca");
     //user.addIngredientToBlackList("Cachaca");
-    console.log(user);
-
 });
 
 
