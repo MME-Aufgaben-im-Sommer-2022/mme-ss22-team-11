@@ -18,7 +18,7 @@ class CreatorIngredientView extends Observable {
         //this.el.textContent = ingredient.displayName;
         this.el.textContent = ingredient;
 
-        this.el.addEventListener("click", (event) => this.notifyAll(new Event("INGREDIENT CLICKED", [this.el, this.ingredient])));
+        this.el.addEventListener("click", () => this.notifyAll(new Event("INGREDIENT CLICKED", [this.el, this.ingredient])));
     }
 
     appendTo(parent) {
