@@ -69,8 +69,8 @@ bannedIngredientsView.showBannedIngredients();
 htmlManipulator.addEventListener("CHANGE_PROFILE_CONTENT", (event) => {
   if (event.data == "banned-ingredients") {
     bannedIngredientsView.showBannedIngredients();
-  } else if (event.data == "created-cocktails") {
-    console.log("created-cocktails");
+  //} else if (event.data == "created-cocktails") {
+  //  console.log("created-cocktails");
   } else {
     reviewSectionView.showReviewSection();
     reviewSectionView.refreshReviews(getReviews());
