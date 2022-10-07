@@ -38,9 +38,9 @@ class CocktailListView extends Observable {
             this.el.classList.add("substitute");
         }
 
-        if (this.cocktail.image == "NO_IMAGE") {
+        if (this.cocktail.image === "NO_IMAGE") {
             // TODO: Bild für nix da
-        } else if (this.cocktail.image == "STORAGE") {
+        } else if (this.cocktail.image === "STORAGE") {
             let data = await this.appwrite.getFile(this.cocktail.id);
             this.el.querySelector(".cocktail-image").style.background = `url(${data.href}) center`;
         } else {
