@@ -10,46 +10,51 @@ function createCocktailPageElement() {
 }
 
 function createTags(el, cocktail) {
-    let tags = []
-    tags = cocktail.tags;
+  let tags = []
+  tags = cocktail.tags;
 
-    if (tags.length === 0) return;
-    
-    let text = "";
-    for (let i = 0; i < tags.length; i++) {
-        text += tags[i];
-        if (i < tags.length - 1) text += ", "
-    }
+  if (tags.length === 0) return;
 
-    let span = el.getElementsByClassName("tags")[0];
-    span.innerHTML = text;
+  let text = "";
+  for (let i = 0; i < tags.length; i++) {
+    text += tags[i];
+    if (i < tags.length - 1) text += ", "
+  }
+
+  let span = el.getElementsByClassName("tags")[0];
+  span.innerHTML = text;
 }
 
 function createRating(el, cocktail) {
-    let rating = cocktail.getRating();
+  let rating = cocktail.getRating();
 
-    if (rating == undefined) {
-        let noRating = document.createElement("div");
-        noRating.innerHTML = "Keine Bewertungen";
-        el.querySelector(".avg-rating").append(noRating);
-        return;
+  if (rating == undefined) {
+    let noRating = document.createElement("div");
+    noRating.innerHTML = "Keine Bewertungen";
+    el.querySelector(".avg-rating").append(noRating);
+    return;
+  }
+
+  for (let i = 0; i < 5; i++) {
+    let star = document.createElement("img");
+    star.setAttribute("draggable", "false");
+    if (i < rating) {
+      star.src = "./resources/css/img/VectorStarFilledBlack.svg";
+    } else {
+      star.src = "./resources/css/img/VectorStarHollowBlack.svg";
     }
-    
-    for (let i = 0; i < 5; i++) {
-        let star = document.createElement("img");
-        star.setAttribute("draggable", "false");
-        if (i < rating) {
-            star.src = "./resources/css/img/VectorStarFilledBlack.svg";
-        } else {
-            star.src = "./resources/css/img/VectorStarHollowBlack.svg";
-        }
-        el.querySelector(".avg-rating").append(star);
-    }
+    el.querySelector(".avg-rating").append(star);
+  }
 }
 
-function createIngredients(el, ingredients) {
+function createIngredients(el, ingredients, toBeSubbed) {
   ingredients.forEach(element => {
     let li = document.createElement("li");
+
+    if (toBeSubbed.indexOf(element.ingredient.displayName) != -1) {
+      // TODO: diese Zutat sollte ersetzt werden
+    }
+
     li.textContent =
       `${element.ingredient.displayName} ${element.portion}${element.unit}`;
     el.querySelector(".ingredients").append(li);
@@ -128,22 +133,31 @@ class CocktailView extends Observable {
     super();
     this.cocktail = cocktail;
 
+    console.log(cocktail);
+
     this.el = createCocktailPageElement();
     window.scrollTo(0, 0);
   }
 
-    fillHtml() {
-        this.el.querySelector(".cocktail-image").style.background = `url(${this.cocktail.image}) center`;
-        this.el.querySelector(".cocktail-image").style.backgroundSize = "cover";
-        this.el.querySelector(".name").textContent = this.cocktail.name;
+  fillHtml() {
+    this.el.querySelector(".cocktail-image").style.background = `url(${this.cocktail.image}) center`;
+    this.el.querySelector(".cocktail-image").style.backgroundSize = "cover";
+    this.el.querySelector(".name").textContent = this.cocktail.name;
 
+    // TODO: Ersatzzutaten anzeigen (man kann auch abfragen, ob ein Ersatz bei diesem Cocktail nötig ist)
+    /*
+    if (this.cocktail.isMarked) {
+      
+    }
+    */
 
+    console.log(this.cocktail.toBeSubbed);
 
-        createTags(this.el, this.cocktail);
-        createRating(this.el, this.cocktail);
-        createIngredients(this.el, this.cocktail.recipe.mainIngredients);
-        createInstructions(this.el, this.cocktail.steps);
-    
+    createTags(this.el, this.cocktail);
+    createRating(this.el, this.cocktail);
+    createIngredients(this.el, this.cocktail.recipe.mainIngredients, this.cocktail.toBeSubbed);
+    createInstructions(this.el, this.cocktail.steps);
+
     let backButton = this.el.querySelector(".cocktail-back");
     let favButton = this.el.querySelector(".cocktail-fav");
     let ratingInput = this.el.querySelector(".rating-input");
@@ -155,9 +169,6 @@ class CocktailView extends Observable {
 
     initializeBackEventListeners(backButton, this);
     initializeFavEventListeners(favButton, this);
-
-    createIngredients(this.el, this.cocktail.recipe.mainIngredients);
-    createInstructions(this.el, this.cocktail.steps);
   }
 
   showCocktailPage() {

@@ -1,4 +1,4 @@
-import Observable from "../utils/Observable.js";
+import { Observable, Event } from "../utils/Observable.js";
 import { CocktailListManager } from "./cocktailListManager.js";
 import { Recipe } from "./recipe.js";
 
@@ -22,33 +22,13 @@ class CocktailCreator extends Observable {
         super();
 
         this.cocktailListManager = new CocktailListManager();
+        this.file;
 
-        this.IMAGE_INPUT;
-        this.IMAGE_INPUT_LABEL;
-        this.CREATOR_TAG_INPUT_CONTAINER;
-        this.CREATOR_ING_CONTAINER;
-        this.CREATOR_ING_INPUT_CONTAINER;
-        this.CREATOR_ING_RESULTS;
-        this.CREATOR_ING_ADD;
-        this.CREATOR_ING_RESULT_CONTAINER;
-        this.CREATOR_ING_TEMPLATE;
-        this.CREATOR_INS_CONTAINER;
-        this.CREATOR_INS_INPUT_CONTAINER;
-        this.CREATOR_INS_ADD;
-        this.CREATOR_ING_INPUT_CONTAINER_TEMPLATE;
-        this.CREATOR_INS_INPUT_CONTAINER_TEMPLATE;
-        this.CREATOR_SUMBIT;
-
-    }
-
-    initializeCreator() {
-        document.querySelector("#filter").style.display = "none";
-        document.querySelector(".cocktails").style.display = "none";
-        document.querySelector("body").append(this.createCocktailCreator());
+        this.initializeCreator();
 
         this.IMAGE_INPUT = document.querySelector(".image-input")
         this.IMAGE_INPUT_LABEL = document.querySelector(".image-input-label")
-        this.CREATOR_TAG_INPUT_CONTAINER = document.querySelectorAll(".creator-tag-input-container")
+        this.CREATOR_TAG_INPUT_CONTAINER = document.querySelector(".creator-tag-input-container")
         this.CREATOR_ING_CONTAINER = document.querySelector(".creator-ingredients-container")
         this.CREATOR_ING_INPUT_CONTAINER = document.querySelectorAll(".creator-ingredient-input-container")
         this.CREATOR_ING_RESULTS = document.querySelector(".creator-ingredient-input-results")
@@ -73,6 +53,12 @@ class CocktailCreator extends Observable {
         this.initializeInstructionInputContainer();
     }
 
+    initializeCreator() {
+        document.querySelector("#filter").style.display = "none";
+        document.querySelector(".cocktails").style.display = "none";
+        document.querySelector("body").append(this.createCocktailCreator());
+    }
+
     createCocktailCreator() {
         let el = document.createElement("div");
         el.innerHTML = COCKTAIL_CREATOR_TEMPLATE;
@@ -90,6 +76,7 @@ class CocktailCreator extends Observable {
     */
 
     validateFileType(event) {
+        this.file = event;
         var fileName = this.IMAGE_INPUT.value;
         var idxDot = fileName.lastIndexOf(".") + 1;
         var extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
@@ -124,16 +111,23 @@ class CocktailCreator extends Observable {
     */
 
     initializeTagInputContainer() {
-        for (let i = 0; i < this.CREATOR_TAG_INPUT_CONTAINER.length; i++) {
-            for (let k = 0; k < this.CREATOR_TAG_INPUT_CONTAINER[i].querySelectorAll(".creator-tag").length; k++) {
-                this.CREATOR_TAG_INPUT_CONTAINER[i].querySelectorAll(".creator-tag")[k].addEventListener("click", () => {
-                    if (this.CREATOR_TAG_INPUT_CONTAINER[i].querySelectorAll(".creator-tag")[k].classList.contains("selected")) {
-                        this.CREATOR_TAG_INPUT_CONTAINER[i].querySelectorAll(".creator-tag")[k].classList.remove("selected");
-                    } else {
-                        this.CREATOR_TAG_INPUT_CONTAINER[i].querySelectorAll(".creator-tag")[k].classList.add("selected");
+        let tags = this.CREATOR_TAG_INPUT_CONTAINER.querySelectorAll(".creator-tag");
+        for (let k = 0; k < tags.length; k++) {
+            tags[k].addEventListener("click", () => {
+                // check how many tags are already selected
+                let maxTagCount = 3;
+                for (let k = 0; k < tags.length; k++) {
+                    if (tags[k].classList.contains("selected")) {
+                        maxTagCount -= 1;
                     }
-                })
-            }
+                }
+                // assign up to 3 (maxTagCount) tags
+                if (tags[k].classList.contains("selected")) {
+                    tags[k].classList.remove("selected");
+                } else if (maxTagCount > 0) {
+                    tags[k].classList.add("selected");
+                }
+            })
         }
     }
 
@@ -301,7 +295,12 @@ class CocktailCreator extends Observable {
     collectInput() {
         let name = document.querySelector(".name-input").value;
 
-        let image = document.querySelector(".image-input").value;
+        // TODO: image richtig holen
+        //let fileName = document.querySelector(".image-input").value;
+        let image = "NO_IMAGE"
+        if (this.file !== undefined) {
+            image = this.file.target.files[0];
+        }
 
         let tagList = [];
         let tags = document.getElementsByClassName("creator-tag selected");
@@ -312,8 +311,9 @@ class CocktailCreator extends Observable {
         let ingredientList = [];
         let ingredients = document.getElementsByClassName("creator-ingredient-input");
         let ingredientsQuantity = document.getElementsByClassName("creator-ingredient-quantity-input");
+        let ingredientsUnit = document.getElementsByClassName("creator-ingredient-unit-input");
         for (let i = 0; i < ingredients.length; i++) {
-            ingredientList.push({ "name": ingredients[i].value, "amount": ingredientsQuantity[i].value, "unit": undefined });
+            ingredientList.push({ "name": ingredients[i].value, "amount": ingredientsQuantity[i].value, "unit": ingredientsUnit[i].value });
         }
 
         let stepList = []
@@ -322,7 +322,8 @@ class CocktailCreator extends Observable {
             stepList.push(steps[i].value);
         }
 
-        let data = { name, image, tagList, stepList, ingredientList }
+        let data = { name, image, stepList, ingredientList }
+        data.tags = tagList;
         return data;
     }
 
@@ -332,20 +333,22 @@ class CocktailCreator extends Observable {
 
         if (this.isValid(data)) {
 
-            let name = data.name;
-            let image = data.image;
-            let tags = data.tagList;
             let recipe = new Recipe();
-
-            let ingredients = data.ingredientList;
-            ingredients.forEach((ingredient) => {
+            data.ingredientList.forEach((ingredient) => {
                 recipe.addMainIngredient(ingredient.name, ingredient.amount, ingredient.unit);
             })
+            data.ingredientList = undefined;
+            data.recipe = recipe;
 
-            let steps = data.stepList;
+            let steps = {};
+            let i = 1;
+            data.stepList.forEach((step) => {
+                steps[i] = step;
+                i += 1;
+            })
+            data.steps = steps;
 
-            this.cocktailListManager.addCustomCocktail(name, recipe, image, tags, "", steps, "");
-
+            this.notifyAll(new Event("COCKTAIL_DATA_FOR_USER", data));
         } else {
             alert("Cocktail Creation failed: Invalid Input");
         }

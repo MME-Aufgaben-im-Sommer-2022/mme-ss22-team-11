@@ -241,7 +241,7 @@
             </button>
             <div class="login-question-container">
                 <p class="login-question">Hast du schon einen Account?</p><a class="login-link">Login</a>
-                </div>    
+            </div>
         </div>
 
     </section>
@@ -262,24 +262,15 @@
                 <div class="creator-tag-input-containers">
                     <div class="creator-tag-input-container">
                         <div class="creator-tag-list">
-                            <!--TODO: ADD TAGS HERE (if tag is selected, add "selected" to classList")-->
-                            <div class="creator-tag">Spritzig</div>
-                            <div class="creator-tag">Sauer</div>
-                            <div class="creator-tag">Süß</div>
-                        </div>
-                    </div>
-                    <div class="creator-tag-input-container">
-                        <div class="creator-tag-list">
+                            <div class="creator-tag">Bitter</div>
+                            <div class="creator-tag">Cremig</div>
+                            <div class="creator-tag">Exotisch</div>
+                            <div class="creator-tag">Frisch</div>
+                            <div class="creator-tag">Fruchtig</div>
                             <div class="creator-tag">Sauer</div>
                             <div class="creator-tag">Spritzig</div>
                             <div class="creator-tag">Süß</div>
-                        </div>
-                    </div>
-                    <div class="creator-tag-input-container">
-                        <div class="creator-tag-list">
-                            <div class="creator-tag">Süß</div>
-                            <div class="creator-tag">Sauer</div>
-                            <div class="creator-tag">Spritzig</div>
+                            <div class="creator-tag">Würzig</div>
                         </div>
                     </div>
                 </div>
@@ -293,7 +284,9 @@
                 <div class="creator-ingredient-input-container">
                     <div class="creator-ingredient-input-header">
                         <input class="creator-ingredient-input" type="text" placeholder="Zutat">
-                        <input class="creator-ingredient-quantity-input" type="text" placeholder="Menge">
+                        <input class="creator-ingredient-quantity-input" type="text"
+                            onkeypress="return /[0-9]/i.test(event.key)" placeholder="Menge">
+                        <input class="creator-ingredient-unit-input" type="text" placeholder="Einheit">
                     </div>
                     <div class="creator-ingredient-input-results">
                         <!--Load ingredients here-->
@@ -325,7 +318,9 @@
     <div class="creator-ingredient-input-container">
         <div class="creator-ingredient-input-header">
             <input class="creator-ingredient-input" type="text" placeholder="Zutat">
-            <input class="creator-ingredient-quantity-input" type="text" placeholder="Menge">
+            <input class="creator-ingredient-quantity-input" type="text" min="1"
+                onkeypress="return /[0-9]/i.test(event.key)" placeholder="Menge">
+            <input class="creator-ingredient-unit-input" type="text" placeholder="Einheit">
         </div>
         <div class="creator-ingredient-input-results">
             <!--Load ingredients here-->

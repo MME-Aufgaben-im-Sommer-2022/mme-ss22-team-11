@@ -23,6 +23,7 @@ class CocktailListManager extends Observable {
         this.ingredientList.addEventListener("INGREDIENTS_READY", (event) => this.fillAllIngredients(event.data));
         this.ingredientList.getAllIngredientsFromJSON();
         this.substitutes = {};
+        this.substitutedIngredients = [];
         this.fillReplacements();
 
         // Diese Liste soll immer angezeigt werden
@@ -81,7 +82,9 @@ class CocktailListManager extends Observable {
 
         let docs = [];
 
-        for (let i = BATCH_SIZE; i <= count.total; i += BATCH_SIZE) {
+        console.log(count.total);
+
+        for (let i = BATCH_SIZE; i <= count.total + BATCH_SIZE; i += BATCH_SIZE) {
             let batch = await this.appwrite.listDocuments(i);
             let batchDocs = batch.documents;
             batchDocs.forEach(d => {
@@ -113,6 +116,7 @@ class CocktailListManager extends Observable {
 
             this.allCocktails.push(cocktail);
         });
+        console.log(this.allCocktails);
         this.allCocktails.sort((a, b) => a.id - b.id);
         this.updateDisplayList(this.allCocktails);
     }
@@ -222,6 +226,8 @@ class CocktailListManager extends Observable {
     // soll beim Event "COCKTAIL_CREATION_REQUESTED" ausgeführt werden
     addCustomCocktail(data) {
 
+        console.log(data);
+
         let name = data.name,
             recipe = data.recipe,
             image = data.image,
@@ -231,21 +237,33 @@ class CocktailListManager extends Observable {
             author = data.username,
             id = this.getNewID();
 
+        if (image != "NO_IMAGE") {
+            this.appwrite.createFile(id, image);
+            image = "STORAGE";
+        }
+
         // TODO: letzte id aus db auslesen (daraus neue errechnen)
         let cocktail = new Cocktail(id, name, recipe, image, [], tags, description, steps, author);
         console.log(cocktail);
         this.allCocktails.push(cocktail);
         this.notifyAll(new Event("COCKTAIL_CREATION_DONE"), cocktail.id);
         // TODO: db aktualisieren
+        let dbID = "cocktailNr" + cocktail.id,
+            dbData = cocktail.toDBObject();
+        this.addCocktailToDB(dbID, dbData);
+
     }
 
     getNewID() {
 
         let ids = [];
         this.allCocktails.forEach(cocktail => {
-            ids.push(cocktail.id);
+            ids.push(Number(cocktail.id));
         });
-        let max = Math.max(ids);
+
+        console.log(ids);
+        let max = Math.max.apply(null, ids);
+        console.log(max);
 
         return max + 1;
 
@@ -282,6 +300,12 @@ class CocktailListManager extends Observable {
     updateDisplayList(returnList) {
         this.displayList = returnList;
         this.notifyAll(new Event("DATA_UPDATED"));
+    }
+
+    async deleteCocktail(id) {
+        await this.appwrite.deleteDocument(id);
+        this.allCocktails = [];
+        this.getCocktailsFromDB();
     }
 
     searchCocktailByName(query) {
@@ -322,14 +346,21 @@ class CocktailListManager extends Observable {
 
         let returnList = [];
         this.markedIDs = [];
+        this.substitutedIngredients = [];
+
         this.allCocktails.forEach(cocktail => {
-            let bool = cocktail.checkIfCocktailHasOnlyTheseIngredients(ingredients, withDeco, this.substitutes)
-            if (bool) {
+            let data = cocktail.checkIfCocktailHasOnlyTheseIngredients(ingredients, withDeco, this.substitutes)
+            if (data.bool) {
                 returnList.push(cocktail);
-            } else if (bool == undefined) {
+            } else if (data.bool == undefined) {
                 returnList.push(cocktail);
                 this.markedIDs.push(cocktail.id);
+
+                data.substitutedIngredients.forEach(sub => {
+                    this.substitutedIngredients.push(sub);
+                });
             }
+
         });
         this.updateDisplayList(returnList);
     }
@@ -337,14 +368,19 @@ class CocktailListManager extends Observable {
     // Alle Cocktails die mindestens alle angegebenen Zutaten benötigen
     getCocktailsWithIngredients(ingredients, withDeco) {
         this.markedIDs = [];
+        this.substitutedIngredients = [];
         let returnList = [];
         this.allCocktails.forEach(cocktail => {
-            let bool = cocktail.checkIfCocktailHasIngredients(ingredients, withDeco, this.substitutes);
-            if (bool) {
+            let data = cocktail.checkIfCocktailHasIngredients(ingredients, withDeco, this.substitutes);
+            if (data.bool) {
                 returnList.push(cocktail);
             } else if (bool == undefined) {
                 returnList.push(cocktail);
                 this.markedIDs.push(cocktail.id);
+
+                data.substitutedIngredients.forEach(sub => {
+                    this.substitutedIngredients.push(sub);
+                });
             }
         });
         this.updateDisplayList(returnList);
@@ -376,7 +412,7 @@ class CocktailListManager extends Observable {
                         // wenn die bannedIngredient durch eine nicht gebannte Zutat ersetzt werden kann
                         if (bannedIngredients.indexOf(sub) == -1) {
                             canBeSubstituted = true;
-                            console.log(sub);
+                            this.substitutedIngredients.push(bannedIngredient);
                         }
 
                     });

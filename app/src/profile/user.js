@@ -124,22 +124,16 @@ class User extends Observable {
     // CREATED COCKTAILS
     // wenn der Nutzer einen Cocktail erstellt soll die ID hier gespeichert werden
     onCocktailCreated(cocktailID) {
-        this.createdCocktails.push(cocktailID);
+        // TODO: code wieder ausführen lassen
+        // this.createdCocktails.push(cocktailID);
         // User changed => update in db
-        this.notifyAll(new Event("USER_DATA_CHANGED", this.toSavedObj()));
+        // this.notifyAll(new Event("USER_DATA_CHANGED", this.toSavedObj()));
     }
 
     // soll aufgerufen werden, wenn ein Cocktail erstellt werden soll
-    createCocktail(name, recipe, image, tags, description, steps) {
-        let data = {}
-        data.name = name;
-        data.recipe = recipe;
-        data.image = image;
-        data.tags = tags;
-        data.description = description;
-        data.steps = steps;
+    createCocktail(data) {
         data.username = this.username;
-        this.notifyAll(new Event("COCKTAIL_CREATION_REQUESTED"), data);
+        this.notifyAll(new Event("COCKTAIL_CREATION_REQUESTED", data));
     }
 
     // wenn ein cocktail von diesem User gelöscht wurde

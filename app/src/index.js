@@ -17,12 +17,42 @@ let htmlManipulator = new HtmlManipulator(),
     loginView = new LoginView(),
     reviewManager = new ReviewManager(),
     ingredientListView = new IngredientListView(),
-    cocktailCreator = new CocktailCreator(),
+    cocktailCreator,
     showCocktails = () => {
-        listView.refreshCocktails(cocktailListManager.displayList);
+        listView.refreshCocktails(cocktailListManager.displayList, cocktailListManager.markedIDs, cocktailListManager.substitutedIngredients);
     },
     login = new Login(),
     user;
+
+
+htmlManipulator.addEventListener("COCKTAILCREATOR", (event) => {
+
+    if (user != undefined) {
+
+        cocktailCreator = new CocktailCreator();
+        cocktailCreator.addEventListener("COCKTAIL_DATA_FOR_USER", (event) => {
+            user.createCocktail(event.data);
+            console.log(event.data)
+        });
+
+    } else {
+        loginView.initializeLoginView();
+        loginView.showLoginView();
+        loginView.addEventListener("USER_SUBMIT", (event) => {
+            console.log(event.data);
+
+            if (event.data[0] == undefined) {
+                login.login(event.data[1], event.data[2]);
+            }
+            else {
+                login.singUp(event.data[0], event.data[1], event.data[2]);
+            }
+
+            // TODO: work with user input here
+            // if event.data[0] is undefined -> user wants to login
+        })
+    }
+});
 
 /*
     Functions for using the LoginView
@@ -54,13 +84,24 @@ login.addEventListener("LOGIN", (event) => {
     loginView.removeLoginView();
     user = event.data;
     user.addEventListener("USER_DATA_CHANGED", (event) => login.updateUser(event.data));
-    user.addEventListener("RATING_READY", (event) => { 
+    user.addEventListener("RATING_READY", (event) => {
         cocktailListManager.rateCocktail(event.data);
+    });
+
+    user.addEventListener("COCKTAIL_CREATION_REQUESTED", (event) => {
+        console.log(event);
+        cocktailListManager.addCustomCocktail(event.data)
+    });
+    cocktailListManager.addEventListener("COCKTAIL_CREATION_DONE", (event) => {
+        user.onCocktailCreated(event.data)
     });
     //user.deleteIngredientFromBlackList("Cachaca");
     //user.addIngredientToBlackList("Cachaca");
     console.log(user);
+
 });
+
+
 
 // testing:
 // login.singUp("Gix", "georg_dechant@web.de", "IchBinEinPasswort");
