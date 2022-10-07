@@ -47,12 +47,15 @@ function createRating(el, cocktail) {
   }
 }
 
-function createIngredients(el, ingredients, toBeSubbed) {
+function createIngredients(el, ingredients, toBeSubbed, subDict) {
   ingredients.forEach(element => {
     let li = document.createElement("li");
 
     if (toBeSubbed.indexOf(element.ingredient.displayName) != -1) {
       // TODO: diese Zutat sollte ersetzt werden
+      let subs = subDict[element.ingredient.displayName];
+      li.textContent =
+      `${element.ingredient.displayName} ${element.portion}${element.unit}`;
     }
 
     li.textContent =
@@ -151,11 +154,9 @@ class CocktailView extends Observable {
     }
     */
 
-    console.log(this.cocktail.toBeSubbed);
-
     createTags(this.el, this.cocktail);
     createRating(this.el, this.cocktail);
-    createIngredients(this.el, this.cocktail.recipe.mainIngredients, this.cocktail.toBeSubbed);
+    createIngredients(this.el, this.cocktail.recipe.mainIngredients, this.cocktail.toBeSubbed, this.cocktail.subDict);
     createInstructions(this.el, this.cocktail.steps);
 
     let backButton = this.el.querySelector(".cocktail-back");

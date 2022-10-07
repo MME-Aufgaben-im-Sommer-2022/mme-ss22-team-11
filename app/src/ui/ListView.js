@@ -24,7 +24,7 @@ class ListView extends Observable {
         cocktailListViews.splice(0, cocktailListViews.length);
     }
 
-    addAllCocktails(cocktails, markedIDs, substitutedIngredients) {
+    addAllCocktails(cocktails, markedIDs, substitutedIngredients, substitutes) {
         cocktails.forEach(cocktail => {
             if (markedIDs.indexOf(cocktail.id) == -1) {
                 cocktail.isMarked = false;
@@ -33,11 +33,13 @@ class ListView extends Observable {
             }
 
             cocktail.toBeSubbed = [];
+            cocktail.subDict = {};
 
             if (substitutedIngredients != undefined) {
                 cocktail.recipe.mainIngredients.forEach(component => {
                     if (substitutedIngredients.indexOf(component.ingredient.displayName) != -1) {
                         cocktail.toBeSubbed.push(component.ingredient.displayName);
+                        cocktail.subDict[component.ingredient.displayName] = substitutes[component.ingredient.displayName];
                     }
                 });
             }
@@ -46,9 +48,9 @@ class ListView extends Observable {
         });
     }
 
-    refreshCocktails(cocktails, markedIDs, substitutedIngredients) {
+    refreshCocktails(cocktails, markedIDs, substitutedIngredients, substitutes) {
         this.removeAllCocktails();
-        this.addAllCocktails(cocktails, markedIDs, substitutedIngredients);
+        this.addAllCocktails(cocktails, markedIDs, substitutedIngredients, substitutes);
     }
 }
 

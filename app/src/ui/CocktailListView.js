@@ -32,7 +32,7 @@ class CocktailListView extends Observable {
     fillHtml() {
 
         if (this.cocktail.isMarked) {
-            // TODO: markieren, weil mindestens eine Zutat ersetzt werden muss
+            // markieren, weil mindestens eine Zutat ersetzt werden muss
             this.el.style.backgroundColor = "orange";
         }
 

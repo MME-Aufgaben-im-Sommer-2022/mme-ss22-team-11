@@ -19,7 +19,7 @@ let htmlManipulator = new HtmlManipulator(),
     ingredientListView = new IngredientListView(),
     cocktailCreator,
     showCocktails = () => {
-        listView.refreshCocktails(cocktailListManager.displayList, cocktailListManager.markedIDs, cocktailListManager.substitutedIngredients);
+        listView.refreshCocktails(cocktailListManager.displayList, cocktailListManager.markedIDs, cocktailListManager.substitutedIngredients, cocktailListManager.substitutes);
     },
     login = new Login(),
     user;

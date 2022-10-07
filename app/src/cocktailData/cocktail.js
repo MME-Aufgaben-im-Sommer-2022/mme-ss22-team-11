@@ -98,7 +98,7 @@ class Cocktail {
   // Reste verwerten:
   checkIfCocktailHasOnlyTheseIngredients(ingredients, withDeco, subs) {
 
-    //TODO: Eiswürfel ignorieren? (vielleicht mit checkbox)
+    // Eiswürfel ignorieren? (vielleicht mit checkbox)
     let bool = true;
 
     let substitutedIngredients = [];
