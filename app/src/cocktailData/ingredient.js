@@ -44,26 +44,23 @@ class IngredientList extends Observable {
 
     getAllIngredientsFromJSON() {
 
-        let ingredients = [];
-        let lst = new IngredientList();
+        let ingredients = [],
+            lst = new IngredientList();
 
-        fetch('./src/cocktailData/JSON/ingredients.json')
+        fetch("./src/cocktailData/JSON/ingredients.json")
             .then((response) => response.json())
             .then((json) => {
 
+                // eslint-disable-next-line guard-for-in
                 for (let i in json) {
 
                     let data = json[i];
                     ingredients.push(new Ingredient(i, data.display_name, data.alcoholic));
 
-
                 }
-
 
                 ingredients.forEach(ingredient => lst.addIngredient(ingredient));
                 this.notifyAll(new Event("INGREDIENTS_READY", ingredients));
-
-
 
             });
     }
@@ -91,12 +88,12 @@ class IngredientList extends Observable {
 
         this.list.forEach(ingredient => {
 
-            console.log(ingredient);
+            // console.log(ingredient);
 
             if (ingredient.displayName === query) {
                 returnList.push(ingredient);
             }
-        })
+        });
 
         return returnList;
     }
@@ -131,7 +128,7 @@ class IngredientList extends Observable {
 
         this.list.forEach(ingredient => {
 
-            if (ingredient.name == query) {
+            if (ingredient.name === query) {
                 returnString = ingredient.displayName;
             }
         });
