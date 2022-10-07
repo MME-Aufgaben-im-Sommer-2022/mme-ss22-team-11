@@ -54,12 +54,27 @@ function createIngredients(el, ingredients, toBeSubbed, subDict) {
     if (toBeSubbed.indexOf(element.ingredient.displayName) != -1) {
       // TODO: diese Zutat sollte ersetzt werden
       let subs = subDict[element.ingredient.displayName];
-      li.textContent =
-      `${element.ingredient.displayName} ${element.portion}${element.unit}`;
-    }
 
-    li.textContent =
-      `${element.ingredient.displayName} ${element.portion}${element.unit}`;
+      let substituteString = "Ersatzzutat: "
+      
+      if (subs.length > 1) {
+        substituteString = "Ersatzzutaten: "
+      }
+      
+      subs.forEach((sub) => {
+        substituteString += `${sub}, `;
+      })
+      substituteString =  substituteString.substring(0, substituteString.length - 2);
+
+      li.textContent =
+      `${element.ingredient.displayName} ${element.portion} ${element.unit}
+      ${substituteString}`;
+      li.style.color = "var(--light-orange-darker)"
+    } else {
+      li.textContent =
+        `${element.ingredient.displayName} ${element.portion} ${element.unit}`;
+    }
+    
     el.querySelector(".ingredients").append(li);
   });
 }

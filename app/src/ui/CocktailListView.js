@@ -33,7 +33,7 @@ class CocktailListView extends Observable {
 
         if (this.cocktail.isMarked) {
             // markieren, weil mindestens eine Zutat ersetzt werden muss
-            this.el.style.backgroundColor = "orange";
+            this.el.classList.add("substitute");
         }
 
         this.el.querySelector(".cocktail-image").style.background = `url(${this.cocktail.image}) center`;
