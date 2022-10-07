@@ -362,7 +362,7 @@ class CocktailCreator extends Observable {
             if (ingredient.amount === "") {
                 hasValidIngredient = false;
             }
-            //if (ingredient.unit == "") hasValidIngredient = false;
+            if (ingredient.unit == "") hasValidIngredient = false;
         });
         if (!hasValidIngredient) {
             return false;

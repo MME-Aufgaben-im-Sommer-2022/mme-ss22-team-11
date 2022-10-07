@@ -1,17 +1,42 @@
-# Vorlage für MME-Projekte
 
-Dieses Repository bildet die Grundlage für Ihre Projektarbeit und wurde über die Annahme der _Classroom_-Aufgabe automatisch erstellt. Hinweise zum Aufbau der vorgegebenen Struktur und Hilfswerkzeuge finden Sie im [Dev Guide](./DevGuide.md). **Achten Sie während der Entwicklung stets darauf, dass der Code in Ihrem Repository zu jeder Zeit über `npm run build` fehlerfrei gebaut und veröffentlicht werden kann.**
+# VerwertBar
 
-**Ergänzen Sie im Laufe der Entwicklung die folgenden Punkte in dieser Readme-Datei!**
+## Links
+[VerwertBar (Live-Server)](https://verwertbar.software-engineering.education/)
 
-## Projekt
+[Das Team](./docs/Team.md)
 
-_Fassen Sie kurz die wichtigsten Features, die intendierte Zielgruppe und die grundlegende Motivation des Projekts zusammen. Nennen Sie die aktuell bereits implementierten Funktionen und verlinken Sie den aktuellsten Release._
+## Projektbeschreibung
 
-## Beschreibung & Anleitung
+### Kurzbeschreibung
+**VerwertBar** ist eine Website, die zum nachhaltigen Erstellen von Cocktails anregen soll. Dies wird durch einen Zutaten-Filter ermöglicht, der dazu motiviert vorhandene Zutaten zu verwenden und somit Reste zu verwerten. Die Seite Sie bietet Nutzern die Möglichkeit mit einem Account eigene Kreationen zu teilen und die von anderen Nutzern bewerten. Der Nutzer kann mit Hilfe eines Profils anpassen welche Zutaten nicht vorgeschlagen werden sollen und Favoriten markieren.
 
-_Beschreiben Sie die zentralen Funktionen Ihrer Anwendung und deren Verwendung. Nutzen Sie dazu Screenshots und/oder Videos. Verlinken Sie ein min. 60-sekündiges Demo-Video, das die Verwendung aller wichtigen Funktionen zeigt und in Form eines Audio-Kommentars beschreibt._
+### Anleitung
 
-## Team
+Eine Seite um Cocktails zu browsen und gezielt suchen zu können formt die Homepage des Projekts. Auf der Linken Seite befinden sich in einer Sidebar zwei Filter.
 
-_Listen Sie tabelarisch alle Teammitglieder mit Name, E-Mail-Adresse und Foto auf. Halten Sie für jedes Mitglied kurz fest, welchen Teilbereich der Anwendung die jeweilige Person maßgeblich bearbeitet hat._
+(screenshot: homepage)
+
+In den einen Filter können alle Zutaten eingegeben werden, die dem Nutzer zur Verfügung stehen. Die Seite versucht dann basierend darauf Cocktail-Rezepte zu finden.
+
+(screenshot: homepage, eingaben im "was hast du zuhause" filter für beispiel cocktail)
+
+Der andere Filter dient dazu um einfach nach Cocktail-Rezepten zu Suchen die mindestens bestimmte Zutaten enthalten müssen
+
+(screenshot: homepage, eingaben im normalen filter)
+
+(screenshot: cocktailview von einem cocktail)
+
+Nutzer der Seite können sich per E-Mail einen Account bei VerwertBar erstellen beziehungsweise mit dieser einfach einloggen. 
+
+(screenshot: signup fenster)
+
+Ist der Nutzer eingeloggt ist zum einen auf die Cocktail-Erstellfunktion verfügbar. Hier können Name, Tags, Zutaten und Zubereitungsschritte für den Cocktail eingegeben werden. 
+
+(screenshot: cocktailcreator, beispiel eingaben)
+
+Im Profil-Tab können verschiedene Informationen zum Nutzer aufgerufen werden. Dazu gehören favorisierte Cocktails, verfasste Reviews und ein Manager für geblacklistete Zutaten.
+
+(screenshots: profiltab jede section)
+
+irgendwas zu blacklist und ersatzzutaten, bilder wie 
