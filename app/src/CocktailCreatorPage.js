@@ -1,29 +1,25 @@
-import { IngredientFilterManager } from "./cocktailData/ingredientFilterManager.js"
-import { CreatorIngredientListView } from "./ui/ingredients/CreatorIngredientListView.js"
+import { IngredientFilterManager } from "./cocktailData/ingredientFilterManager.js";
+import { CreatorIngredientListView } from "./ui/ingredients/CreatorIngredientListView.js";
 
-const IMAGE_INPUT = document.querySelector(".image-input")
-const IMAGE_INPUT_LABEL = document.querySelector(".image-input-label")
-
-const CREATOR_ING_CONTAINER = document.querySelector(".creator-ingredients-container")
-const CREATOR_ING_INPUT_CONTAINER = document.querySelectorAll(".creator-ingredient-input-container")
-const CREATOR_ING_RESULTS = document.querySelector(".creator-ingredient-input-results")
-const CREATOR_ING_ADD = document.querySelector(".creator-ingredient-add")
-const CREATOR_ING_RESULT_CONTAINER = document.querySelectorAll(".creator-ingredient-input-results")
-const CREATOR_ING_TEMPLATE = document.querySelector("#creator-ingredient-template")
-
-const CREATOR_INS_CONTAINER = document.querySelector(".creator-instructions-container")
-const CREATOR_INS_INPUT_CONTAINER = document.querySelectorAll(".creator-instructions-input-container")
-const CREATOR_INS_ADD = document.querySelector(".creator-instructions-add")
-
-const CREATOR_ING_INPUT_CONTAINER_TEMPLATE = document.querySelector("#creator-ingredient-input-container-template").innerHTML.trim()
-const CREATOR_INS_INPUT_CONTAINER_TEMPLATE = document.querySelector("#creator-instructions-input-container-template").innerHTML.trim()
-
+const IMAGE_INPUT = document.querySelector(".image-input"),
+    IMAGE_INPUT_LABEL = document.querySelector(".image-input-label"),
+    CREATOR_ING_CONTAINER = document.querySelector(".creator-ingredients-container"),
+    CREATOR_ING_INPUT_CONTAINER = document.querySelectorAll(".creator-ingredient-input-container"),
+    CREATOR_ING_RESULTS = document.querySelector(".creator-ingredient-input-results"),
+    CREATOR_ING_ADD = document.querySelector(".creator-ingredient-add"),
+    // CREATOR_ING_RESULT_CONTAINER = document.querySelectorAll(".creator-ingredient-input-results"),
+    // CREATOR_ING_TEMPLATE = document.querySelector("#creator-ingredient-template"),
+    CREATOR_INS_CONTAINER = document.querySelector(".creator-instructions-container"),
+    CREATOR_INS_INPUT_CONTAINER = document.querySelectorAll(".creator-instructions-input-container"),
+    CREATOR_INS_ADD = document.querySelector(".creator-instructions-add"),
+    CREATOR_ING_INPUT_CONTAINER_TEMPLATE = document.querySelector("#creator-ingredient-input-container-template").innerHTML.trim(),
+    CREATOR_INS_INPUT_CONTAINER_TEMPLATE = document.querySelector("#creator-instructions-input-container-template").innerHTML.trim();
 
 function validateFileType(event) {
-    var fileName = IMAGE_INPUT.value;
-    var idxDot = fileName.lastIndexOf(".") + 1;
-    var extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
-    if (extFile == "jpg" || extFile == "jpeg" || extFile == "png") {
+    var fileName = IMAGE_INPUT.value,
+        idxDot = fileName.lastIndexOf(".") + 1,
+        extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
+    if (extFile === "jpg" || extFile === "jpeg" || extFile === "png") {
 
         let getImagePath = URL.createObjectURL(event.target.files[0]);
         IMAGE_INPUT_LABEL.style.background = `url(${getImagePath}) center`;
@@ -36,10 +32,7 @@ function validateFileType(event) {
     }
 }
 
-
-IMAGE_INPUT.addEventListener("change", (event) => validateFileType(event))
-
-
+IMAGE_INPUT.addEventListener("change", (event) => validateFileType(event));
 
 function createIngredientInputContainer() {
     let el = document.createElement("div");
@@ -57,11 +50,11 @@ function createInstructionsInputContainer() {
     INGREDIENTS
 */
 
-
-
 function fillIngredientList(container, input) {
-    let ingredientFilterManager = new IngredientFilterManager();
-    let ingredientListView = new CreatorIngredientListView(container, input);
+    let ingredientFilterManager = new IngredientFilterManager(),
+        ingredientListView = new CreatorIngredientListView(container, input),
+        timeout = null,
+        responseDelay = 500;
 
     ingredientFilterManager.addEventListener("INGREDIENT_DATA_READY", () => {
         ingredientListView.refreshSearchResults(ingredientFilterManager.displayList);
@@ -72,10 +65,8 @@ function fillIngredientList(container, input) {
     });
 
     // search functionality
-    let timeout = null,
-        responseDelay = 500;
 
-    input.addEventListener('keyup', function () {
+    input.addEventListener("keyup", function () {
         clearTimeout(timeout);
         timeout = setTimeout(() => {
             ingredientFilterManager.searchIngredientByName(input.value);
@@ -88,17 +79,16 @@ function fillIngredientList(container, input) {
     });
 }
 
-
 for (let i = 0; i < CREATOR_ING_INPUT_CONTAINER.length; i++) {
-    CREATOR_ING_INPUT_CONTAINER[i].addEventListener("click", (event) => {
-        if (CREATOR_ING_RESULTS.childElementCount != 0) {
+    CREATOR_ING_INPUT_CONTAINER[i].addEventListener("click", () => {
+        if (CREATOR_ING_RESULTS.childElementCount !== 0) {
             CREATOR_ING_INPUT_CONTAINER[i].classList.add("extend");
         } else {
             CREATOR_ING_INPUT_CONTAINER[i].classList.add("focus");
         }
     });
     document.addEventListener("click", (event) => {
-        if (!CREATOR_ING_INPUT_CONTAINER[i].contains(event.target) && event.target.className != "creator-ingredient") {
+        if (!CREATOR_ING_INPUT_CONTAINER[i].contains(event.target) && event.target.className !== "creator-ingredient") {
             if (CREATOR_ING_INPUT_CONTAINER[i].classList.contains("focus")) {
                 CREATOR_ING_INPUT_CONTAINER[i].classList.remove("focus");
             } else if (CREATOR_ING_INPUT_CONTAINER[i].classList.contains("extend")) {
@@ -112,34 +102,33 @@ for (let i = 0; i < CREATOR_ING_INPUT_CONTAINER.length; i++) {
     */
     fillIngredientList(CREATOR_ING_INPUT_CONTAINER[i].querySelector(".creator-ingredient-input-results"), CREATOR_ING_INPUT_CONTAINER[i].querySelector(".creator-ingredient-input"));
 
-
-    if (i != 0) {
-        if (CREATOR_ING_INPUT_CONTAINER[i].querySelector(".creator-ingredient-input").textContent == "") {
+    if (i !== 0) {
+        if (CREATOR_ING_INPUT_CONTAINER[i].querySelector(".creator-ingredient-input").textContent === "") {
             CREATOR_ING_INPUT_CONTAINER[i].querySelector(".creator-ingredient-input").addEventListener("keydown", (event) => {
-                console.log(event.keyCode);
-                if (event.keyCode == 8) {
-                    console.log("DELETE");
+                // console.log(event.keyCode);
+                // eslint-disable-next-line no-magic-numbers
+                if (event.keyCode === 8) {
+                    // console.log("DELETE");
                     CREATOR_ING_INPUT_CONTAINER[i].remove();
                 }
-            })
+            });
         }
     }
 }
 
-
-CREATOR_ING_ADD.addEventListener("click", (event) => {
+CREATOR_ING_ADD.addEventListener("click", () => {
     let newCreatorIngInputContainer = createIngredientInputContainer();
-    CREATOR_ING_CONTAINER.insertBefore(newCreatorIngInputContainer, CREATOR_ING_CONTAINER.lastElementChild)
+    CREATOR_ING_CONTAINER.insertBefore(newCreatorIngInputContainer, CREATOR_ING_CONTAINER.lastElementChild);
 
-    newCreatorIngInputContainer.addEventListener("click", (event) => {
-        if (CREATOR_ING_RESULTS.childElementCount != 0) {
+    newCreatorIngInputContainer.addEventListener("click", () => {
+        if (CREATOR_ING_RESULTS.childElementCount !== 0) {
             newCreatorIngInputContainer.classList.add("extend");
         } else {
             newCreatorIngInputContainer.classList.add("focus");
         }
     });
     document.addEventListener("click", (event) => {
-        if (!newCreatorIngInputContainer.contains(event.target) && event.target.className != "creator-ingredient") {
+        if (!newCreatorIngInputContainer.contains(event.target) && event.target.className !== "creator-ingredient") {
             if (newCreatorIngInputContainer.classList.contains("focus")) {
                 newCreatorIngInputContainer.classList.remove("focus");
             } else if (newCreatorIngInputContainer.classList.contains("extend")) {
@@ -149,24 +138,25 @@ CREATOR_ING_ADD.addEventListener("click", (event) => {
     });
 
     newCreatorIngInputContainer.querySelector(".creator-ingredient-input").addEventListener("keydown", (event) => {
-        if (newCreatorIngInputContainer.querySelector(".creator-ingredient-input").value == "" && event.keyCode == 8) {
-            newCreatorIngInputContainer.remove()
+        // eslint-disable-next-line no-magic-numbers
+        if (newCreatorIngInputContainer.querySelector(".creator-ingredient-input").value === "" && event.keyCode === 8) {
+            newCreatorIngInputContainer.remove();
         }
-    })
+    });
 
     /*
     FILL ING RESULTS
     */
     fillIngredientList(newCreatorIngInputContainer.querySelector(".creator-ingredient-input-results"), newCreatorIngInputContainer.querySelector(".creator-ingredient-input"));
 
-})
+});
 
 /*
     INSTRUCTIONS
 */
 
 for (let i = 0; i < CREATOR_INS_INPUT_CONTAINER.length; i++) {
-    CREATOR_INS_INPUT_CONTAINER[i].addEventListener("click", (event) => {
+    CREATOR_INS_INPUT_CONTAINER[i].addEventListener("click", () => {
         CREATOR_INS_INPUT_CONTAINER[i].classList.add("focus");
     });
 
@@ -176,21 +166,21 @@ for (let i = 0; i < CREATOR_INS_INPUT_CONTAINER.length; i++) {
         }
     });
 
-    if (i != 0) {
+    if (i !== 0) {
         CREATOR_INS_INPUT_CONTAINER[i].querySelector(".creator-instructions-input").addEventListener("keydown", (event) => {
-            if (CREATOR_INS_INPUT_CONTAINER[i].querySelector(".creator-instructions-input").value == "" && event.keyCode == 8) {
-                CREATOR_INS_INPUT_CONTAINER[i].remove()
+            // eslint-disable-next-line no-magic-numbers
+            if (CREATOR_INS_INPUT_CONTAINER[i].querySelector(".creator-instructions-input").value === "" && event.keyCode === 8) {
+                CREATOR_INS_INPUT_CONTAINER[i].remove();
             }
-        })
+        });
     }
 }
 
-
-CREATOR_INS_ADD.addEventListener("click", (event) => {
+CREATOR_INS_ADD.addEventListener("click", () => {
     let newCreatorInsInputContainer = createInstructionsInputContainer();
-    CREATOR_INS_CONTAINER.insertBefore(newCreatorInsInputContainer, CREATOR_INS_CONTAINER.lastElementChild)
+    CREATOR_INS_CONTAINER.insertBefore(newCreatorInsInputContainer, CREATOR_INS_CONTAINER.lastElementChild);
 
-    newCreatorInsInputContainer.addEventListener("click", (event) => {
+    newCreatorInsInputContainer.addEventListener("click", () => {
         newCreatorInsInputContainer.classList.add("focus");
     });
 
@@ -201,8 +191,9 @@ CREATOR_INS_ADD.addEventListener("click", (event) => {
     });
 
     newCreatorInsInputContainer.querySelector(".creator-instructions-input").addEventListener("keydown", (event) => {
-        if (newCreatorInsInputContainer.querySelector(".creator-instructions-input").value == "" && event.keyCode == 8) {
-            newCreatorInsInputContainer.remove()
+        // eslint-disable-next-line no-magic-numbers
+        if (newCreatorInsInputContainer.querySelector(".creator-instructions-input").value === "" && event.keyCode === 8) {
+            newCreatorInsInputContainer.remove();
         }
-    })
-})
+    });
+});
