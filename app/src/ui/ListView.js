@@ -26,7 +26,7 @@ class ListView extends Observable {
 
     addAllCocktails(cocktails, markedIDs, substitutedIngredients, substitutes) {
         cocktails.forEach(cocktail => {
-            if (markedIDs.indexOf(cocktail.id) == -1) {
+            if (markedIDs.indexOf(cocktail.id) === -1) {
                 cocktail.isMarked = false;
             } else {
                 cocktail.isMarked = true;
@@ -35,9 +35,9 @@ class ListView extends Observable {
             cocktail.toBeSubbed = [];
             cocktail.subDict = {};
 
-            if (substitutedIngredients != undefined) {
+            if (substitutedIngredients !== undefined) {
                 cocktail.recipe.mainIngredients.forEach(component => {
-                    if (substitutedIngredients.indexOf(component.ingredient.displayName) != -1) {
+                    if (substitutedIngredients.indexOf(component.ingredient.displayName) !== -1) {
                         cocktail.toBeSubbed.push(component.ingredient.displayName);
                         cocktail.subDict[component.ingredient.displayName] = substitutes[component.ingredient.displayName];
                     }
