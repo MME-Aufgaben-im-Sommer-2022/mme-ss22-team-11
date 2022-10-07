@@ -14,17 +14,6 @@ let htmlManipulator = new HtmlManipulator(),
   login = new Login(),
   cocktailListManager = new CocktailListManager();
 
-<<<<<<< Updated upstream
-login.addEventListener("LOGIN", (event) => {
-  console.log("profile.js: user - " + event);
-  user = event.data;
-  user.addEventListener("USER_DATA_CHANGED", (event) =>
-    login.updateUser(event.data));
-  user.addEventListener("DELETE_RATING", (event) => {
-    cocktailListManager.deleteCocktailRating(event.data);
-  });
-});
-=======
   console.log(localStorage.getItem("USER"));
 
   let userData = JSON.parse(localStorage.getItem("USER"));
@@ -38,7 +27,6 @@ login.addEventListener("LOGIN", (event) => {
   localStorage.clear();
   console.log(localStorage.getItem("USER"));
   user.addEventListener("USER_DATA_CHANGED", (event) => login.updateUser(event.data));
->>>>>>> Stashed changes
 
 //cocktailListManager.addEventListener("DATA_READY", showFavorites());
 
