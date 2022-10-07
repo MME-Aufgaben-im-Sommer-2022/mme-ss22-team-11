@@ -99,7 +99,7 @@ document.querySelector("#profile-link").addEventListener("click", (event) => {
         data.givenRatings = user.givenRatings;
 
         localStorage.setItem("USER", JSON.stringify(data));
-        window.open("./resources/html/profile.html", "_self");
+        window.open("./profile.html", "_self");
     } else {
         // open signup/login fenster
         loginView.initializeLoginView();
@@ -176,7 +176,20 @@ let showIngredients = () => {
 }
 
 let processReview = (event) => {
-    console.log(event);
+    if (user == undefined) {
+        // login fenster anzeigen
+        loginView.initializeLoginView();
+        loginView.showLoginView();
+        loginView.addEventListener("USER_SUBMIT", (event) => {
+            if (event.data[0] == undefined) {
+                login.login(event.data[1], event.data[2]);
+            }
+            else {
+                login.singUp(event.data[0], event.data[1], event.data[2]);
+            }
+        })
+        return;
+    }
     if (reviewManager.isRatingValid(event.data.rating)) {
         // TODO: 
         user.makeRating(event.data['id'], event.data['rating'], event.data['review']);

@@ -54,10 +54,10 @@ class Cocktail {
     this.ratings.push(rating);
   }
 
-  deleteRating(username) {
+  deleteRating(email) {
     let newRatings = [];
     this.ratings.forEach(rating => {
-      if (rating.username !== username) {
+      if (rating.email !== email) {
         newRatings.push(rating);
       }
       this.ratings = newRatings;

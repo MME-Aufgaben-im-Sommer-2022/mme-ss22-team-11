@@ -1,11 +1,12 @@
 import { Observable, Event } from "../../utils/Observable.js";
-import { IngredientView } from "../ingredients/IngredientView.js";
+import IngredientView from "../ingredients/IngredientView.js";
 
 const PROFILE_BANNED_INGS_TEMPLATE = document.getElementById("banned-ingredients-section-template")
   .innerHTML.trim();
 
 const BANNED_INGS_CONTAINER = document.querySelector(".banned-ingredients-container"),
     SEARCH_RESULTS_CONTAINER = document.querySelector(".search-results-container"),
+    SETTINGS_FRAME = document.querySelector(".settings-frame"),
     searchResultList = [],
     bannedIngsList = [];
 
@@ -20,26 +21,21 @@ class BannedIngredientsView extends Observable {
     constructor() {
         super();
         this.el = createProfileBannedIngsElement();
-
-    }
-
-    fillHtml() {
-        //el.querySelector(".banned-ingredients-container")
-        //el.querySelector(".search-results-container")
-        document.querySelector(".banned-ingredients-container").append(this.el);
+        this.searchResultsContainer = this.el.querySelector(".search-results-container");
     }
 
     showBannedIngredients() {
-        
+        SETTINGS_FRAME.innerHTML = "";
+        SETTINGS_FRAME.append(this.el);
     }
 
     addToSearchResults(ingredient) {
-        let ingredientView = new IngredientView();
-        ingredientView.appendTo(SEARCH_RESULTS_CONTAINER);
+        let ingredientView = new IngredientView(ingredient);
+        ingredientView.appendTo(this.searchResultsContainer);
         searchResultList.push(ingredientView);
 
         ingredientView.addEventListener("INGREDIENT CLICKED", (event) => {
-            console.log("SEARCH INGREDIENT CLICKED");
+            this.notifyAll(new Event("INGREDIENT_SELECTED"))
         })
     }
 
@@ -64,7 +60,7 @@ class BannedIngredientsView extends Observable {
         bannedIngsList.push(ingredientView);
 
         ingredientView.addEventListener("INGREDIENT CLICKED", (event) => {
-            console.log("BANNED INGREDIENT CLICKED");
+            this.notifyAll(new Event("INGREDIENT_UNSELECTED"))
         })
     }
 

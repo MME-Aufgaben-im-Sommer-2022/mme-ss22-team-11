@@ -70,8 +70,8 @@ class CocktailListManager extends Observable {
         // this.emptyDB();
         // return;
         let count = await this.appwrite.countDocuments(),
-        docs = [], 
-            img, 
+            docs = [],
+            img,
             cocktail;
 
         // if there are no Cocktails in the DB, the cocktails from the json will be loaded
@@ -88,7 +88,9 @@ class CocktailListManager extends Observable {
             let batch = await this.appwrite.listDocuments(i),
                 batchDocs = batch.documents;
             batchDocs.forEach(d => {
-                docs.push(d);
+                if (d != undefined) {
+                    docs.push(d);
+                }
             });
         }
 
@@ -193,6 +195,17 @@ class CocktailListManager extends Observable {
             }
         });
     }
+
+    deleteRating(data) {
+        this.allCocktails.forEach(cocktail => {
+            if (cocktail.id == data.cocktail) {
+                cocktail.removeRating(data.email);
+                this.updateCocktail(cocktail);
+                this.notifyAll(new Event("RATING_DELETED"));
+            }
+        });
+    }
+
     // database update
     async updateCocktail(cocktail) {
         let id = "cocktailNr" + cocktail.id;

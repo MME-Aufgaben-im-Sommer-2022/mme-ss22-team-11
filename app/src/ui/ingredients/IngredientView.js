@@ -1,4 +1,4 @@
-import {Observable, Event} from "../../utils/Observable.js";
+import { Observable, Event } from "../../utils/Observable.js";
 
 const INGREDIENT_ELEMENT_TEMPLATE = document.getElementById("ingredient-element-template").innerHTML.trim();
 

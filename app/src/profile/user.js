@@ -50,7 +50,7 @@ class User extends Observable {
 
     let data = {};
     data.cocktailID = cocktailID;
-    data.rating = new Rating(stars, text, this.username);
+    data.rating = new Rating(stars, text, this.username, this.email);
 
     //TODO: listener in cocktailManager oder ähnlichem nutzen
     this.notifyAll(new Event("RATING_READY", data));
@@ -75,7 +75,7 @@ class User extends Observable {
     this.notifyAll(new Event("USER_DATA_CHANGED", this.toSavedObj()));
 
     data.cocktailID = cocktailID;
-    data.username = this.username;
+    data.email = this.email;
     this.notifyAll(new Event("DELETE_RATING", data));
   }
 
