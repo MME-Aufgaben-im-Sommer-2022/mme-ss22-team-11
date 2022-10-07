@@ -16,48 +16,48 @@ class HtmlManipulator {
 
     constructor() {
         for (let item of SETTINGS_NAV_LINKS) {
-            item.addEventListener("click", (event) => {
-                if(item.id == "favorites") {
+            item.addEventListener("click", () => {
+                if(item.id === "favorites") {
                     SETTINGS_FRAME.innerHTML = "";
 
-                    console.log("open favorites");
+                    // console.log("open favorites");
                     SETTINGS_FRAME.append(getViewFromTemplate(COCKTAIL_LIST_SECTION_TEMPLATE));
                     SETTINGS_FRAME.firstChild.querySelector("h1").textContent = "Favoriten";
                 }
-                else if(item.id == "banned-ingredients") {
+                else if(item.id === "banned-ingredients") {
                     SETTINGS_FRAME.innerHTML = "";
                     
-                    console.log("open banned-ingredients");
+                    // console.log("open banned-ingredients");
                     SETTINGS_FRAME.append(getViewFromTemplate(BANNED_INGREDIENTS_SECTION_TEMPLATE));
                 }
-                else if(item.id == "created-cocktails") {
+                else if(item.id === "created-cocktails") {
                     SETTINGS_FRAME.innerHTML = "";
                     
-                    console.log("open created-cocktails");
+                    // console.log("open created-cocktails");
                     SETTINGS_FRAME.append(getViewFromTemplate(COCKTAIL_LIST_SECTION_TEMPLATE));
                     SETTINGS_FRAME.firstChild.querySelector("h1").textContent = "Erstellte Cocktails";
                 }
                 else {
                     SETTINGS_FRAME.innerHTML = "";
                     
-                    console.log("open reviews");
+                    // console.log("open reviews");
                     SETTINGS_FRAME.append(getViewFromTemplate(REVIEWS_SECTION_TEMPLATE));
 
                     SETTINGS_FRAME.querySelectorAll(".review-header a").forEach(el => {
-                        el.addEventListener("click", (event) => {
-                            console.log("open cocktail");
+                        el.addEventListener("click", () => {
+                            // console.log("open cocktail");
                         });
                     });
 
                     SETTINGS_FRAME.querySelectorAll(".review-delete").forEach(el => {
-                        el.addEventListener("mouseover", (event) => {
+                        el.addEventListener("mouseover", () => {
                             el.src = "../css/img/VectorTrashCanHover.svg";
                         });
-                        el.addEventListener("mouseout", (event) => {
+                        el.addEventListener("mouseout", () => {
                             el.src = "../css/img/VectorTrashCan.svg";
                         });
-                        el.addEventListener("click", (event) => {
-                            console.log("delete review");
+                        el.addEventListener("click", () => {
+                            // console.log("delete review");
                         });
                     });
                 }
