@@ -15,8 +15,7 @@
         <nav>
             <ul class="nav-links">
                 <li><a class="nav-link active" href="./index.html">Rezepte</a></li>
-                <li><a class="nav-link" href="#">Bars</a></li>
-                <li id="profile-link"><a class="nav-link" href="./resources/html/profile.html">Profil</a></li>
+                <li id="profile-link"><a class="nav-link">Profil</a></li>
             </ul>
         </nav>
     </header>
@@ -159,62 +158,27 @@
 
                 <!--Append Reviews here-->
 
-                <div class="review">
-                    <div class="review-header">
-                        <h1>Anonym</h1>
-                        <div class="review-rating">
-                            <img src="./resources/css/img/VectorStarFilledBlack.svg" draggable="false">
-                            <img src="./resources/css/img/VectorStarFilledBlack.svg" draggable="false">
-                            <img src="./resources/css/img/VectorStarFilledBlack.svg" draggable="false">
-                            <img src="./resources/css/img/VectorStarFilledBlack.svg" draggable="false">
-                            <img src="./resources/css/img/VectorStarHollowBlack.svg" draggable="false">
-                        </div>
-                    </div>
-                    <p class="review-text">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
-                        eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At</p>
-                </div>
-                <div class="review">
-                    <div class="review-header">
-                        <h1>Anonym</h1>
-                        <div class="review-rating">
-                            <img src="./resources/css/img/VectorStarFilledBlack.svg" draggable="false">
-                            <img src="./resources/css/img/VectorStarFilledBlack.svg" draggable="false">
-                            <img src="./resources/css/img/VectorStarFilledBlack.svg" draggable="false">
-                            <img src="./resources/css/img/VectorStarFilledBlack.svg" draggable="false">
-                            <img src="./resources/css/img/VectorStarFilledBlack.svg" draggable="false">
-                        </div>
-                    </div>
-                    <p class="review-text">Lorem ipsum dolor sit amet, consscing elitr,scing elitr,scing elitr,scing
-                        elitr,scing elitr,scing elitr,etetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
-                        labore et dolore magna aliquyam erat, sed diam voluptua. At</p>
-                </div>
-                <div class="review">
-                    <div class="review-header">
-                        <h1>Anonym</h1>
-                        <div class="review-rating">
-                            <img src="./resources/css/img/VectorStarFilledBlack.svg" draggable="false">
-                            <img src="./resources/css/img/VectorStarFilledBlack.svg" draggable="false">
-                            <img src="./resources/css/img/VectorStarFilledBlack.svg" draggable="false">
-                            <img src="./resources/css/img/VectorStarHollowBlack.svg" draggable="false">
-                            <img src="./resources/css/img/VectorStarHollowBlack.svg" draggable="false">
-                        </div>
-                    </div>
-                    <p class="review-text">Lorem ipsum dolor scing elitr,scing elitr,scing elitr,sit amet, consetetur
-                        sadipscing elitr,scing elitr,scing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-                        dolore magna aliquyam erat, sed diam voluptua. Atsit amet, consetetur sadipscing elitr,scing
-                        elitr,scing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-                        erat, sed diam voluptua</p>
-                </div>
-
             </div>
         </div>
-
 
     </section>
 </template>
 
+<template id="review-template">
+    <div class="review">
+        <div class="review-header">
+            <h1>Anonym</h1>
+            <div class="review-rating">
+                <!-- append rating stars -->
+            </div>
+        </div>
+        <p class="review-text">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+            eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At</p>
+    </div>
+</template>
+
 <template id="login-modal-template">
-    <section class="login-section">
+    <section class="login-section login">
 
         <div class="login-container">
             <img class="login-icon" src="./resources/css/img/VectorLoginIcon.svg">
@@ -237,10 +201,10 @@
                 <input class="login-password-input" type="password" placeholder="Mind. 8 Zeichen">
             </div>
             <button class="signup-button">
-                Sign Up
+                Login
             </button>
             <div class="login-question-container">
-                <p class="login-question">Hast du schon einen Account?</p><a class="login-link">Login</a>
+                <p class="login-question">Hast du noch keinen Account?</p><a class="login-link">Sign Up</a>
             </div>
         </div>
 

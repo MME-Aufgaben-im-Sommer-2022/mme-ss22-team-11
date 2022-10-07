@@ -6,7 +6,7 @@ export default class GetFileTask extends AppwriteTask {
     async createResult(input) {
         let storage = new this.appwrite.Storage(this.client);
         try {
-            return await storage.getFile(Config.storage, input.fileId);
+            return await storage.getFilePreview(Config.storage, input.id);
         } catch (error) {
             return "NO FILE";
         }

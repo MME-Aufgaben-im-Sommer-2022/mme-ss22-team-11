@@ -183,20 +183,12 @@ class CocktailListManager extends Observable {
     rateCocktail(data) {
         this.allCocktails.forEach(cocktail => {
             if (cocktail.id == data.cocktailID) {
-                let allowed = true;
-                // if there is already a rating for this cocktail by the same user;
-                cocktail.ratings.forEach(rating => {
-                    if (rating.username == data.rating.username) {
-                        //TODO: überschreiben oder auslagern ob Bewertung möglich ist
-                        console.log("ERNEUTE BEWERTUNG DES GLEICHEN COCKTAILS NICHT MÖGLICH");
-                        allowed = false;
-                    }
-                });
-                if (allowed) {
-                    cocktail.addRating(data.rating);
-                    // update cocktail in db
-                    this.updateCocktail(cocktail);
-                }
+
+                cocktail.addRating(data.rating);
+                // update cocktail in db
+                this.updateCocktail(cocktail);
+                this.notifyAll(new Event("COCKTAIL_RATED", cocktail));
+
             }
         });
     }

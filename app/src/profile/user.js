@@ -41,6 +41,13 @@ class User extends Observable {
   //RATINGS
   // wird aufgerufen, wenn eine Bewertung erstellt wird
   makeRating(cocktailID, stars, text) {
+
+    if (this.givenRatings.indexOf(cocktailID) != -1) {
+      this.notifyAll("NO_RATING_POSSIBLE");
+      alert("Du musst erst die aktuelle Bewertung für diesen Cocktail im Profil-Tab löschen!");
+      return;
+    }
+
     let data = {};
     data.cocktailID = cocktailID;
     data.rating = new Rating(stars, text, this.username);

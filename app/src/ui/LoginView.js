@@ -59,7 +59,7 @@ class LoginView extends Observable {
         })
 
         document.querySelector("body").addEventListener("click", (event) => {
-            if (!this.el.querySelector(".login-container").contains(event.target)) {
+            if (!this.el.querySelector(".login-container").contains(event.target) && !document.querySelector("header").contains(event.target) && !document.querySelector(".new-recipe-fab").contains(event.target)) {
                 this.removeLoginView();
             }
         })

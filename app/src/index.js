@@ -25,6 +25,36 @@ let htmlManipulator = new HtmlManipulator(),
     user;
 
 
+if (localStorage.getItem("USER") !== null) {
+
+    let userData = JSON.parse(localStorage.getItem("USER"));
+    user = new User();
+
+    user.username = userData.username;
+    user.email = userData.email;
+    user.createdCocktails = userData.createdCocktails;
+    user.favorites = userData.favorites;
+    user.blackListedIngredients = userData.blackListedIngredients;
+    user.givenRatings = userData.givenRatings;
+
+    localStorage.clear();
+
+    // TODO: auslagern
+    user.addEventListener("USER_DATA_CHANGED", (event) => login.updateUser(event.data));
+    user.addEventListener("RATING_READY", (event) => {
+        cocktailListManager.rateCocktail(event.data);
+    });
+
+    user.addEventListener("COCKTAIL_CREATION_REQUESTED", (event) => {
+        console.log(event);
+        cocktailListManager.addCustomCocktail(event.data)
+    });
+    cocktailListManager.addEventListener("COCKTAIL_CREATION_DONE", (event) => {
+        user.onCocktailCreated(event.data)
+    });
+    cocktailListManager.filterCocktailsByBannedIngredient(user.blackListedIngredients);
+}
+
 htmlManipulator.addEventListener("COCKTAILCREATOR", (event) => {
 
     if (user != undefined) {
@@ -54,26 +84,39 @@ htmlManipulator.addEventListener("COCKTAILCREATOR", (event) => {
     }
 });
 
-/*
-    Functions for using the LoginView
-*/
 
+document.querySelector("#profile-link").addEventListener("click", (event) => {
+    if (user !== undefined) {
+        user.listener = {};
+        user.allIngredients = {};
 
-loginView.initializeLoginView();
-loginView.showLoginView();
-loginView.addEventListener("USER_SUBMIT", (event) => {
-    console.log(event.data);
+        let data = {}
+        data.username = user.username;
+        data.email = user.email;
+        data.createdCocktails = user.createdCocktails;
+        data.favorites = user.favorites;
+        data.blackListedIngredients = user.blackListedIngredients;
+        data.givenRatings = user.givenRatings;
 
-    if (event.data[0] == undefined) {
-        login.login(event.data[1], event.data[2]);
+        localStorage.setItem("USER", JSON.stringify(data));
+        window.open("./resources/html/profile.html", "_self");
+    } else {
+        // open signup/login fenster
+        loginView.initializeLoginView();
+        loginView.showLoginView();
+        loginView.addEventListener("USER_SUBMIT", (event) => {
+            if (event.data[0] == undefined) {
+                login.login(event.data[1], event.data[2]);
+            }
+            else {
+                login.singUp(event.data[0], event.data[1], event.data[2]);
+            }
+
+            // TODO: work with user input here
+            // if event.data[0] is undefined -> user wants to login
+        })
     }
-    else {
-        login.singUp(event.data[0], event.data[1], event.data[2]);
-    }
-
-    // TODO: work with user input here
-    // if event.data[0] is undefined -> user wants to login
-})
+});
 
 
 //TODO: LOGIN (standarduser, der nix kann, sign/log-in)
@@ -133,8 +176,22 @@ let showIngredients = () => {
 }
 
 let processReview = (event) => {
-    if (reviewManager.isRatingValid(event.data['rating'])) {
-        // save review+rating to db etc.
+    console.log(event);
+    if (reviewManager.isRatingValid(event.data.rating)) {
+        // TODO: 
+        user.makeRating(event.data['id'], event.data['rating'], event.data['review']);
+        // save review to db 
+        console.log(event.data['id'], event.data['rating'], event.data['review']);
+        cocktailListManager.getCocktailsFromDB();
+        cocktailListManager.allCocktails.forEach(cocktail => {
+            if (cocktail.id == event.data['id']) {
+                let cView = new CocktailView(cocktail);
+                cView.fillHtml();
+                cView.showCocktailPage();
+                cView.addEventListener("REVIEW SUBMITTED", (event) => processReview(event));
+                cocktailListManager.addEventListener("COCKTAIL_RATED", (event) => { cView.remove() });
+            }
+        });
     }
 }
 
@@ -143,6 +200,7 @@ listView.addEventListener("COCKTAIL CLICKED", (event) => {
     cocktailView.fillHtml();
     cocktailView.showCocktailPage();
     cocktailView.addEventListener("REVIEW SUBMITTED", (event) => processReview(event));
+    cocktailListManager.addEventListener("COCKTAIL_RATED", (event) => { cocktailView.remove() });
 })
 
 

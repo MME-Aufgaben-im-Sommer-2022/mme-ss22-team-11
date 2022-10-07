@@ -1,7 +1,9 @@
-import { Observable } from "../../utils/Observable.js";
+import { Observable, Event } from "../../utils/Observable.js";
 
 const COCKTAIL_PAGE_TEMPLATE = document.getElementById(
-  "cocktail-section-element-template").innerHTML.trim();
+  "cocktail-section-element-template").innerHTML.trim(),
+  REVIEW_CONTAINER_TEMPLATE = document.getElementById(
+    "review-template").innerHTML.trim();
 
 function createCocktailPageElement() {
   let el = document.createElement("div");
@@ -87,6 +89,38 @@ function createInstructions(el, instructions) {
   }
 }
 
+function createReviewContainer() {
+  let el = document.createElement("div");
+  el.innerHTML = REVIEW_CONTAINER_TEMPLATE;
+  console.log(el)
+  return el.querySelector(".review");
+}
+
+function createReviews(el, reviews) {
+  // reviews = [Rating(), Rating(), ...]
+  // rating -> rating.stars (int), rating.text (string), rating.username (string)
+  reviews.forEach((review) => {
+    let container = createReviewContainer();
+    // review user
+    container.querySelector("h1").innerHTML = review.username;
+    // review text
+    container.querySelector(".review-text").innerHTML = review.text;
+    // review stars
+    for (let i = 0; i < 5; i++) {
+      let star = document.createElement("img");
+      star.setAttribute("draggable", "false");
+      if (i < review.stars) {
+        star.src = "./resources/css/img/VectorStarFilledBlack.svg";
+      } else {
+        star.src = "./resources/css/img/VectorStarHollowBlack.svg";
+      }
+      container.querySelector(".review-rating").append(star);
+    }
+
+    el.querySelector(".review-container").append(container);
+  })
+}
+
 
 function initializeBackEventListeners(backButton, cocktailView) {
   backButton.addEventListener("mouseover", (event) => {
@@ -140,7 +174,11 @@ function initializeRatingEventListeners(ratingInput, reviewInput, sendButton, co
   });
   sendButton.addEventListener("click", () => {
     let review = reviewInput.value;
-    cocktailView.notifyAll(new Event("REVIEW SUBMITTED", { rating, review }));
+    let data = {}
+    data.id = cocktailView.cocktail.id;
+    data.rating = rating;
+    data.review = review;
+    cocktailView.notifyAll(new Event("REVIEW SUBMITTED", data));
   })
 
 }
@@ -150,9 +188,6 @@ class CocktailView extends Observable {
   constructor(cocktail) {
     super();
     this.cocktail = cocktail;
-
-    console.log(cocktail);
-
     this.el = createCocktailPageElement();
     window.scrollTo(0, 0);
   }
@@ -173,6 +208,7 @@ class CocktailView extends Observable {
     createRating(this.el, this.cocktail);
     createIngredients(this.el, this.cocktail.recipe.mainIngredients, this.cocktail.toBeSubbed, this.cocktail.subDict);
     createInstructions(this.el, this.cocktail.steps);
+    createReviews(this.el, this.cocktail.ratings);
 
     let backButton = this.el.querySelector(".cocktail-back");
     let favButton = this.el.querySelector(".cocktail-fav");

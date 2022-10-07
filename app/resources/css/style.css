@@ -680,7 +680,7 @@ nav {
 .review-section {
     width: 100%;
     max-width: 1000px;
-    height: 1000px;
+    height: fit-content;
     background: var(--secondary);
     padding: 50px 75px;
 
@@ -930,6 +930,10 @@ nav {
 
 .login-field input::placeholder {
     color: var(--accent-lighter);
+}
+
+#login-field-username {
+    display: none;
 }
 
 .signup-button {

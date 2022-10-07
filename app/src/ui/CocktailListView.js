@@ -1,3 +1,4 @@
+import AppwriteConnector from "../appwrite/AppwriteConnector.js";
 import { Observable, Event } from "../utils/Observable.js";
 
 const COCKTAIL_LIST_VIEW_TEMPLATE_STRING = document.getElementById("cocktail-list-element-template").innerHTML.trim();
@@ -23,20 +24,29 @@ class CocktailListView extends Observable {
     constructor (cocktail) {
         super();
         
+        this.appwrite = new AppwriteConnector();
         this.cocktail = cocktail;
         this.el = createCocktailElementForView();
 
         this.el.addEventListener("click", () => this.notifyAll(new Event("COCKTAIL CLICKED", this.cocktail)));
     }
 
-    fillHtml() {
+    async fillHtml() {
 
         if (this.cocktail.isMarked) {
             // markieren, weil mindestens eine Zutat ersetzt werden muss
             this.el.classList.add("substitute");
         }
 
-        this.el.querySelector(".cocktail-image").style.background = `url(${this.cocktail.image}) center`;
+        if (this.cocktail.image == "NO_IMAGE") {
+            // TODO: Bild für nix da
+        } else if (this.cocktail.image == "STORAGE") {
+            let data = await this.appwrite.getFile(this.cocktail.id);
+            this.el.querySelector(".cocktail-image").style.background = `url(${data.href}) center`;
+        } else {
+            this.el.querySelector(".cocktail-image").style.background = `url(${this.cocktail.image}) center`;
+        }
+        
         this.el.querySelector(".cocktail-image").style.backgroundSize = "cover";
 
         this.el.querySelector(".cocktail-name").textContent = this.cocktail.name;
