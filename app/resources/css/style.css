@@ -1070,19 +1070,8 @@ nav {
     color: var(--accent-lighter);
 }
 
-.creator-tag-input-containers {
-    background: none;
-    width: 100%;
-    height: 35%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    gap: 25px;
-}
-
 .creator-tag-input-container {
-    width: 31%;
+    width: 40%;
     height: 120px;
     
     background: none;
@@ -1206,7 +1195,7 @@ nav {
 }
 
 .creator-ingredient-input {
-    width: 66%;
+    width: 60%;
     height: 75px;
     background: none;
     border: none;
@@ -1217,7 +1206,19 @@ nav {
 }
 
 .creator-ingredient-quantity-input {
-    width: 33%;
+    width: 20%;
+    height: 75px;
+    background: none;
+    border: none;
+    padding-left: 15px;
+
+    font-size: 2rem;
+    font-family: 'Josefin';
+    color: var(--accent);
+}
+
+.creator-ingredient-unit-input {
+    width: 20%;
     height: 75px;
     background: none;
     border: none;
