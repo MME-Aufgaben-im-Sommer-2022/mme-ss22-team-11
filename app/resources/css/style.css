@@ -1217,6 +1217,7 @@ nav {
 
 .creator-ingredient-quantity-input {
     width: 20%;
+    min-width: 120px;
     height: 75px;
     background: none;
     border: none;
@@ -1229,6 +1230,7 @@ nav {
 
 .creator-ingredient-unit-input {
     width: 20%;
+    min-width: 120px;
     height: 75px;
     background: none;
     border: none;
