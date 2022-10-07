@@ -18,7 +18,6 @@ export default class ListDocumentsTask extends AppwriteTask {
           this.appwrite.Query.lesser("id", input.query),
         ]);
     } catch (error) {
-      console.log(error);
       return undefined;
     }
   }

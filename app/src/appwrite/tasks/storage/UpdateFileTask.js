@@ -8,7 +8,7 @@ export default class UpdateFileTask extends AppwriteTask {
         try {
             await storage.updateFile(Config.storage, fileId, file);
         } catch (error) {
-            throw new Error("Error while trying to update a file.");
+            throw new Error("Custom Error: Error while trying to update a file." + error);
         }
     }
     

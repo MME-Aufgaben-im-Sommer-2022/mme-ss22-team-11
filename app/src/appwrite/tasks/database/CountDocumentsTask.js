@@ -5,12 +5,10 @@ export default class CountDocumentsTask extends AppwriteTask {
 
     async createResult() {
         let database = new this.appwrite.Databases(this.client, Config.database.id);
-        console.log(database);
         try {
             return await database.listDocuments(Config.database.collections.recipe.id);
         } catch (error) {
-            console.log(error);
-            throw new Error("Team11: Something went wrong");
+            throw new Error("Custom Error: Error while trying to count documents in the database." + error);
         }
     }
 }
