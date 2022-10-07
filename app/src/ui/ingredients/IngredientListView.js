@@ -48,8 +48,8 @@ class IngredientListView extends Observable {
             event.data[0].remove();
             selectedList.splice(selectedList.indexOf(ingredientView), 1);
 
-            this.notifyAll(new Event("INGREDIENT_UNSELECTED"))
-        })
+            this.notifyAll(new Event("INGREDIENT_UNSELECTED"));
+        });
 
     }
 
