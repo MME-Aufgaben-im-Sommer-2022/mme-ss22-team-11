@@ -7,11 +7,12 @@ class ReviewManager extends Observable {
     }
 
     isRatingValid(rating) {
-        console.log(rating)
-        if (0 < rating && rating <= 5) {
+        // console.log(rating);
+        // eslint-disable-next-line no-magic-numbers
+        if (rating > 0 && rating <= 5) {
             return true;
         }
-        alert("Invalid Rating")
+        alert("Invalid Rating");
         return false;
     }
 }
