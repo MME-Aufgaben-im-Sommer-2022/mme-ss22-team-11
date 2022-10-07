@@ -1,0 +1,541 @@
+:root {
+    --primary: #F7F2F4;
+    --primary-darker: #E8E3E5;
+    --secondary: #D1C5F4;
+    --accent: #9672FF;
+    --accent-lighter: #B49CFA;
+    --black: #151515;
+    --deactivated: #757575;
+    --ban: #FB838A;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    background-color: var(--primary);
+}
+
+/*
+    Top NavBar
+*/
+
+li, a {
+    font-family: 'Josefin';
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--black);
+    text-decoration: none;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 50px 10%;
+    background: var(--secondary);
+    height: 150px;
+    position: fixed;
+    z-index: 2;
+    box-shadow: 0px 0px 50px 13px rgba(132,120,169,0.25);
+}
+
+.logo {
+    background: none;
+    width: 200px;
+    height: auto;
+}
+
+nav {
+    background: none;
+    width: 75vw;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    background: none;
+}
+
+.nav-links li {
+    background: none;
+    flex-grow: 1;
+    text-align: end;
+}
+
+.nav-links li a {
+    background: none;
+    text-decoration: none;
+    padding-bottom: 0.25rem;
+    position: relative;
+    transition: all 150ms ease-in-out;
+}
+
+.nav-links li a::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 0;
+    height: 3px;
+    background-color: var(--black);
+    transition: all 150ms ease-in-out;
+}
+
+.nav-links li a:hover::before {
+    width: 100%;
+    left: 0;
+}
+
+.nav-links li a:is(:link, :active, :visited).active {
+    color: var(--accent);
+}
+
+.nav-links li a:is(:link, :active, :visited).active::before {
+    background-color: var(--accent);
+    width: 100%;
+    left: 0;
+}
+
+#profile-link {
+    flex-grow: 3;
+    float: right;
+    margin-right: 50px;
+}
+
+/*
+    Settings Nav Section
+*/
+
+#settings-nav {
+    position: fixed;
+    background-color: var(--primary-darker);
+    width: 22.5vw;
+    min-width: 310px;
+    height: calc(100vh - 150px);
+    z-index: 1;
+    box-shadow: 0px 0px 50px 13px rgba(132,120,169,0.25);
+    top: 150px;
+
+    overflow-x: hidden;
+    overflow-y: scroll;
+
+    font-family: 'Josefin';
+    font-size: 1.5rem;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 5vh;
+    padding: 50px;
+}
+
+#settings-nav h1 {
+    color: var(--black);
+    background: none;
+    padding-bottom: 2.5vh;
+}
+
+#settings-nav a {
+    color: var(--black);
+    background: none;
+    cursor: pointer;
+    width: fit-content;
+
+    transition: all 125ms ease-in-out;
+}
+
+#settings-nav a.active{
+    color: var(--accent);
+}
+
+#settings-nav a:hover {
+    color: var(--accent);
+}
+
+/*
+    Settings Frame Section
+*/
+
+.settings-frame {
+    position: absolute;
+    z-index: 0;
+    right: 0;
+    top: 150px;
+    width: 77.5vw;
+    height: calc(100% - 150px);
+    background: var(--primary);
+}
+
+/*
+    Favorites Section
+*/
+
+.cocktail-list-section {
+    width: 100%;
+    height: 100%;
+    padding: 50px 40px;
+
+    background: none;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 25px;
+}
+
+.cocktail-list-section h1 {
+    font-family: 'Josefin';
+    font-size: 3rem;
+    background: none;
+    color: var(--black);
+}
+
+.cocktail-container {
+    width: 100%;
+    /*height: calc(100% - 110px);*/
+    height: fit-content;
+
+    padding: 2.5%;
+
+    background: none;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    align-content: flex-start;
+    gap: 50px;
+}
+
+.cocktail {
+    width: 45%;
+    min-width: 450px;
+    height: 150px;
+    padding: 25px;
+    background: var(--secondary);
+    border-radius: 25px;
+
+    box-shadow: 0px 0px 50px 0px rgba(132,120,169,0.25);
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 25px;
+
+    cursor: pointer;
+    transition: all 250ms ease-in-out;
+}
+
+.cocktail:hover {
+    box-shadow: 0px 0px 50px 15px rgba(132,120,169,0.25);
+    background: var(--accent-lighter);
+
+}
+
+.cocktail-image {
+    height: 100px;
+    width: 100px;
+    background: rgba(132,120,169,0.25);
+    border-radius: 100%;
+}
+
+.cocktail-text {
+    background: none;
+    height: 90%;
+    width: 60%;
+    color: var(--black);
+    font-family: 'Josefin';
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: flex-start;
+}
+
+.cocktail-name {
+    background: none;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.cocktail-info {
+    background: none;
+    font-size: 1.1rem;
+}
+
+.cocktail-info span {
+    background: none;
+}
+
+
+
+
+
+
+/*
+    Banned Ingredients Section
+*/
+
+.banned-ingredients-section {
+    width: 100%;
+    height: 100%;
+    padding: 50px 40px;
+
+    background: none;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 25px;
+}
+
+.banned-ingredients-section h1 {
+    font-family: 'Josefin';
+    font-size: 3rem;
+    background: none;
+    color: var(--black);
+}
+
+.banned-ingredients-section .contents-container {
+    width: 100%;
+    height: 88%;
+    background: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: flex-start;
+}
+
+.banned-ingredients-container {
+    width: calc(50% - 10px);
+    height: 100%;
+    background: none;
+    
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+    gap: 10px;
+}
+
+
+.banned-ingredients-container .ingredient {
+    font-family: 'Josefin';
+    font-size: 1.5rem;
+    
+    background: var(--deactivated);
+    color: var(--primary);
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    width: fit-content;
+    padding: 7.5px 15px;
+    border-radius: 10px;
+    text-align: center;
+
+    transition: all 150ms ease-in-out;
+    cursor: pointer;
+}
+
+.banned-ingredients-container .ingredient:hover {
+    background: var(--accent-lighter);
+}
+
+.search-ingredients-container {
+    width: calc(50% - 10px);
+    border: 5px solid var(--black);
+    border-radius: 25px;
+    background: none;
+}
+
+.search-ingredients-header {
+    background: none;
+    height: 75px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.search-ingredients-header input {
+    width: 90%;
+    height: 75%;
+    background: none;
+    border: none;
+
+    font-family: 'Josefin';
+    font-size: 2rem;
+    color: var(--accent);
+}
+
+.search-ingredients-header input:focus {
+    outline: none;
+}
+
+.search-ingredients-header input::placeholder {
+    color: var(--accent-lighter);
+}
+
+.search-ingredients-header img {
+    width: 8%;
+    background: none;
+}
+
+.search-results-container {
+    width: 100%;
+    height: calc(100% - 75px);
+    padding: 10px;
+    background: none;
+
+    overflow-y: scroll;
+    overflow-x: hidden;
+    
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+    gap: 10px;
+}
+
+.search-results-container .ingredient {
+    font-family: 'Josefin';
+    font-size: 1.5rem;
+    
+    background: var(--secondary);
+    color: var(--black);
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    width: fit-content;
+    padding: 7.5px 15px;
+    border-radius: 10px;
+    text-align: center;
+
+    transition: all 150ms ease-in-out;
+    cursor: pointer;
+}
+
+.search-results-container .ingredient:hover {
+    background: var(--ban);
+}
+
+/*
+    Reviews Section
+*/
+
+.reviews-section {
+    width: 100%;
+    height: 100%;
+    padding: 50px 40px;
+
+    background: none;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 25px;
+}
+
+.reviews-section h1 {
+    font-family: 'Josefin';
+    font-size: 3rem;
+    background: none;
+    color: var(--black);   
+}
+
+.reviews-container {
+    width: 100%;
+    height: fit-content;
+    padding: 40px 0;
+
+    background: none;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 50px;
+}
+
+.review {
+    width: 100%;
+    height: fit-content;
+    background: var(--primary);
+    box-shadow: 0px 0px 25px -5px rgba(132,120,169,0.3);
+
+    padding: 25px;
+
+    border-radius: 25px;
+
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.review-content {
+    width: 90%;
+    height: fit-content;
+    background: none;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 25px;
+}
+
+.review-header {
+    background: none;
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 25px;
+}
+
+.review-header h1 {
+    background: none;
+    color: var(--black);
+    font-size: 2.25rem;
+}
+
+.review-header .rating {
+    background: none;
+}
+
+.review-header img {
+    background: none;
+    width: 30px;
+}
+
+.review-text {
+    font-family: 'Josefin';
+    font-size: 1.5rem;
+    color: var(--black);
+    background: none;
+    width: 100%;
+    height: fit-content;
+}
+
+.review-delete {
+    width: 60px;
+    height: 60px;
+    background: none;
+
+    cursor: pointer;
+}

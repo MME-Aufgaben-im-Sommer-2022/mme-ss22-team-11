@@ -1,0 +1,533 @@
+:root {
+    --primary: #F7F2F4;
+    --primary-darker: #E8E3E5;
+    --secondary: #D1C5F4;
+    --accent: #9672FF;
+    --accent-lighter: #B49CFA;
+    --black: #151515;
+    --deactivated: #757575;
+    --ban: #FB838A;
+    --light-grey: #C4C4C4;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    background-color: var(--primary);
+}
+
+/*
+    Top NavBar
+*/
+
+li, a {
+    font-family: 'Josefin';
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--black);
+    text-decoration: none;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 50px 10%;
+    background: var(--secondary);
+    height: 150px;
+    position: fixed;
+    z-index: 2;
+    box-shadow: 0px 0px 50px 13px rgba(132,120,169,0.25);
+}
+
+.logo {
+    background: none;
+    width: 200px;
+    height: auto;
+}
+
+nav {
+    background: none;
+    width: 75vw;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    background: none;
+}
+
+.nav-links li {
+    background: none;
+    flex-grow: 1;
+    text-align: end;
+}
+
+.nav-links li a {
+    background: none;
+    text-decoration: none;
+    padding-bottom: 0.25rem;
+    position: relative;
+    transition: all 150ms ease-in-out;
+}
+
+.nav-links li a::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 0;
+    height: 3px;
+    background-color: var(--black);
+    transition: all 150ms ease-in-out;
+}
+
+.nav-links li a:hover::before {
+    width: 100%;
+    left: 0;
+}
+
+.nav-links li a:is(:link, :active, :visited).active {
+    color: var(--accent);
+}
+
+.nav-links li a:is(:link, :active, :visited).active::before {
+    background-color: var(--accent);
+    width: 100%;
+    left: 0;
+}
+
+#profile-link {
+    flex-grow: 3;
+    float: right;
+    margin-right: 50px;
+}
+
+/*
+    COCKTAIL CREATOR
+*/
+
+.recipe-creator-section {
+    width: 100%;
+    height: fit-content;
+    position: relative;
+    top: 150px;
+    padding: 100px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 50px;
+    overflow: scroll;
+}
+
+
+.creator-header {
+    width: 75%;
+    min-width: 1000px;
+    height: 250px;
+    background: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 50px;
+}
+
+.image-input-label {
+    width: 200px;
+    height: 200px;
+    background: var(--light-grey);
+    border-radius: 50px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all ease-in-out 150ms;
+}
+
+.image-input-label:hover {
+    background: var(--secondary);
+}
+
+.image-input {
+    display: none;
+}
+
+.image-input-label img {
+    background: none;
+    width: 50px;
+}
+
+.creator-header-input-container {
+    width: 75%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-around;
+    background: none;
+}
+
+.name-input-container {
+    width: 65%;
+    height: 40%;
+    background: none;
+    border: solid 4px var(--black);
+    border-radius: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.name-input {
+    width: 98%;
+    height: 90%;
+    background: none;
+    border: none;
+
+    font-size: 2.5rem;
+    font-family: 'Josefin';
+    color: var(--accent);
+}
+
+.name-input:focus {
+    outline: none;
+}
+
+.name-input::placeholder {
+    color: var(--accent-lighter);
+}
+
+.creator-tag-input-containers {
+    background: none;
+    width: 100%;
+    height: 35%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+}
+
+.creator-tag-input-container {
+    width: 31%;
+    height: 120px;
+    
+    background: none;
+    border: solid 4px var(--black);
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.creator-tag-list {
+    width: calc(100% - 20px);
+    padding: 10px 0;
+    border-radius: 8px;
+    background: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    overflow: scroll;
+}
+
+.creator-tag {
+    width: 100%;
+    padding: 10px;
+    border-radius: 7px;
+    background: var(--secondary);
+    
+    color: var(--black);
+    text-align: center;
+    font-family: 'Josefin';
+    font-size: 1.5rem;
+    
+    cursor: pointer;
+    transition: all ease-in-out 150ms;
+}
+
+.creator-tag:hover {
+    background: var(--accent);
+}
+
+.creator-tag.selected {
+    background: var(--accent);
+    color: var(--primary);
+}
+
+.creator-cancel {
+    height: 50px;
+    align-self: flex-start;
+    cursor: pointer;
+}
+
+.creator-ing-ins-container {
+    width: 75%;
+    min-width: 1000px;
+    height: auto;
+    background: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+/*
+    INGREDIENTS
+*/
+
+.creator-ingredients-container {
+    width: 45%;
+    height: 100%;
+    background: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 25px;
+}
+
+.creator-ingredients-container h1 {
+    font-family: 'Josefin';
+    font-size: 2.5rem;
+    color: var(--black);
+    background: none;
+}
+
+.creator-ingredient-input-container {
+    width: 100%;
+    height: 75px;
+    background: none;
+    border: solid 4px var(--black);
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    overflow: hidden;
+
+    transition: all ease-in-out 250ms;
+}
+
+.creator-ingredient-input-container.extend {
+    height: 200px;
+    border-color: var(--accent);
+}
+
+.creator-ingredient-input-container.focus {
+    border-color: var(--accent);
+}
+
+.creator-ingredient-input-header {
+    width: 95%;
+    height: auto;
+    background: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.creator-ingredient-input {
+    width: 66%;
+    height: 75px;
+    background: none;
+    border: none;
+
+    font-size: 2rem;
+    font-family: 'Josefin';
+    color: var(--accent);
+}
+
+.creator-ingredient-quantity-input {
+    width: 33%;
+    height: 75px;
+    background: none;
+    border: none;
+    padding-left: 15px;
+
+    font-size: 2rem;
+    font-family: 'Josefin';
+    color: var(--accent);
+}
+
+.creator-ingredient-input-header input:focus {
+    outline: none;
+}
+
+.creator-ingredient-input-header input::placeholder {
+    color: var(--accent-lighter);
+}
+
+.creator-ingredient-input-results {
+    width: 100%;
+    padding: 0 10px;
+    border-radius: 15px;
+    height: calc(300px - 5rem);
+    position: relative;
+    background: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+
+    overflow-y: scroll;
+}
+
+.creator-ingredient {
+    width: 100%;
+    padding: 10px;
+    border-radius: 7px;
+    background: var(--secondary);
+    
+    color: var(--black);
+    text-align: center;
+    font-family: 'Josefin';
+    font-size: 1.5rem;
+    
+    cursor: pointer;
+    transition: all ease-in-out 150ms;
+}
+
+.creator-ingredient:hover {
+    background: var(--accent);
+}
+
+.creator-ingredient-add {
+    width: 60px;
+    height: 60px;
+    background: none;
+    align-self: center;
+    border: 4px solid var(--black);
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all ease-in-out 150ms;
+}
+
+.creator-ingredient-add:hover {
+    background: var(--accent);
+}
+
+.creator-ingredient-add img {
+    width: 40px;
+    background: none;
+}
+
+/*
+INSTRUCTIONS
+*/
+
+.creator-instructions-container {
+    width: 45%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 25px;
+}
+
+.creator-instructions-container h1 {
+    font-family: 'Josefin';
+    font-size: 2.5rem;
+    color: var(--black);
+    background: none;
+}
+
+.creator-instructions-input-container {
+    width: 100%;
+    height: 150px;
+    padding: 10px;
+    background: none;
+    border: solid 4px var(--black);
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    
+    transition: all ease-in-out 150ms;
+}
+
+.creator-instructions-input-container.focus {
+    border: solid 4px var(--accent);
+}
+
+.creator-instructions-input {
+    width: 100%;
+    height: 100%;
+    background: none;
+    border: none;
+    
+    font-size: 2rem;
+    font-family: 'Josefin';
+    color: var(--accent);
+    
+    caret-color: var(--black);
+    resize: none;
+}
+
+.creator-instructions-input:focus {
+    outline: none;
+}
+
+.creator-instructions-input::placeholder {
+    color: var(--accent-lighter);
+}
+
+.creator-instructions-add {
+    width: 60px;
+    height: 60px;
+    background: none;
+    align-self: center;
+    border: 4px solid var(--black);
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all ease-in-out 150ms;
+}
+
+
+.creator-instructions-add:hover {
+    background: var(--accent);
+}
+
+.creator-instructions-add img {
+    width: 40px;
+    background: none;
+}
+
+
+.submit-button {
+    border: none;
+    border: 4px solid var(--accent);
+    background: none;
+    padding: 15px;
+    border-radius: 15px;
+    
+    font-family: 'Josefin';
+    font-size: 2rem;
+    color: var(--accent);
+
+    cursor: pointer;
+    transition: all ease-in-out 150ms;
+}
+
+.submit-button:hover {
+    background: var(--accent);
+    color: var(--primary);
+}

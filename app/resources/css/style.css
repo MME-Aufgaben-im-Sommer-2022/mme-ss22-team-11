@@ -1,0 +1,1420 @@
+:root {
+    --primary: #F7F2F4;
+    --primary-darker: #E8E3E5;
+    --secondary: #D1C5F4;
+    --accent: #9672FF;
+    --accent-lighter: #B49CFA;
+    --black: #151515;
+    --light-grey: #C4C4C4;
+    --light-orange: #FFDA80;
+    --light-orange-darker: #E6C573;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    background-color: var(--primary);
+}
+
+/*
+    Top NavBar
+*/
+
+li, a {
+    font-family: 'Josefin';
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--black);
+    text-decoration: none;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 50px 10%;
+    background: var(--secondary);
+    height: 150px;
+    position: fixed;
+    z-index: 2;
+    box-shadow: 0px 0px 50px 13px rgba(132,120,169,0.25);
+}
+
+.logo {
+    background: none;
+    width: 200px;
+    height: auto;
+}
+
+nav {
+    background: none;
+    width: 75vw;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    background: none;
+}
+
+.nav-links li {
+    background: none;
+    flex-grow: 1;
+    text-align: end;
+}
+
+.nav-links li a {
+    background: none;
+    text-decoration: none;
+    padding-bottom: 0.25rem;
+    position: relative;
+    transition: all 150ms ease-in-out;
+}
+
+.nav-links li a::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 0;
+    height: 3px;
+    background-color: var(--black);
+    transition: all 150ms ease-in-out;
+}
+
+.nav-links li a:hover::before {
+    width: 100%;
+    left: 0;
+}
+
+.nav-links li a:is(:link, :active, :visited).active {
+    color: var(--accent);
+}
+
+.nav-links li a:is(:link, :active, :visited).active::before {
+    background-color: var(--accent);
+    width: 100%;
+    left: 0;
+}
+
+#profile-link {
+    flex-grow: 3;
+    float: right;
+    margin-right: 50px;
+}
+
+/*
+    Filter Section
+*/
+
+.divider {
+    width: 75%;
+    height: 4px;
+    position: relative;
+    align-self: center;
+    background: var(--black);
+}
+
+#filter {
+    position: fixed;
+    background-color: var(--primary-darker);
+    width: 22.5vw;
+    height: calc(100vh - 150px);
+    z-index: 1;
+    box-shadow: 0px 0px 50px 13px rgba(132,120,169,0.25);
+    top: 150px;
+
+    overflow-x: hidden;
+    overflow-y: scroll;
+
+    font-family: 'Josefin';
+    font-size: 1.5rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 3vh;
+    padding: 50px 25px;
+
+
+
+}
+
+.filter-header {
+    height: 50px;
+    width: 100%;
+    background: none;
+}
+
+.filter-header h1 {
+    text-align: center;
+    margin: auto;
+    background: none;
+}
+
+.filter-header img {
+    background: none;
+    height: 30px;
+    width: auto;
+    position: absolute;
+    top: 50px;
+    right: 25px;
+    transition: all 250ms ease-in-out;
+    cursor: pointer;
+}
+
+.filter-header .hidden {
+    opacity: 0;
+}
+
+.filter-header .hidden:hover{
+    opacity: 1;
+}
+
+.ingredients-section {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: inherit;
+    background: none;
+    overflow: visible;
+    height: auto;
+}
+
+.ingredients-section h1 {
+    margin: auto;
+    background: none;
+    text-align: center;
+    font-size: 1.75rem;
+    word-wrap: normal;
+    width: 80%;
+}
+
+.ingredient-input-container {
+    background: none;
+    align-self: center;
+    width: 80%;
+    height: 45px;
+    border: 4px solid var(--black);
+    
+    padding: 7.5px 15px;
+    border-radius: 10px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+
+    transition: all 250ms ease-in-out;
+}
+
+.ingredients-section .ingredient-input-header {
+    width: 100%;
+    height: 40px;
+    background: none;
+    position: relative;
+    top: -5px;
+
+    display: flex;
+    flex-direction: row;;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ingredients-section .ingredient-input {
+    cursor: pointer;
+    font-family: 'Josefin';
+    color: var(--accent);
+    font-size: 1.3rem;
+    margin-left: -10px;
+    position: relative;
+    top: 2.5px;
+    width: 90%;
+    height: 150%;
+    background: none;
+    border: none;
+    caret-color: var(--black);
+}
+
+.ingredients-section .ingredient-input:hover {
+    cursor: text;
+}
+
+.ingredients-section .ingredient-input:focus {
+    outline: none;
+}
+
+.ingredients-section .ingredient-input::placeholder {
+    color: var(--accent-lighter);
+}
+
+.ingredients-section .ingredient-search {
+    background: none;
+    position: relative;
+    right: -10px;
+    height: 28px;
+    width: auto;
+    transition: all 250ms ease-in-out;
+    cursor: pointer;
+}
+
+.ingredients-section .ingredient-input-container.extend {
+    height: 25vh;
+    border-color: var(--accent);
+}
+
+.ingredients-section .ingredient-input-container.focus {
+    border-color: var(--accent);
+}
+
+.ingredients-section .ingredient-search-results {
+    position: relative;
+    bottom: -7px;
+    width: 105%;
+    height: inherit;
+    
+    border-radius: 7px;
+    
+    background: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.ingredient-search-results .ingredient {
+    width: 100%;
+    background: var(--secondary);
+    color: var(--black);
+    text-align: center;
+}
+
+.ingredients-container {
+    background: none;
+    height: fit-content;
+    width: 80%;
+    align-self: center;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+    gap: 10px;
+}
+
+.ingredient {
+    background: var(--accent);
+    color: var(--primary);
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    width: fit-content;
+    padding: 7.5px 15px;
+    border-radius: 10px;
+    text-align: center;
+
+    transition: all 150ms ease-in-out;
+    cursor: pointer;
+}
+
+.ingredient:hover {
+    background: var(--accent-lighter);
+}
+
+/*
+    Cocktail List Section
+*/
+
+.cocktails {
+    position: absolute;
+    z-index: 0;
+    right: 0;
+    top: 150px;
+    width: 77.5vw;
+    height: calc(100% - 150px);
+    background: var(--primary);
+
+
+
+}
+
+.search-bar-container {
+    width: fit-content;
+    height: 60px;
+    position: relative;
+
+    top: 30px;
+    left: calc(2.5% + 25px);
+    
+    background: none;
+
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+}
+
+.search-bar {
+    width: calc(100% - 60px - 25px);
+    background: none;
+    border: 4px solid var(--black);
+    border-radius: 50px;
+
+    padding: 5px 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.search-bar-input {
+    background: none;
+    font-family: 'Josefin';
+    font-size: 2rem;
+    color: var(--accent);
+    border: none;
+    width: 85%;
+    overflow: visible;
+
+    position: relative;
+    left: 5px;
+    top: 2.5px;
+}
+
+.search-bar-input:focus {
+    outline: none;
+}
+
+.search-bar-input::placeholder {
+    color: var(--accent-lighter);
+}
+
+.search-bar img {
+    width: auto;
+    height: 90%;
+    background: none;
+    cursor: pointer;
+}
+
+.search-fav {
+    width: 60px;
+    height: 60px;
+    border: 4px solid var(--black);
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.search-fav img {
+    height: 35px;
+    width: 35px;
+    background: none;
+}
+
+.cocktail-container {
+    width: 100%;
+    /*height: calc(100% - 110px);*/
+    height: fit-content;
+    position: relative;
+    top: 50px;
+    left: 0;
+
+    padding: 2.5%;
+
+    background: none;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    align-content: flex-start;
+    gap: 50px;
+}
+
+.cocktail {
+    width: 45%;
+    min-width: 450px;
+    height: 150px;
+    padding: 25px;
+    background: var(--secondary);
+    border-radius: 25px;
+
+    box-shadow: 0px 0px 50px 0px rgba(132,120,169,0.25);
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 25px;
+
+    cursor: pointer;
+    transition: all 250ms ease-in-out;
+}
+
+.cocktail:hover {
+    box-shadow: 0px 0px 50px 15px rgba(132,120,169,0.25);
+    background: var(--accent-lighter);
+
+}
+
+.cocktail.substitute {
+    background: var(--light-orange);
+}
+
+.cocktail.substitute:hover {
+    background: var(--light-orange-darker);
+}
+
+.cocktail-image {
+    height: 100px;
+    width: 100px;
+    background: rgba(132,120,169,0.25);
+    border-radius: 100%;
+}
+
+.cocktail-text {
+    background: none;
+    height: 90%;
+    width: 60%;
+    color: var(--black);
+    font-family: 'Josefin';
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: flex-start;
+}
+
+.cocktail-name {
+    background: none;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.cocktail-info {
+    background: none;
+    font-size: 1.1rem;
+}
+
+.cocktail-info span {
+    background: none;
+}
+
+.new-recipe-fab {
+    position: fixed;
+    width: 75px;
+    height: 75px;
+    padding: 5px;
+    bottom: 50px;
+    right: 50px;
+    background: var(--primary);
+    border: 4px solid var(--accent);
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0px 0px 25px 5px rgba(132,120,169,0.4);
+
+    transition: all 150ms ease-in-out;
+}
+
+.new-recipe-fab:hover {
+    background: var(--accent);
+}
+
+.new-recipe-fab img {
+    background: none;
+    width: 50px;
+    height: 50px;
+}
+
+
+/*
+    Cocktail section
+*/
+
+.cocktail-section {
+    width: 65vw;
+    position: relative;
+    top: 150px;
+    margin: 0 auto;
+    padding-top: 50px;
+    
+    background: none;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 30px;
+}
+
+.cocktail-section .cocktail-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    height: fit-content;
+    gap: 25px;
+
+    background: none;
+}
+
+.cocktail-section .cocktail-image {
+    background: #151515;
+    width: 200px;
+    height: 200px;
+    border-radius: 50px;
+}
+
+.cocktail-section .cocktail-info {
+    width: 50%;
+    height: 100%;
+    background: none;
+    font-family: 'Josefin';
+    color: var(--black);
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.cocktail-section .cocktail-info .tags {
+    font-size: 1.25rem;
+    background: none;
+}
+
+.cocktail-section .cocktail-info .name {
+    font-size: 3.5rem;
+    font-weight: 700;
+    background: none;
+}
+
+.cocktail-section .cocktail-info img {
+    width: 30px;
+    background: none;
+}
+
+.cocktail-section .cocktail-back {
+    background: none;
+    height: 50px;
+    cursor: pointer;
+}
+
+.cocktail-section .cocktail-fav {
+    background: none;
+    height: 50px;
+    cursor: pointer;
+}
+
+.cocktail-section .ing-ins-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-start;
+    padding: 25px 0;
+    width: 100%;
+    height: auto;
+    font-family: 'Josefin';
+
+    
+    background: none;
+}
+
+.cocktail-section .ingredients-container {
+    width: 40%;
+    background: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-self: flex-start;
+}
+
+.cocktail-section h1 {
+    font-size: 2.5rem;
+    background: none;
+}
+
+.cocktail-section .ingredients {
+    margin-left: 50px;
+    background: none;
+}
+
+.cocktail-section .ingredients li {
+    background: none;
+    padding: 5px 0;
+}
+
+.cocktail-section .instructions-container {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    background: none;
+    align-self: flex-start;
+}
+
+.cocktail-section .instructions {
+    margin-left: 50px;
+    padding-top: 15px;
+    list-style: decimal;
+    background: none;
+}
+
+.cocktail-section .instructions li {
+    background: none;
+    padding: 10px 0;
+}
+
+.review-section {
+    width: 100%;
+    max-width: 1000px;
+    height: fit-content;
+    background: var(--secondary);
+    padding: 50px 75px;
+
+    border-radius: 25px 25px 0 0;
+    box-shadow: 0px 0px 50px 13px rgba(132,120,169,0.15);
+
+    z-index: 1;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 50px;
+}
+
+.review-section h1 {
+    background: none;
+    align-self: flex-start;
+    font-family: 'Josefin';
+}
+
+.review-input-container {
+    width: 100%;
+    height: 150px;
+    padding: 15px;
+
+    background: var(--primary);
+    border: 4px var(--black) solid;
+    border-radius: 25px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 7.5px;
+}
+
+.rating-input {
+    user-select: none;
+}
+
+.rating-input [type=radio] {
+    display: none;
+    opacity: 0;
+}
+
+.rating-input [type=radio] + img {
+    cursor: pointer;
+    width: 30px;
+
+}
+
+.review-text-container {
+    width: 100%;
+    height: 75px;
+    background: none;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.review-input {
+    width: calc(100% - 35px - 15px);
+    height: 100%;
+
+    color: var(--accent);
+    border: none;
+    background: none;
+
+    caret-color: var(--black);
+
+    font-family: 'Josefin';
+    font-size: 1.5rem;
+    resize: none;
+}
+
+.review-input:focus {
+    outline: none;
+}
+
+.review-input::placeholder {
+    color: var(--accent-lighter);
+}
+
+.send-icon {
+    width: 35px;
+    background: none;
+    align-self: flex-end;
+    cursor: pointer;
+}
+
+.review-container {
+    background: none;
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 25px;
+}
+
+.review {
+    width: 100%;
+    height: 150px;
+    /*
+    height: fit-content;
+    */
+
+    background: none;
+    font-family: 'Josefin';
+    color: var(--black);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 25px;
+}
+
+.review-header {
+    width: 100%;
+    height: 2.5rem;
+    
+    background: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+    gap: 25px;
+}
+
+.review-header h1 {
+    font-weight: 400;
+    font-size: 2.5rem;
+    background: none;
+}
+
+.review-rating {
+    width: fit-content;
+    height: fit-content;
+    background: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 2.5px;
+}
+
+.review-rating img {
+    width: 25px;
+    background: none;
+}
+
+.review-text {
+    font-size: 1.25rem;
+    background: none;
+}
+
+
+/*
+    Login Section
+*/
+
+.login-section {
+    width: 100%;
+    height: calc(100vh - 150px);
+    position: fixed;
+    top: 150px;
+    z-index: 2;
+
+    background: none;
+    backdrop-filter: blur(3px) saturate(100%) brightness(95%);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+}
+
+.login-container {
+    width: 50%;
+    min-width: 800px;
+    height: 95%;
+    background: var(--primary);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 25px;
+    border-radius: 25px;
+    cursor: default;
+
+    box-shadow: 0px 0px 40px 13px rgba(132,120,169,0.25);
+}
+
+.login-icon {
+    width: 75px;
+    background: none;
+    height: auto;
+}
+
+.login-field {
+    width: 75%;
+    height: 13%;
+    background: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+
+    font-family: 'Josefin';
+    color: var(--black);
+}
+
+.login-field p {
+    margin-left: 9%;
+    background: none;
+    font-size: 1.5rem;
+}
+
+.login-field input {
+    width: 90%;
+    height: 70%;
+    min-height: 50px;
+    align-self: center;
+    padding-left: 15px;
+    background: none;
+    border: 4px var(--black) solid;
+    border-radius: 100px;
+    font-family: 'Inter';
+    font-size: 1.5rem;
+    font-weight: 200;
+    color: var(--accent);
+
+    transition: all 150ms ease-in-out;
+}
+
+.login-field input:focus {
+    outline: none;
+    border: 4px var(--accent) solid;
+}
+
+.login-field input::placeholder {
+    color: var(--accent-lighter);
+}
+
+#login-field-username {
+    display: none;
+}
+
+.signup-button {
+    width: 125px;
+    height: 50px;
+    font-family: 'Josefin';
+    font-size: 1.25rem;
+    color: var(--primary);
+    border-radius: 25px;
+    background: var(--accent);
+    border: none;
+    cursor: pointer;
+
+    transition: all 150ms ease-in-out;
+}
+
+.signup-button:hover {
+    color: var(--accent);
+    background: none;
+    border: 4px solid var(--accent);
+}
+
+.login-question-container {
+    width: 75%;
+    height: auto;
+    background: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.login-question {
+    color: var(--black);
+    font-family: 'Josefin';
+    font-size: 1.25rem;
+    background: none;
+}
+
+.login-link {
+    background: none;
+    color: var(--black);
+    font-family: 'Josefin';
+    font-size: 1.25rem;
+    text-decoration: underline;
+    cursor: pointer;
+
+    transition: all 150ms ease-in-out;
+}
+
+.login-link:hover {
+    color: var(--accent);
+}
+
+/*
+    COCKTAIL CREATOR
+*/
+
+.recipe-creator-section {
+    width: 100%;
+    height: fit-content;
+    position: relative;
+    top: 150px;
+    padding: 100px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 50px;
+    overflow: scroll;
+}
+
+
+.creator-header {
+    width: 75%;
+    min-width: 1000px;
+    height: 250px;
+    background: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 50px;
+}
+
+.image-input-label {
+    width: 200px;
+    height: 200px;
+    background: var(--light-grey);
+    border-radius: 50px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all ease-in-out 150ms;
+}
+
+.image-input-label:hover {
+    background: var(--secondary);
+}
+
+.image-input {
+    display: none;
+}
+
+.image-input-label img {
+    background: none;
+    width: 50px;
+}
+
+.creator-header-input-container {
+    width: 75%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-around;
+    background: none;
+}
+
+.name-input-container {
+    width: 65%;
+    height: 40%;
+    background: none;
+    border: solid 4px var(--black);
+    border-radius: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.name-input {
+    width: 98%;
+    height: 90%;
+    background: none;
+    border: none;
+
+    font-size: 2.5rem;
+    font-family: 'Josefin';
+    color: var(--accent);
+}
+
+.name-input:focus {
+    outline: none;
+}
+
+.name-input::placeholder {
+    color: var(--accent-lighter);
+}
+
+.creator-tag-input-container {
+    width: 40%;
+    height: 120px;
+    
+    background: none;
+    border: solid 4px var(--black);
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.creator-tag-list {
+    width: calc(100% - 20px);
+    padding: 10px 0;
+    border-radius: 8px;
+    background: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.creator-tag {
+    width: 100%;
+    padding: 10px;
+    border-radius: 7px;
+    background: var(--secondary);
+    
+    color: var(--black);
+    text-align: center;
+    font-family: 'Josefin';
+    font-size: 1.5rem;
+    
+    cursor: pointer;
+    transition: all ease-in-out 150ms;
+}
+
+.creator-tag:hover {
+    background: var(--accent);
+}
+
+.creator-tag.selected {
+    background: var(--accent);
+    color: var(--primary);
+}
+
+.creator-cancel {
+    height: 50px;
+    align-self: flex-start;
+    cursor: pointer;
+}
+
+.creator-ing-ins-container {
+    width: 75%;
+    min-width: 1000px;
+    height: auto;
+    background: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+/*
+    INGREDIENTS
+*/
+
+.creator-ingredients-container {
+    width: 45%;
+    height: 100%;
+    background: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 25px;
+}
+
+.creator-ingredients-container h1 {
+    font-family: 'Josefin';
+    font-size: 2.5rem;
+    color: var(--black);
+    background: none;
+}
+
+.creator-ingredient-input-container {
+    width: 100%;
+    height: 75px;
+    background: none;
+    border: solid 4px var(--black);
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    overflow: hidden;
+
+    transition: all ease-in-out 250ms;
+}
+
+.creator-ingredient-input-container.extend {
+    height: 200px;
+    border-color: var(--accent);
+}
+
+.creator-ingredient-input-container.focus {
+    border-color: var(--accent);
+}
+
+.creator-ingredient-input-header {
+    width: 95%;
+    height: auto;
+    background: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.creator-ingredient-input {
+    width: 60%;
+    height: 75px;
+    background: none;
+    border: none;
+
+    font-size: 2rem;
+    font-family: 'Josefin';
+    color: var(--accent);
+}
+
+.creator-ingredient-quantity-input {
+    width: 20%;
+    min-width: 120px;
+    height: 75px;
+    background: none;
+    border: none;
+    padding-left: 15px;
+
+    font-size: 2rem;
+    font-family: 'Josefin';
+    color: var(--accent);
+}
+
+.creator-ingredient-unit-input {
+    width: 20%;
+    min-width: 120px;
+    height: 75px;
+    background: none;
+    border: none;
+    padding-left: 15px;
+
+    font-size: 2rem;
+    font-family: 'Josefin';
+    color: var(--accent);
+}
+
+.creator-ingredient-input-header input:focus {
+    outline: none;
+}
+
+.creator-ingredient-input-header input::placeholder {
+    color: var(--accent-lighter);
+}
+
+.creator-ingredient-input-results {
+    width: 100%;
+    padding: 0 10px;
+    border-radius: 15px;
+    height: calc(300px - 5rem);
+    position: relative;
+    background: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+
+    overflow-y: scroll;
+}
+
+.creator-ingredient {
+    width: 100%;
+    padding: 10px;
+    border-radius: 7px;
+    background: var(--secondary);
+    
+    color: var(--black);
+    text-align: center;
+    font-family: 'Josefin';
+    font-size: 1.5rem;
+    
+    cursor: pointer;
+    transition: all ease-in-out 150ms;
+}
+
+.creator-ingredient:hover {
+    background: var(--accent);
+}
+
+.creator-ingredient-add {
+    width: 60px;
+    height: 60px;
+    background: none;
+    align-self: center;
+    border: 4px solid var(--black);
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all ease-in-out 150ms;
+}
+
+.creator-ingredient-add:hover {
+    background: var(--accent);
+}
+
+.creator-ingredient-add img {
+    width: 40px;
+    background: none;
+}
+
+/*
+INSTRUCTIONS
+*/
+
+.creator-instructions-container {
+    width: 45%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 25px;
+}
+
+.creator-instructions-container h1 {
+    font-family: 'Josefin';
+    font-size: 2.5rem;
+    color: var(--black);
+    background: none;
+}
+
+.creator-instructions-input-container {
+    width: 100%;
+    height: 150px;
+    padding: 10px;
+    background: none;
+    border: solid 4px var(--black);
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    
+    transition: all ease-in-out 150ms;
+}
+
+.creator-instructions-input-container.focus {
+    border: solid 4px var(--accent);
+}
+
+.creator-instructions-input {
+    width: 100%;
+    height: 100%;
+    background: none;
+    border: none;
+    
+    font-size: 2rem;
+    font-family: 'Josefin';
+    color: var(--accent);
+    
+    caret-color: var(--black);
+    resize: none;
+}
+
+.creator-instructions-input:focus {
+    outline: none;
+}
+
+.creator-instructions-input::placeholder {
+    color: var(--accent-lighter);
+}
+
+.creator-instructions-add {
+    width: 60px;
+    height: 60px;
+    background: none;
+    align-self: center;
+    border: 4px solid var(--black);
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all ease-in-out 150ms;
+}
+
+
+.creator-instructions-add:hover {
+    background: var(--accent);
+}
+
+.creator-instructions-add img {
+    width: 40px;
+    background: none;
+}
+
+
+.submit-button {
+    border: none;
+    border: 4px solid var(--accent);
+    background: none;
+    padding: 15px;
+    border-radius: 15px;
+    
+    font-family: 'Josefin';
+    font-size: 2rem;
+    color: var(--accent);
+
+    cursor: pointer;
+    transition: all ease-in-out 150ms;
+}
+
+.submit-button:hover {
+    background: var(--accent);
+    color: var(--primary);
+}

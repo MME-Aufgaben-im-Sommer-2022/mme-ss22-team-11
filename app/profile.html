@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VerwertBar</title>
+    <link rel="stylesheet" href="./resources/css/profile.css">
+    <link rel="stylesheet" href="./resources/css/fonts.css">
+</head>
+
+<body>
+    <header>
+        <img class="logo" src="./resources/css/img/VectorVerwertBarLogo.svg" draggable="false" alt="logo">
+        <nav>
+            <ul class="nav-links">
+                <li id="recipes-link"><a class="nav-link">Rezepte</a></li>
+                <li id="profile-link"><a class="nav-link active">Profil</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="settings-nav">
+        <h1>Profil</h1>
+        <a class="nav-link active" id="banned-ingredients">Gesperrte Zutaten</a>
+        <!-- <a class="nav-link" id="created-cocktails">Erstellte Cocktails</a> -->
+        <a class="nav-link" id="reviews">Bewertungen</a>
+    </section>
+    <section class="settings-frame">
+        
+        <!--Append settings-module here-->
+        
+    </section>
+
+   <script type="module" src="./src/profile.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/appwrite@9.0.1/dist/iife/sdk.min.js"></script>
+</body>
+
+<template id="banned-ingredients-section-template">
+    <div class="banned-ingredients-section">
+        <h1>Gesperrte Zutaten</h1>
+        <div class="contents-container">
+            <div class="banned-ingredients-container">
+                <!--Append banned ingredients here-->
+            </div>
+            <div class="search-ingredients-container">
+                <div class="search-ingredients-header">
+                    <input type="text" class="search-ingredient" placeholder="Search...">
+                    <img src="./resources/css/img/VectorSearchBig.svg" draggable="false">
+                </div>
+                <div class="search-results-container">
+                    <!--Append search results here-->
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template id="ingredient-element-template">
+    <div class="ingredient">
+        Zutat
+    </div>
+</template>
+
+<template id="reviews-section-template">
+    <div class="reviews-section">
+        <h1>Bewertungen</h1>
+        <div class="reviews-container">
+            <!--Append reviews here-->
+        </div>
+    </div>
+</template>
+
+<template id="review-template">
+    <div class="review">
+        <div class="review-content">
+            <div class="review-header">
+                <h1>Cocktail-Name</h1>
+                <div class="rating">
+                    <!--Append stars here-->
+                </div>
+            </div>
+                <p class="review-text">Bewertung</p>
+        </div>
+        <img class="review-delete" src="./resources/css/img/VectorTrashCan.svg">
+    </div>
+</template>
+
+<template id="cocktail-section-element-template">
+    <section class="cocktail-section">
+
+        <div class="cocktail-header">
+            <div class="cocktail-image"></div>
+            <div class="cocktail-info"><span class="tags"></span><span class="name">NAME</span>
+                <div class="avg-rating">
+
+                </div>
+            </div>
+            <img class="cocktail-fav" src="./resources/css/img/VectorFavHollow.svg" draggable="false">
+            <img class="cocktail-back" src="./resources/css/img/VectorBack.svg" draggable="false">
+        </div>
+
+        <div class="ing-ins-container">
+            <div class="ingredients-container">
+                <h1>Zutaten</h1>
+                <ul class="ingredients">
+
+                    <!--Append ingredients here-->
+
+                </ul>
+            </div>
+            <div class="instructions-container">
+                <h1>Zubereitung</h1>
+                <ol class="instructions">
+
+                    <!--Append instruction steps here-->
+
+                </ol>
+            </div>
+        </div>
+
+
+        <div class="review-section">
+            <h1>Bewertungen</h1>
+            <div class="review-input-container">
+                <div class="rating-input">
+                    <label for="star-1">
+                        <input type="radio" id="star-1">
+                        <img src="./resources/css/img/VectorStarHollowAccent.svg" draggable="false">
+                    </label>
+                    <label for="star-2">
+                        <input type="radio" id="star-2">
+                        <img src="./resources/css/img/VectorStarHollowAccent.svg" draggable="false">
+                    </label>
+                    <label for="star-3">
+                        <input type="radio" id="star-3">
+                        <img src="./resources/css/img/VectorStarHollowAccent.svg" draggable="false">
+                    </label>
+                    <label for="star-4">
+                        <input type="radio" id="star-4">
+                        <img src="./resources/css/img/VectorStarHollowAccent.svg" draggable="false">
+                    </label>
+                    <label for="star-5">
+                        <input type="radio" id="star-5">
+                        <img src="./resources/css/img/VectorStarHollowAccent.svg" draggable="false">
+                    </label>
+                </div>
+                <div class="review-text-container">
+                    <textarea class="review-input" rows="3" placeholder="Bewertung verfassen"></textarea>
+                    <img class="send-icon" src="./resources/css/img/VectorSendIcon.svg">
+                </div>
+            </div>
+            <div class="review-container">
+
+                <!--Append Reviews here-->
+
+                <div class="review">
+                    <div class="review-header">
+                        <h1>Anonym</h1>
+                        <div class="review-rating">
+                            <img src="./resources/css/img/VectorStarFilledBlack.svg" draggable="false">
+                            <img src="./resources/css/img/VectorStarFilledBlack.svg" draggable="false">
+                            <img src="./resources/css/img/VectorStarFilledBlack.svg" draggable="false">
+                            <img src="./resources/css/img/VectorStarFilledBlack.svg" draggable="false">
+                            <img src="./resources/css/img/VectorStarHollowBlack.svg" draggable="false">
+                        </div>
+                    </div>
+                    <p class="review-text">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+                        eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At</p>
+                </div>
+                <div class="review">
+                    <div class="review-header">
+                        <h1>Anonym</h1>
+                        <div class="review-rating">
+                            <img src="./resources/css/img/VectorStarFilledBlack.svg" draggable="false">
+                            <img src="./resources/css/img/VectorStarFilledBlack.svg" draggable="false">
+                            <img src="./resources/css/img/VectorStarFilledBlack.svg" draggable="false">
+                            <img src="./resources/css/img/VectorStarFilledBlack.svg" draggable="false">
+                            <img src="./resources/css/img/VectorStarFilledBlack.svg" draggable="false">
+                        </div>
+                    </div>
+                    <p class="review-text">Lorem ipsum dolor sit amet, consscing elitr,scing elitr,scing elitr,scing
+                        elitr,scing elitr,scing elitr,etetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+                        labore et dolore magna aliquyam erat, sed diam voluptua. At</p>
+                </div>
+                <div class="review">
+                    <div class="review-header">
+                        <h1>Anonym</h1>
+                        <div class="review-rating">
+                            <img src="./resources/css/img/VectorStarFilledBlack.svg" draggable="false">
+                            <img src="./resources/css/img/VectorStarFilledBlack.svg" draggable="false">
+                            <img src="./resources/css/img/VectorStarFilledBlack.svg" draggable="false">
+                            <img src="./resources/css/img/VectorStarHollowBlack.svg" draggable="false">
+                            <img src="./resources/css/img/VectorStarHollowBlack.svg" draggable="false">
+                        </div>
+                    </div>
+                    <p class="review-text">Lorem ipsum dolor scing elitr,scing elitr,scing elitr,sit amet, consetetur
+                        sadipscing elitr,scing elitr,scing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
+                        dolore magna aliquyam erat, sed diam voluptua. Atsit amet, consetetur sadipscing elitr,scing
+                        elitr,scing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+                        erat, sed diam voluptua</p>
+                </div>
+
+            </div>
+        </div>
+
+
+    </section>
+</template>
+
+<template id="cocktail-section-element-template">
+    <section class="cocktail-section">
+
+        <div class="cocktail-header">
+            <div class="cocktail-image"></div>
+            <div class="cocktail-info"><span class="tags"></span><span class="name">NAME</span>
+                <div class="avg-rating">
+
+                </div>
+            </div>
+            <img class="cocktail-fav" src="./resources/css/img/VectorFavHollow.svg" draggable="false">
+            <img class="cocktail-back" src="./resources/css/img/VectorBack.svg" draggable="false">
+        </div>
+
+        <div class="ing-ins-container">
+            <div class="ingredients-container">
+                <h1>Zutaten</h1>
+                <ul class="ingredients">
+
+                    <!--Append ingredients here-->
+
+                </ul>
+            </div>
+            <div class="instructions-container">
+                <h1>Zubereitung</h1>
+                <ol class="instructions">
+
+                    <!--Append instruction steps here-->
+
+                </ol>
+            </div>
+        </div>
+
+
+        <div class="review-section">
+            <h1>Bewertungen</h1>
+            <div class="review-input-container">
+                <div class="rating-input">
+                    <label for="star-1">
+                        <input type="radio" id="star-1">
+                        <img src="./resources/css/img/VectorStarHollowAccent.svg" draggable="false">
+                    </label>
+                    <label for="star-2">
+                        <input type="radio" id="star-2">
+                        <img src="./resources/css/img/VectorStarHollowAccent.svg" draggable="false">
+                    </label>
+                    <label for="star-3">
+                        <input type="radio" id="star-3">
+                        <img src="./resources/css/img/VectorStarHollowAccent.svg" draggable="false">
+                    </label>
+                    <label for="star-4">
+                        <input type="radio" id="star-4">
+                        <img src="./resources/css/img/VectorStarHollowAccent.svg" draggable="false">
+                    </label>
+                    <label for="star-5">
+                        <input type="radio" id="star-5">
+                        <img src="./resources/css/img/VectorStarHollowAccent.svg" draggable="false">
+                    </label>
+                </div>
+                <div class="review-text-container">
+                    <textarea class="review-input" rows="3" placeholder="Bewertung verfassen"></textarea>
+                    <img class="send-icon" src="./resources/css/img/VectorSendIcon.svg">
+                </div>
+            </div>
+            <div class="review-container">
+
+                <!--Append Reviews here-->
+
+            </div>
+        </div>
+
+    </section>
+</template>
+
+<template id="review-template">
+    <div class="review">
+        <div class="review-header">
+            <h1>Anonym</h1>
+            <div class="review-rating">
+                <!-- append rating stars -->
+            </div>
+        </div>
+        <p class="review-text">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+            eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At</p>
+    </div>
+</template>
+
+</html>
