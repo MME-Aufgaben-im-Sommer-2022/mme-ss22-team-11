@@ -1,223 +1,206 @@
 class Cocktail {
-
-  constructor(id, name, recipe, image, ratings, tags, description, steps,
+  constructor (id, name, recipe, image, ratings, tags, description, steps,
     author) {
-    this.id = id;
-    this.name = name;
-    this.recipe = recipe;
-    this.image = image;
-    this.toBeSubbed = [];
+    this.id = id
+    this.name = name
+    this.recipe = recipe
+    this.image = image
+    this.toBeSubbed = []
 
     if (ratings === undefined) {
-      this.ratings = [];
+      this.ratings = []
     } else {
-      this.ratings = ratings;
+      this.ratings = ratings
     }
-    this.tags = tags;
+    this.tags = tags
 
     if (description === undefined) {
-      this.description = "";
+      this.description = ''
     } else {
-      this.description = description;
+      this.description = description
     }
 
-    this.steps = steps;
-    this.author = author;
-    this.isAlcoholic = this.getIsAlcoholic();
-
+    this.steps = steps
+    this.author = author
+    this.isAlcoholic = this.getIsAlcoholic()
   }
 
-  toDBObject() {
+  toDBObject () {
+    // console.log(this.ratings, this.description);
 
-    //console.log(this.ratings, this.description);
+    const data = {}
 
-    let data = {};
+    data.name = this.name
 
-    data.name = this.name;
+    data.recipe = JSON.stringify(this.recipe)
+    data.ratings = JSON.stringify(this.ratings)
+    data.description = this.description
+    data.tags = this.tags
+    data.author = this.author
+    data.image = this.image
+    data.id = this.id
 
-    data.recipe = JSON.stringify(this.recipe);
-    data.ratings = JSON.stringify(this.ratings);
-    data.description = this.description;
-    data.tags = this.tags;
-    data.author = this.author;
-    data.image = this.image;
-    data.id = this.id;
-
-    data.steps = [];
-    for (let val of Object.values(this.steps)) {
-      data.steps.push(val);
+    data.steps = []
+    for (const val of Object.values(this.steps)) {
+      data.steps.push(val)
     }
 
-    return data;
+    return data
   }
 
-  addRating(rating) {
-    this.ratings.push(rating);
+  addRating (rating) {
+    this.ratings.push(rating)
   }
 
-  deleteRating(email) {
-    let newRatings = [];
+  deleteRating (email) {
+    const newRatings = []
     this.ratings.forEach(rating => {
       if (rating.email !== email) {
-        newRatings.push(rating);
+        newRatings.push(rating)
       }
-      this.ratings = newRatings;
-    });
+      this.ratings = newRatings
+    })
   }
 
-  getRating() {
+  getRating () {
     if (this.ratings.length === 0) {
-      return undefined;
+      return undefined
     }
 
-    let sum = 0;
-    this.ratings.forEach(rating => sum += rating.stars);
-    return sum / this.ratings.length;
-
+    let sum = 0
+    this.ratings.forEach((rating) => { sum += rating.stars })
+    return sum / this.ratings.length
   }
 
-  getIsAlcoholic() {
-
-    let alcoholic = false;
+  getIsAlcoholic () {
+    let alcoholic = false
 
     this.recipe.mainIngredients.forEach(component => {
       if (component.ingredient.alcoholic) {
-        alcoholic = true;
+        alcoholic = true
       }
-    });
+    })
 
     this.recipe.decoIngredients.forEach(component => {
       if (component.ingredient.alcoholic) {
-        alcoholic = true;
+        alcoholic = true
       }
-    });
+    })
 
-    return alcoholic;
+    return alcoholic
   }
 
   // Reste verwerten:
-  checkIfCocktailHasOnlyTheseIngredients(ingredients, withDeco, subs) {
-
+  checkIfCocktailHasOnlyTheseIngredients (ingredients, withDeco, subs) {
     // Eiswürfel ignorieren? (vielleicht mit checkbox)
-    let bool = true,
-      substitutedIngredients = [],
-      ings = [],
-      data;
+    let bool = true
+    const substitutedIngredients = []
+    const ings = []
     ingredients.forEach(ingredient => {
-      ings.push(ingredient.ingredient);
-    });
+      ings.push(ingredient.ingredient)
+    })
 
     this.recipe.mainIngredients.forEach(component => {
-
-      if (ings.indexOf(component.ingredient.displayName) === -1 && component.ingredient.displayName !== "Eiswürfel" && component.ingredient.displayName !== "Crushed Ice") {
-
-        let ingredientSubs = subs[component.ingredient.displayName],
-          foundSub = false;
+      if (ings.indexOf(component.ingredient.displayName) === -1 && component.ingredient.displayName !== 'Eiswürfel' && component.ingredient.displayName !== 'Crushed Ice') {
+        const ingredientSubs = subs[component.ingredient.displayName]
+        let foundSub = false
 
         if (ingredientSubs !== undefined) {
           ingredientSubs.forEach(sub => {
             if (ings.indexOf(sub) !== -1) {
-              foundSub = true;
-              substitutedIngredients.push(component.ingredient.displayName);
+              foundSub = true
+              substitutedIngredients.push(component.ingredient.displayName)
             }
-          });
+          })
         }
 
         // undefined, wenn die Zutat durch eine Vorhandene Zutat ersetzt werden kann
         if ((foundSub && bool) || (foundSub && bool === undefined)) {
-          bool = undefined;
+          bool = undefined
         } else {
-          bool = false;
+          bool = false
         }
       }
-
-    });
+    })
 
     if (withDeco) {
       this.recipe.decoIngredients.forEach(component => {
         if (ingredients.indexOf(component.ingredient.displayName) === -1) {
-          bool = false;
+          bool = false
         }
-      });
+      })
     }
 
-    data = {};
-    data.bool = bool;
-    data.substitutedIngredients = substitutedIngredients;
-    return data;
-
+    const data = {}
+    data.bool = bool
+    data.substitutedIngredients = substitutedIngredients
+    return data
   }
 
   // Hat der Cocktail mindestens die angegebenen Zutaten?
-  checkIfCocktailHasIngredients(ingredients, withDeco, subs) {
-
-    let bool = true,
-      lst = [],
-      substitutedIngredients = [],
-      ings = [],
-      data = {};
+  checkIfCocktailHasIngredients (ingredients, withDeco, subs) {
+    let bool = true
+    const lst = []
+    const substitutedIngredients = []
+    const ings = []
+    const data = {}
 
     this.recipe.mainIngredients.forEach(component => {
-      lst.push(component.ingredient.displayName);
-    });
+      lst.push(component.ingredient.displayName)
+    })
 
     if (withDeco) {
       this.recipe.decoIngredients.forEach(component => {
-        lst.push(component.ingredient.displayName);
-      });
+        lst.push(component.ingredient.displayName)
+      })
     }
 
     ingredients.forEach(ingredient => {
-      ings.push(ingredient.ingredient);
-    });
+      ings.push(ingredient.ingredient)
+    })
 
     ings.forEach(ingredient => {
       if (lst.indexOf(ingredient) === -1) {
-
-        let ingredientSubs = subs[ingredient],
-          foundSub = false;
+        const ingredientSubs = subs[ingredient]
+        let foundSub = false
 
         ingredientSubs.forEach(sub => {
-
           if (lst.indexOf(sub) !== -1) {
-            foundSub = true;
-            substitutedIngredients.push(ingredient);
+            foundSub = true
+            substitutedIngredients.push(ingredient)
           }
-        });
+        })
 
         // undefined, wenn die Zutat durch eine Vorhandene Zutat ersetzt werden kann
         if ((foundSub && bool) || (foundSub && bool === undefined)) {
-          bool = undefined;
+          bool = undefined
         } else {
-          bool = false;
+          bool = false
         }
       }
-    });
+    })
 
-    data.bool = bool;
-    data.substitutedIngredients = substitutedIngredients;
-    return data;
-
+    data.bool = bool
+    data.substitutedIngredients = substitutedIngredients
+    return data
   }
 
-  addComment(comment) {
-    this.comments.push(comment);
+  addComment (comment) {
+    this.comments.push(comment)
   }
 
-  getAllDisplayNames() {
-    let displayNames = [];
+  getAllDisplayNames () {
+    const displayNames = []
 
     this.recipe.mainIngredients.forEach(component => {
       // wenn gleicher displayname öfter im rezept ist
       if (displayNames.indexOf(component.ingredient.displayName) === -1) {
-        displayNames.push(component.ingredient.displayName);
+        displayNames.push(component.ingredient.displayName)
       }
-    });
+    })
 
-    return displayNames;
-
+    return displayNames
   }
-
 }
 
-export { Cocktail };
+export { Cocktail }

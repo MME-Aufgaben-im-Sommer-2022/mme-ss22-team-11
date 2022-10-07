@@ -1,57 +1,52 @@
-import CocktailListView from "./CocktailListView.js";
-import { Observable, Event } from "../utils/Observable.js";
+import CocktailListView from './CocktailListView.js'
+import { Observable, Event } from '../utils/Observable.js'
 
-const cocktailListViews = [];
+const cocktailListViews = []
 
 class ListView extends Observable {
+  add (cocktail) {
+    const cocktailListView = new CocktailListView(cocktail)
+    cocktailListView.fillHtml()
+    cocktailListView.appendTo(document.querySelector('.cocktail-container'))
 
-    constructor() {
-        super();
-    }
+    cocktailListViews.push(cocktailListView)
 
-    add(cocktail) {
-        let cocktailListView = new CocktailListView(cocktail);
-        cocktailListView.fillHtml();
-        cocktailListView.appendTo(document.querySelector(".cocktail-container"));
+    cocktailListView.addEventListener('COCKTAIL CLICKED', (event) => this.notifyAll(new Event('COCKTAIL CLICKED', event.data)))
+  }
 
-        cocktailListViews.push(cocktailListView);
+  removeAllCocktails () {
+    cocktailListViews.forEach((view) => view.remove())
+    cocktailListViews.splice(0, cocktailListViews.length)
+  }
 
-        cocktailListView.addEventListener("COCKTAIL CLICKED", (event) => this.notifyAll(new Event("COCKTAIL CLICKED", event.data)));
-    }
+  addAllCocktails (cocktails, markedIDs, substitutedIngredients, substitutes) {
+    cocktails.forEach(cocktail => {
+      if (markedIDs.indexOf(cocktail.id) === -1) {
+        cocktail.isMarked = false
+      } else {
+        cocktail.isMarked = true
+      }
 
-    removeAllCocktails() {
-        cocktailListViews.forEach((view) => view.remove());
-        cocktailListViews.splice(0, cocktailListViews.length);
-    }
+      cocktail.toBeSubbed = []
+      cocktail.subDict = {}
 
-    addAllCocktails(cocktails, markedIDs, substitutedIngredients, substitutes) {
-        cocktails.forEach(cocktail => {
-            if (markedIDs.indexOf(cocktail.id) === -1) {
-                cocktail.isMarked = false;
-            } else {
-                cocktail.isMarked = true;
-            }
+      if (substitutedIngredients !== undefined) {
+        cocktail.recipe.mainIngredients.forEach(component => {
+          if (substitutedIngredients.indexOf(component.ingredient.displayName) !== -1) {
+            cocktail.toBeSubbed.push(component.ingredient.displayName)
+            cocktail.subDict[component.ingredient.displayName] = substitutes[component.ingredient.displayName]
+          }
+        })
+      }
 
-            cocktail.toBeSubbed = [];
-            cocktail.subDict = {};
+      this.add(cocktail)
+    })
+  }
 
-            if (substitutedIngredients !== undefined) {
-                cocktail.recipe.mainIngredients.forEach(component => {
-                    if (substitutedIngredients.indexOf(component.ingredient.displayName) !== -1) {
-                        cocktail.toBeSubbed.push(component.ingredient.displayName);
-                        cocktail.subDict[component.ingredient.displayName] = substitutes[component.ingredient.displayName];
-                    }
-                });
-            }
-
-            this.add(cocktail);
-        });
-    }
-
-    refreshCocktails(cocktails, markedIDs, substitutedIngredients, substitutes) {
-        this.removeAllCocktails();
-        this.addAllCocktails(cocktails, markedIDs, substitutedIngredients, substitutes);
-    }
+  refreshCocktails (cocktails, markedIDs, substitutedIngredients, substitutes) {
+    this.removeAllCocktails()
+    this.addAllCocktails(cocktails, markedIDs, substitutedIngredients, substitutes)
+  }
 }
 
-export { ListView };
+export { ListView }

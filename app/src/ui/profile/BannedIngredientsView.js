@@ -1,87 +1,80 @@
-import { Observable, Event } from "../../utils/Observable.js";
-import IngredientView from "../ingredients/IngredientView.js";
+import { Observable, Event } from '../../utils/Observable.js'
+import IngredientView from '../ingredients/IngredientView.js'
 
-const PROFILE_BANNED_INGS_TEMPLATE = document.getElementById("banned-ingredients-section-template")
-  .innerHTML.trim();
+const PROFILE_BANNED_INGS_TEMPLATE = document.getElementById('banned-ingredients-section-template')
+  .innerHTML.trim()
 
-const BANNED_INGS_CONTAINER = document.querySelector(".banned-ingredients-container"),
-    SEARCH_RESULTS_CONTAINER = document.querySelector(".search-results-container"),
-    SETTINGS_FRAME = document.querySelector(".settings-frame"),
-    searchResultViewList = [],
-    bannedIngsViewList = [];
+const SETTINGS_FRAME = document.querySelector('.settings-frame')
+const searchResultViewList = []
+const bannedIngsViewList = []
 
-function createProfileBannedIngsElement() {
-  let el = document.createElement("div");
-  el.innerHTML = PROFILE_BANNED_INGS_TEMPLATE;
-  return el.querySelector(".banned-ingredients-section");
+function createProfileBannedIngsElement () {
+  const el = document.createElement('div')
+  el.innerHTML = PROFILE_BANNED_INGS_TEMPLATE
+  return el.querySelector('.banned-ingredients-section')
 }
 
 class BannedIngredientsView extends Observable {
+  constructor (bannedIngredients) {
+    super()
+    this.el = createProfileBannedIngsElement()
+    this.bannedIngsContainer = this.el.querySelector('.banned-ingredients-container')
+    this.searchResultsContainer = this.el.querySelector('.search-results-container')
+    this.bannedIngredients = []
 
-    constructor(bannedIngredients) {
-        super();
-        this.el = createProfileBannedIngsElement();
-        this.bannedIngsContainer = this.el.querySelector(".banned-ingredients-container");
-        this.searchResultsContainer = this.el.querySelector(".search-results-container");
-        this.bannedIngredients = [];
+    bannedIngredients.forEach(ingredient => {
+      this.addToBannedIngs(ingredient)
+    })
+  }
 
-        bannedIngredients.forEach(ingredient => {
-            this.addToBannedIngs(ingredient);
-        });
+  showBannedIngredients () {
+    SETTINGS_FRAME.innerHTML = ''
+    SETTINGS_FRAME.append(this.el)
+  }
 
-        //this.settingsFrame = this.el.querySelector(".settings-frame");
-    }
+  addToSearchResults (ingredient) {
+    const ingredientView = new IngredientView(ingredient)
+    ingredientView.appendTo(this.searchResultsContainer)
+    searchResultViewList.push(ingredientView)
 
-    showBannedIngredients() {
-        SETTINGS_FRAME.innerHTML = "";
-        SETTINGS_FRAME.append(this.el);
-    }
+    ingredientView.addEventListener('INGREDIENT CLICKED', (event) => {
+      if (this.bannedIngredients.indexOf(ingredient) === -1) {
+        this.addToBannedIngs(ingredient)
+        this.notifyAll(new Event('INGREDIENT_SELECTED', ingredient))
+      }
+    })
+  }
 
-    addToSearchResults(ingredient) {
-        let ingredientView = new IngredientView(ingredient);
-        ingredientView.appendTo(this.searchResultsContainer);
-        searchResultViewList.push(ingredientView);
+  addAllSearchResults (ingredients) {
+    ingredients.forEach(ingredient => this.addToSearchResults(ingredient))
+  }
 
-        ingredientView.addEventListener("INGREDIENT CLICKED", (event) => {
-            if (this.bannedIngredients.indexOf(ingredient) == -1) {
-                this.addToBannedIngs(ingredient)
-                this.notifyAll(new Event("INGREDIENT_SELECTED", ingredient));
-            }
-        })
-    }
+  removeAllSearchResults () {
+    searchResultViewList.forEach((view) => view.remove())
+    searchResultViewList.splice(0, searchResultViewList.length)
+  }
 
-    addAllSearchResults(ingredients) {
-        ingredients.forEach(ingredient => this.addToSearchResults(ingredient));
-    }
+  refreshSearchResults (ingredients) {
+    const sortedIngredients = ingredients.sort((a, b) => a.localeCompare(b))
+    this.removeAllSearchResults()
+    this.addAllSearchResults(sortedIngredients)
+  }
 
-    
-    removeAllSearchResults() {
-        searchResultViewList.forEach((view) => view.remove());
-        searchResultViewList.splice(0, searchResultViewList.length);
-    }
-    
-    refreshSearchResults(ingredients) {
-        let sortedIngredients = ingredients.sort((a, b) => a.localeCompare(b));
-        this.removeAllSearchResults();
-        this.addAllSearchResults(sortedIngredients);
-    }
-    
-    addToBannedIngs(ingredient) {
-        this.bannedIngredients.push(ingredient);
-        let ingredientView = new IngredientView(ingredient);
-        ingredientView.appendTo(this.bannedIngsContainer);
-        bannedIngsViewList.push(ingredientView);
+  addToBannedIngs (ingredient) {
+    this.bannedIngredients.push(ingredient)
+    const ingredientView = new IngredientView(ingredient)
+    ingredientView.appendTo(this.bannedIngsContainer)
+    bannedIngsViewList.push(ingredientView)
 
-        ingredientView.addEventListener("INGREDIENT CLICKED", () => {
-            ingredientView.remove();
-            this.notifyAll(new Event("INGREDIENT_UNSELECTED", ingredient));
-        })
-    }
+    ingredientView.addEventListener('INGREDIENT CLICKED', () => {
+      ingredientView.remove()
+      this.notifyAll(new Event('INGREDIENT_UNSELECTED', ingredient))
+    })
+  }
 
-    getAllBannedIngs() {
-        return bannedIngsViewList;
-    }
-
+  getAllBannedIngs () {
+    return bannedIngsViewList
+  }
 }
 
-export { BannedIngredientsView };
+export { BannedIngredientsView }
