@@ -40,6 +40,19 @@ function deleteFavorite(cocktailId) {
   user.deleteCocktailFromFavorites(cocktailId);
 }
 
+// Load Favorites in Profile UI
+
+function fillFavorites(favorites) {
+  favorites.array.forEach(cocktail => {
+    let favoriteList = new CocktailListView(cocktail);
+    favoriteList.appendTo(FAVORITE_CONTAINER);
+  });
+}
+
+function showFavorites() {
+  let favorites = getFavorites();
+  fillFavorites(favorites);
+}
 // Add Blacklist Ingredient & Delete Blacklist Ingredient
 
 function addBlacklistIngredient(displayName) {
@@ -60,28 +73,21 @@ function deleteReview (cocktailID) {
   user.deleteRating();
 }
 
-// Load Favorites in Profile UI
+// User created Cocktails
 
-function fillFavorites(favorites) {
-  favorites.array.forEach(cocktail => {
-    let favoriteList = new CocktailListView(cocktail);
-    favoriteList.appendTo(FAVORITE_CONTAINER);
-  });
-}
-
-function showFavorites() {
-  let favorites = getFavorites();
-  fillFavorites(favorites);
+function getUserCreatedCocktails() {
+  return cocktailListManager.getFavorites(user.createdCocktails);
 }
 
 // Load Reviews in Profile UI
 
 function fillReviews() {
   let reviews = getReviews();
+  return reviews;
 }
 
 function showReviews() {
-  let reviews = this.fillReviews();
+  let reviews = fillReviews();
   reviews.forEach(review => {
     let reviewView = new ProfileReviewView(review);
     reviewView.appendTo("parent");

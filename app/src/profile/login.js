@@ -4,16 +4,19 @@ import { User } from "./user.js";
 
 // soll in index.js benutzt werden um den user festzustellen
 
-let result;
-
 class Login extends Observable {
 
     constructor() {
         super();
-        result, this.appwrite = new AppwriteConnector();
+        this.appwrite = new AppwriteConnector();
     }
 
     async singUp(username, email, password) {
+        // eslint-disable-next-line no-magic-numbers
+        if (password.length < 8) {
+            // Error message in UI?
+            return;
+        }
         await this.appwrite.createAccount(username, email, password);
         await this.appwrite.createSession(email, password);
         let user = new User(email, username),
